@@ -11,6 +11,7 @@ export function useData() {
   useEffect(() => {
     Promise.all([loadListings(), loadOwners(), loadTenant()])
       .then(([l, o, t]) => { setListings(l); setOwners(o); setTenant(t); })
+      .catch((err) => { console.error('Failed to load demo data', err); })
       .finally(() => setLoading(false));
   }, []);
 
