@@ -14,6 +14,7 @@ export default function ListingDetail() {
   const nav = useNavigate();
   const { listings, owners, tenant, loading } = useData();
   const [showConnect, setShowConnect] = useState(false);
+  const [activePhoto, setActivePhoto] = useState(0);
 
   if (loading) return <div className="p-8 text-coolgrey">Loading…</div>;
   const listing = listings.find(l => l.id === id);
@@ -26,7 +27,20 @@ export default function ListingDetail() {
 
       <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
         <div>
-          <img src={listing.photos[0]} alt={listing.title} className="h-72 w-full rounded-card object-cover" />
+          <img src={listing.photos[activePhoto]} alt={listing.title} className="h-72 w-full rounded-card object-cover" />
+          {listing.photos.length > 1 && (
+            <div className="flex gap-2 mt-3 overflow-x-auto">
+              {listing.photos.map((photo, i) => (
+                <img
+                  key={i}
+                  src={photo}
+                  alt={`${listing.title} photo ${i + 1}`}
+                  onClick={() => setActivePhoto(i)}
+                  className={`h-16 w-20 object-cover rounded-lg cursor-pointer ${i === activePhoto ? 'ring-2 ring-blueharbor' : 'border border-line opacity-70'}`}
+                />
+              ))}
+            </div>
+          )}
           <div className="mt-4 flex items-baseline gap-2">
             <span className="text-2xl font-extrabold">₹{listing.rent.toLocaleString('en-IN')}</span>
             <span className="text-coolgrey">/mo</span>
