@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropWeb — Listing Screen (Mobile Preview)</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --moontint:#F3F6FF; --blueharbor:#3770BF; --iceblue:#8DC2FF; --limeglow:#C3EA4F;
+    --graphite:#1B1E23; --coolgrey:#5B6470; --line:#DDE3EE; --white:#FFFFFF;
+    --amber:#E8A13D; --mutedred:#E5533D;
+    --display:'Manrope',system-ui,sans-serif;
+    --sans:'Inter',system-ui,-apple-system,Roboto,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:var(--sans);
+    background:#E7ECF6; color:var(--graphite); line-height:24px;
+    display:flex; justify-content:center; padding:24px 0; min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .brand,.resulthead h1,.title,.rent b{font-family:var(--display)}
+
+  /* phone frame */
+  .phone{
+    width:390px; background:var(--moontint); border-radius:32px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(27,30,35,.28); position:relative;
+    border:8px solid #12151b;
+  }
+  .screen{height:812px; overflow-y:auto; position:relative}
+  .screen::-webkit-scrollbar{width:0}
+
+  /* top bar */
+  .topbar{
+    position:sticky; top:0; z-index:20; background:rgba(243,246,255,.92);
+    backdrop-filter:blur(8px); padding:16px 18px 12px; border-bottom:1px solid var(--line);
+  }
+  .brand{font-weight:800; font-size:20px; letter-spacing:1.5px}
+  .brand span{color:var(--blueharbor)}
+  .city{display:flex; align-items:center; gap:4px; font-size:13px; color:var(--coolgrey); font-weight:600}
+  .toprow{display:flex; align-items:center; justify-content:space-between}
+
+  /* filter chips */
+  .filters{display:flex; gap:8px; margin-top:12px; overflow-x:auto; padding-bottom:2px}
+  .filters::-webkit-scrollbar{height:0}
+  .fchip{
+    flex:0 0 auto; display:inline-flex; align-items:center; gap:5px; background:var(--white);
+    border:1px solid var(--line); border-radius:999px; padding:7px 13px; font-size:13px; font-weight:600;
+    color:var(--graphite); white-space:nowrap;
+  }
+  .fchip.edit{color:var(--blueharbor); border-color:#BcD3EF}
+  .fchip i{font-size:15px}
+
+  /* body */
+  .body{padding:16px 16px 90px}
+  .resulthead{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px}
+  .resulthead h1{font-size:16px; font-weight:800}
+  .resulthead .sort{display:flex; align-items:center; gap:4px; font-size:13px; color:var(--coolgrey); font-weight:600}
+
+  /* trust strip */
+  .trust-strip{
+    display:flex; gap:14px; background:var(--white); border:1px solid var(--line);
+    border-radius:14px; padding:11px 14px; margin-bottom:16px; flex-wrap:wrap;
+  }
+  .trust-strip span{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--graphite)}
+  .trust-strip i{font-size:17px; color:var(--blueharbor)}
+
+  /* card */
+  .card{
+    background:var(--white); border:1px solid var(--line); border-radius:16px;
+    overflow:hidden; box-shadow:0 2px 12px rgba(27,30,35,.07); margin-bottom:16px;
+  }
+  .photo{position:relative; height:186px}
+  .photo img{width:100%; height:100%; object-fit:cover; display:block}
+  .photo .overlay-tl{position:absolute; left:12px; top:12px}
+  .photo .overlay-tr{position:absolute; right:12px; top:12px}
+  .dots{position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:5px}
+  .dots i{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.6)}
+  .dots i.on{background:#fff; width:16px; border-radius:3px}
+
+  /* trust token */
+  .trust-token{
+    display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:5px 10px;
+    font-size:13px; font-weight:800; box-shadow:0 1px 4px rgba(0,0,0,.15);
+  }
+  .trust-token i{font-size:14px}
+  .t-strong{background:var(--limeglow); color:var(--graphite)}
+  .t-medium{background:var(--amber); color:var(--graphite)}
+  .t-weak{background:var(--mutedred); color:#fff}
+
+  /* match chip */
+  .match-chip{
+    display:inline-flex; align-items:center; background:var(--iceblue); color:var(--graphite);
+    border-radius:999px; padding:5px 11px; font-size:12px; font-weight:700; box-shadow:0 1px 4px rgba(0,0,0,.12);
+  }
+
+  .cbody{padding:14px 15px 15px}
+  .rent{display:flex; align-items:baseline; gap:4px}
+  .rent b{font-size:21px; font-weight:800}
+  .rent span{font-size:13px; color:var(--coolgrey)}
+  .title{font-weight:700; font-size:15px; margin-top:2px}
+  .addr{display:flex; align-items:center; gap:4px; font-size:13px; color:var(--coolgrey); margin-top:2px}
+  .addr i{font-size:15px}
+
+  .feats{display:flex; gap:7px; margin-top:12px; flex-wrap:wrap}
+  .feat{
+    display:inline-flex; align-items:center; gap:5px; border:1px solid var(--line);
+    border-radius:999px; padding:5px 11px; font-size:12px; color:var(--coolgrey); font-weight:600;
+  }
+  .feat i{font-size:15px; color:var(--graphite)}
+
+  .cfoot{display:flex; align-items:center; justify-content:space-between; margin-top:13px}
+  .posted{font-size:12px; color:var(--coolgrey); font-weight:600}
+
+  /* verified badge (spiked seal) */
+  .badge{
+    display:inline-flex; align-items:center; gap:5px; background:var(--limeglow); color:var(--graphite);
+    border-radius:999px; padding:5px 11px; font-size:12px; font-weight:700;
+  }
+  .badge i{font-size:16px}
+  .badge.pending{background:transparent; border:1.5px solid var(--amber); color:var(--amber)}
+  .unverified{display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--coolgrey)}
+  .unverified i{font-size:16px}
+
+  /* buttons */
+  .btn{
+    width:100%; border:none; border-radius:999px; padding:13px; font-size:15px; font-weight:700;
+    cursor:pointer; margin-top:15px; display:inline-flex; align-items:center; justify-content:center; gap:7px;
+    font-family:inherit;
+  }
+  .btn-primary{background:var(--blueharbor); color:#fff}
+  .btn-primary:active{filter:brightness(.94)}
+  .btn i{font-size:18px}
+
+  /* floating map toggle (secondary button style) */
+  .fab{
+    position:absolute; bottom:22px; left:50%; transform:translateX(-50%); z-index:30;
+    display:inline-flex; align-items:center; gap:7px; background:var(--white); color:var(--blueharbor);
+    border:1.5px solid var(--blueharbor); border-radius:999px; padding:11px 20px; font-size:14px; font-weight:700;
+    box-shadow:0 6px 18px rgba(27,30,35,.2); cursor:pointer; font-family:inherit;
+  }
+  .fab i{font-size:18px}
+
+  .note{width:390px; margin-top:16px; text-align:center; font-size:12px; color:#5A6270}
+  .note b{color:#1B1E23}
+</style>
+</head>
+<body>
+
+<div>
+<div class="phone">
+  <div class="screen">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="toprow">
+        <div class="brand">PROP<span>WEB</span></div>
+        <div class="city"><i class="ph-fill ph-map-pin"></i> Bengaluru</div>
+      </div>
+      <div class="filters">
+        <div class="fchip edit"><i class="ph-bold ph-sliders-horizontal"></i> Filters</div>
+        <div class="fchip"><i class="ph ph-map-pin"></i> Koramangala</div>
+        <div class="fchip"><i class="ph ph-bed"></i> 2 BHK</div>
+        <div class="fchip"><i class="ph ph-currency-inr"></i> ≤ 35k</div>
+        <div class="fchip"><i class="ph ph-users"></i> Family</div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="resulthead">
+        <h1>6 rentals in Koramangala</h1>
+        <div class="sort"><i class="ph ph-arrows-down-up"></i> Sort</div>
+      </div>
+
+      <!-- TRUST STRIP -->
+      <div class="trust-strip">
+        <span><i class="ph-fill ph-shield-check"></i> Verified only</span>
+        <span><i class="ph-fill ph-prohibit"></i> No fakes</span>
+        <span><i class="ph-fill ph-phone-slash"></i> No spam calls</span>
+      </div>
+
+      <!-- CARD 1 — strong trust, perfect match, verified -->
+      <div class="card">
+        <div class="photo">
+          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" alt="2BHK Koramangala">
+          <div class="overlay-tl"><span class="trust-token t-strong"><i class="ph-fill ph-shield-check"></i> 95</span></div>
+          <div class="overlay-tr"><span class="match-chip">100% match</span></div>
+          <div class="dots"><i class="on"></i><i></i><i></i></div>
+        </div>
+        <div class="cbody">
+          <div class="rent"><b>₹35,000</b><span>/mo</span></div>
+          <div class="title">2BHK · Koramangala</div>
+          <div class="addr"><i class="ph ph-map-pin"></i> 5th Block, Koramangala</div>
+          <div class="feats">
+            <span class="feat"><i class="ph ph-ruler"></i> 1,100 sq.ft</span>
+            <span class="feat"><i class="ph ph-bed"></i> 2 BHK</span>
+            <span class="feat"><i class="ph ph-armchair"></i> Semi-furnished</span>
+          </div>
+          <div class="cfoot">
+            <span class="badge"><i class="ph-fill ph-seal-check"></i> Verified Owner</span>
+            <span class="posted">2 days ago</span>
+          </div>
+          <button class="btn btn-primary">View Details <i class="ph-bold ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 2 — medium trust, verified -->
+      <div class="card">
+        <div class="photo">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80" alt="1BHK HSR">
+          <div class="overlay-tl"><span class="trust-token t-medium"><i class="ph-fill ph-shield-check"></i> 62</span></div>
+          <div class="overlay-tr"><span class="match-chip">88% match</span></div>
+          <div class="dots"><i class="on"></i><i></i></div>
+        </div>
+        <div class="cbody">
+          <div class="rent"><b>₹22,000</b><span>/mo</span></div>
+          <div class="title">1BHK · HSR Layout</div>
+          <div class="addr"><i class="ph ph-map-pin"></i> Sector 2, HSR Layout</div>
+          <div class="feats">
+            <span class="feat"><i class="ph ph-ruler"></i> 650 sq.ft</span>
+            <span class="feat"><i class="ph ph-bed"></i> 1 BHK</span>
+            <span class="feat"><i class="ph ph-armchair"></i> Furnished</span>
+          </div>
+          <div class="cfoot">
+            <span class="badge"><i class="ph-fill ph-seal-check"></i> Verified Owner</span>
+            <span class="posted">9 days ago</span>
+          </div>
+          <button class="btn btn-primary">View Details <i class="ph-bold ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- CARD 3 — weak trust, pending verification -->
+      <div class="card">
+        <div class="photo">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80" alt="2BHK Whitefield">
+          <div class="overlay-tl"><span class="trust-token t-weak"><i class="ph-fill ph-shield-check"></i> 41</span></div>
+          <div class="overlay-tr"><span class="match-chip">60% match</span></div>
+          <div class="dots"><i class="on"></i><i></i><i></i></div>
+        </div>
+        <div class="cbody">
+          <div class="rent"><b>₹28,000</b><span>/mo</span></div>
+          <div class="title">2BHK · Whitefield</div>
+          <div class="addr"><i class="ph ph-map-pin"></i> ITPL Main Road, Whitefield</div>
+          <div class="feats">
+            <span class="feat"><i class="ph ph-ruler"></i> 980 sq.ft</span>
+            <span class="feat"><i class="ph ph-bed"></i> 2 BHK</span>
+            <span class="feat"><i class="ph ph-armchair"></i> Unfurnished</span>
+          </div>
+          <div class="cfoot">
+            <span class="badge pending"><i class="ph-fill ph-seal-check"></i> Verification pending</span>
+            <span class="posted">3 wks ago</span>
+          </div>
+          <button class="btn btn-primary">View Details <i class="ph-bold ph-arrow-right"></i></button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FLOATING MAP TOGGLE (secondary button) -->
+    <button class="fab"><i class="ph-fill ph-map-trifold"></i> Map</button>
+
+  </div>
+</div>
+<div class="note"><b>PropWeb</b> · Listing screen · mobile 390px · real Phosphor icons + live tokens</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropWeb — Knowledge Transfer for Pranav</title>
+<style>
+  :root{
+    --ink:#161B26; --paper:#FFFFFF; --teal:#0E6E5C; --teal-dk:#0A4A3E;
+    --sand:#E8A13D; --grey:#5A6270; --line:#DFE5E9; --card:#F3F8F6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.65}
+  ::selection{background:var(--sand);color:var(--ink)}
+
+  /* journey rail */
+  nav.rail{position:fixed;left:0;top:0;bottom:0;width:230px;background:var(--ink);padding:36px 22px;overflow-y:auto}
+  nav.rail .brand{color:#fff;font-weight:800;font-size:20px;letter-spacing:2px}
+  nav.rail .brand span{color:var(--sand)}
+  nav.rail .sub{color:#8A94A0;font-size:11.5px;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+  nav.rail ol{list-style:none;margin-top:34px}
+  nav.rail li{margin-bottom:4px}
+  nav.rail a{display:block;color:#B9C2CC;text-decoration:none;font-size:13.5px;padding:9px 12px;border-left:2px solid transparent;border-radius:0 6px 6px 0;transition:all .15s}
+  nav.rail a:hover,nav.rail a:focus-visible{color:#fff;background:rgba(255,255,255,.06);border-left-color:var(--sand);outline:none}
+  nav.rail a .num{color:var(--sand);font-weight:700;margin-right:8px;font-size:12px}
+  nav.rail .foot{color:#5A6270;font-size:11px;margin-top:36px;line-height:1.5}
+
+  main{margin-left:230px;max-width:940px;padding:0 56px 90px}
+
+  /* hero */
+  header.hero{padding:72px 0 44px;border-bottom:1px solid var(--line)}
+  .kicker{color:var(--teal);font-weight:700;font-size:12.5px;letter-spacing:3px;text-transform:uppercase}
+  header.hero h1{font-size:44px;line-height:1.12;font-weight:800;margin:14px 0 16px}
+  header.hero h1 em{font-style:normal;color:var(--teal)}
+  header.hero p.lede{font-size:17.5px;color:var(--grey);max-width:640px}
+  .meta{display:flex;gap:22px;margin-top:26px;flex-wrap:wrap}
+  .meta div{font-size:12.5px;color:var(--grey)}
+  .meta b{display:block;color:var(--ink);font-size:14px}
+
+  section{padding:56px 0 8px}
+  .chip{display:inline-block;background:var(--teal);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:2px;padding:5px 12px;border-radius:999px;text-transform:uppercase}
+  section h2{font-size:29px;font-weight:800;margin:16px 0 10px}
+  section p.intro{color:var(--grey);font-size:15.5px;max-width:680px;margin-bottom:26px}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+  .cards.three{grid-template-columns:1fr 1fr 1fr}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+  .card h3{font-size:15.5px;font-weight:700;margin-bottom:8px}
+  .card h3 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--teal);margin-right:8px}
+  .card p{font-size:13.5px;color:var(--grey)}
+  .card.sand{background:#FDF6EA;border-color:#F0DDB8}
+  .card.dark{background:var(--ink);border-color:var(--ink)}
+  .card.dark h3{color:#fff}
+  .card.dark p{color:#B9C2CC}
+
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13.5px}
+  th{background:var(--teal);color:#fff;text-align:left;padding:10px 13px;font-weight:700;font-size:12.5px;letter-spacing:.4px}
+  td{padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:nth-child(even) td{background:var(--card)}
+  td b{color:var(--teal-dk)}
+
+  .quote{border-left:4px solid var(--sand);background:#FDF6EA;padding:18px 22px;border-radius:0 10px 10px 0;margin:24px 0;font-size:15px}
+  .quote b{color:var(--teal-dk)}
+
+  .flow{display:flex;gap:10px;align-items:stretch;margin:24px 0;flex-wrap:wrap}
+  .flow .step{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .flow .step .n{color:var(--sand);font-weight:800;font-size:12px;letter-spacing:1px}
+  .flow .step h4{font-size:14px;margin:4px 0 6px}
+  .flow .step p{font-size:12.5px;color:var(--grey)}
+
+  ul.clean{list-style:none;margin:14px 0}
+  ul.clean li{padding-left:24px;position:relative;margin-bottom:9px;font-size:14.5px}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:9px;width:8px;height:8px;border-radius:2px;background:var(--teal)}
+  ul.clean li b{color:var(--teal-dk)}
+
+  .files{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  .file{border:1px dashed var(--teal);border-radius:10px;padding:14px 16px;background:#fff}
+  .file .fname{font-weight:700;font-size:13.5px;color:var(--teal-dk)}
+  .file p{font-size:12.5px;color:var(--grey);margin-top:4px}
+
+  footer{margin-left:230px;background:var(--ink);color:#8A94A0;padding:34px 56px;font-size:13px}
+  footer b{color:#fff}
+
+  @media(max-width:900px){
+    nav.rail{display:none}
+    main,footer{margin-left:0;padding-left:24px;padding-right:24px}
+    .cards,.cards.three,.files{grid-template-columns:1fr}
+    header.hero h1{font-size:32px}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} nav.rail a{transition:none} }
+</style>
+</head>
+<body>
+
+<nav class="rail" aria-label="Document sections">
+  <div class="brand">PROP<span>WEB</span></div>
+  <div class="sub">Knowledge Transfer · Pranav</div>
+  <ol>
+    <li><a href="#big-picture"><span class="num">01</span>The Big Picture</a></li>
+    <li><a href="#references"><span class="num">02</span>The Two References</a></li>
+    <li><a href="#product"><span class="num">03</span>The Product</a></li>
+    <li><a href="#build"><span class="num">04</span>The Build Plan</a></li>
+    <li><a href="#numbers"><span class="num">05</span>The Numbers</a></li>
+    <li><a href="#your-job"><span class="num">06</span>Your Deliverables</a></li>
+    <li><a href="#artifacts"><span class="num">07</span>Where Everything Lives</a></li>
+  </ol>
+  <div class="foot">Prepared by Yogesh (CTO+CPO)<br>July 2026 · Internal & Confidential</div>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="kicker">Read this once, end to end — 15 minutes</div>
+  <h1>Everything you need to know to own the <em>PropWeb</em> pitch.</h1>
+  <p class="lede">You're building the deck, the wireframes, the costing slides and a demo web app. This page gives you the full context so you can do all four without needing Yogesh in the room.</p>
+  <div class="meta">
+    <div><b>Project</b>PropWeb — trust-first rental platform</div>
+    <div><b>Audience</b>Two co-founder CEOs (internal buy-in)</div>
+    <div><b>Your role</b>Deck · Wireframes · Costing · Demo app</div>
+  </div>
+</header>
+
+<section id="big-picture">
+  <span class="chip">01 · The Big Picture</span>
+  <h2>What PropWeb is, in one breath</h2>
+  <p class="intro">India's trust-first, AI-powered rental platform: verified owners meet verified tenants directly — no brokers, no fake listings, no spam calls. Bayut-grade product quality on a NoBroker-style direct model.</p>
+  <div class="cards">
+    <div class="card"><h3><span class="dot"></span>The tenant's pain</h3><p>Fake listings farmed for leads. One flat listed by 10 brokers at 10 prices. One enquiry = 20–50 broker calls. Dead listings everywhere. 10–20 visits before finding a fit.</p></div>
+    <div class="card"><h3><span class="dot"></span>The owner's pain</h3><p>Non-genuine tenants and price-fishers. Phone number and address leaked publicly. Coordinating every single visit alone. Zero visibility into who they're renting to.</p></div>
+  </div>
+  <div class="quote"><b>The one-liner to remember:</b> "Existing portals sell leads. PropWeb sells trust." Every slide, wireframe and demo screen should serve that sentence.</div>
+  <p class="intro">Who's in the room: two co-founder CEOs funding this personally from their existing profitable company. Yogesh joins as part-time CTO+CPO (20 hrs/week), leads all tech and product, hires the team. The pitch's job: get the CEOs to approve a budget scenario, greenlight the first hires, and sign off a 90-day plan.</p>
+</section>
+
+<section id="references">
+  <span class="chip">02 · The Two References</span>
+  <h2>Bayut and NoBroker — know these cold</h2>
+  <p class="intro">Every conversation about PropWeb happens against these two companies. One is our quality benchmark, one is our business-model reference and main competitor.</p>
+  <div class="cards">
+    <div class="card dark"><h3>Bayut (Dubai) — copy the quality</h3><p>UAE's top property portal (Dubizzle Group). Famous for TruCheck (physically verified listings, geotagged photos), TruEstimate (AI price valuation, mid-to-high-90s% accuracy claims), TruBroker (agent trust scores), BayutGPT (chat search). 600+ engineers, Python/React/AWS/Elasticsearch. We borrow their trust-feature philosophy and UI polish — NOT their broker-based model.</p></div>
+    <div class="card dark"><h3>NoBroker (India) — copy the model, fix the flaws</h3><p>India's first proptech unicorn. Direct owner-to-tenant, freemium contact unlock (plans ₹1,499–₹10,999). FY24: ₹803 Cr revenue, ₹411 Cr loss — spent ₹1.62 to earn ₹1. Trust is enforced by call-centre humans, not tech: fake listings and broker infiltration remain complaint #1. That gap is our opening.</p></div>
+  </div>
+  <div class="quote"><b>If a CEO asks "why will you win?":</b> NoBroker proved Indians pay to skip brokers, but they do trust with people (₹436 Cr employee cost). We do trust with software — verification pipeline, trust score, broker detection — which is cheaper, scales, and can't be retrofitted by portals built to sell leads.</div>
+</section>
+
+<section id="product">
+  <span class="chip">03 · The Product</span>
+  <h2>Six pillars and one flow</h2>
+  <p class="intro">The product story is six pillars. The demo tells it in four steps. Learn both — they're the backbone of your deck's Act 1.</p>
+  <div class="cards three">
+    <div class="card"><h3><span class="dot"></span>Verified Owner Badge</h3><p>Aadhaar/PAN + ownership proof + mobile verification.</p></div>
+    <div class="card"><h3><span class="dot"></span>Verified Tenant Badge</h3><p>Employment, income range, KYC — owners see who they rent to.</p></div>
+    <div class="card"><h3><span class="dot"></span>Pay-to-Connect</h3><p>Browsing free; contacts unlock for a small fee. Kills fake enquiries.</p></div>
+    <div class="card"><h3><span class="dot"></span>AI Matchmaking</h3><p>Budget, location, family/bachelor, furnishing — a match score, like matrimony for rentals.</p></div>
+    <div class="card"><h3><span class="dot"></span>Rental Trust Score</h3><p>Verification + response rate + freshness + reviews. On every listing.</p></div>
+    <div class="card"><h3><span class="dot"></span>Intelligence, not leads</h3><p>An AI engine that recommends, ranks and protects — not a directory reselling contacts.</p></div>
+  </div>
+  <div class="flow">
+    <div class="step"><div class="n">STEP 1</div><h4>Verify</h4><p>Both sides complete KYC and earn badges before transacting.</p></div>
+    <div class="step"><div class="n">STEP 2</div><h4>Match</h4><p>Engine scores listings against the tenant's real needs.</p></div>
+    <div class="step"><div class="n">STEP 3</div><h4>Connect</h4><p>Small fee unlocks contact — only genuine intent gets through.</p></div>
+    <div class="step"><div class="n">STEP 4</div><h4>Transact</h4><p>Trust score + digital rent agreement close the deal safely.</p></div>
+  </div>
+  <p class="intro">Launch scope: rentals only, Bengaluru first, web app before native apps. Revenue today = connect fees + premium listings + badge subscriptions. Revenue tomorrow = services marketplace (movers, cleaning, furniture, interiors) — NoBroker's own non-listing revenue reached ~50% of its mix, proving services outgrow listings.</p>
+</section>
+
+<section id="build">
+  <span class="chip">04 · The Build Plan</span>
+  <h2>Four phases, gated by numbers</h2>
+  <p class="intro">The tech story (deck Act 2). Core idea: a modular monolith web app — one well-organised building, not twenty microservice buildings — built by a lean in-house team, with money released phase by phase only when the previous gate is hit.</p>
+  <table>
+    <tr><th>Phase</th><th>When</th><th>What ships</th><th>Team</th><th>Cost</th></tr>
+    <tr><td><b>0 — Setup</b></td><td>Weeks 0–4</td><td>Cloud, CI/CD, design system, DPDP privacy baseline, vendor sandboxes</td><td>CTO + 1 founding engineer</td><td>₹4–7 L</td></tr>
+    <tr><td><b>1 — MVP</b></td><td>Months 1–4</td><td>OTP login, listings, search+map, basic verification, call-masked pay-to-connect, admin console</td><td>+2 engineers, designer, fractional DevOps</td><td>₹22–35 L</td></tr>
+    <tr><td><b>2 — Depth</b></td><td>Months 4–9</td><td>Trust score, broker detection, matchmaking v1, digital rent agreements, WhatsApp</td><td>+1 backend, +1 QA</td><td>₹35–55 L</td></tr>
+    <tr><td><b>3 — Scale</b></td><td>Months 9–15</td><td>Services marketplace, city #2, native apps only if data justifies</td><td>6–8 total</td><td>₹50–80 L</td></tr>
+  </table>
+  <ul class="clean">
+    <li><b>Stack (one line each, CEO-safe):</b> Next.js (free Google traffic via locality pages) · Node+TypeScript (one language, fast small team) · PostgreSQL+PostGIS ("flats within 3 km" natively) · Typesense self-hosted (~$69/mo vs Algolia ~$525/mo) · Ola Maps/MapmyIndia (free tier, best India data) · AWS Mumbai (KYC data stays in India — DPDP) · Razorpay UPI-first (0% MDR) · Exotel (masked calls).</li>
+    <li><b>The legal line you must not fumble:</b> private companies cannot use Aadhaar OTP/biometric eKYC (Supreme Court, 2018). PropWeb uses the legal route — offline Aadhaar XML / DigiLocker / licensed KYC partners.</li>
+    <li><b>Where the moat is:</b> verification pipeline (8–12 person-weeks), trust score (4–6), broker detection (5–8), matchmaking (5–8). Everything else is commodity assembly.</li>
+  </ul>
+</section>
+
+<section id="numbers">
+  <span class="chip">05 · The Numbers</span>
+  <h2>The figures the CEOs will ask about</h2>
+  <table>
+    <tr><th>Question</th><th>Answer</th><th>Backup detail</th></tr>
+    <tr><td>12-month budget?</td><td><b>Lean ₹55–75 L · Base ₹85 L–1.1 Cr · Comfortable ₹1.3–1.6 Cr</b></td><td>Base recommended; team + infra + vendors, all-in</td></tr>
+    <tr><td>Agency instead?</td><td>₹15–40 L quotes, but you rebuild in a year</td><td>No team, no asset, wrong incentives for marketplaces</td></tr>
+    <tr><td>Salaries?</td><td>Founding eng ₹25–42 L · Sr backend ₹30–36 L · Mid frontend ₹8–16 L</td><td>Bengaluru 2025–26 benchmarks; QA ₹8–14 L; designer ₹1.2–2.5 L/mo contract</td></tr>
+    <tr><td>Per-verification cost?</td><td>PAN ₹1–3 · Aadhaar/DigiLocker ₹3–20 · eSign ~₹15</td><td>≈₹5–25 per verified listing before human review</td></tr>
+    <tr><td>Per-connect cost?</td><td>≈₹1–5 (masked call + WhatsApp utility msg)</td><td>Must stay far below the connect price</td></tr>
+    <tr><td>Infra?</td><td>₹15–25k/mo lean MVP on AWS Mumbai</td><td>₹40k–1.5 L/mo production-grade</td></tr>
+    <tr><td>Market?</td><td>India proptech USD 1.3–1.7 Bn (2025), 12–19% CAGR</td><td>Rental ecosystem USD 20 Bn+; NoBroker = demand proof</td></tr>
+  </table>
+  <div class="quote"><b>Accountability metrics (the CEOs' dashboard):</b> listing density per locality · verified-listing share (majority of live inventory) · connect conversion (~2–5% freemium benchmark). Three numbers, no code-reading required.</div>
+</section>
+
+<section id="your-job">
+  <span class="chip">06 · Your Deliverables</span>
+  <h2>What you're building, and the bar for done</h2>
+  <div class="cards">
+    <div class="card sand"><h3>1 · The deck (16–18 slides)</h3><p>Two acts: product story (slides 1–9), tech + money story (10–16). Follow the solution-pitch markdown slide-by-slide — headlines, key messages and speaker notes are already written. Presenter notes on every slide.</p></div>
+    <div class="card sand"><h3>2 · Wireframes (11 screens)</h3><p>Home/search, results (list+map), listing detail, pay-to-connect modal, tenant onboarding, tenant KYC, owner listing wizard, owner KYC, owner dashboard, trust-score explainer, match-score view. Mobile-first at 390px, then desktop.</p></div>
+    <div class="card sand"><h3>3 · Costing slides (2)</h3><p>Reproduce the budget table (3 scenarios) and hiring sequence + unit economics from Section 05. No new math — just clean design.</p></div>
+    <div class="card sand"><h3>4 · Demo web app</h3><p>Rentals only. Three journeys: tenant search → detail; owner listing wizard → published; trust badges + score everywhere, tappable. Local JSON only (25–30 Bengaluru listings, ₹18k–85k), Leaflet + OpenStreetMap, no backend/DB/auth/payments. One command to run, deployed to a free static link.</p></div>
+  </div>
+  <ul class="clean">
+    <li><b>Design direction:</b> fresh, inspired by Bayut's clarity (whitespace, cards, map-right, calm palette) — do NOT clone it. Where NoBroker feels cluttered and upsell-heavy, PropWeb feels calm and verified. Trust marks are the hero on every screen; every badge is tappable to show what was verified and when.</li>
+    <li><b>Demo script (what we click live):</b> search Koramangala 2BHK ₹35k → open a 95-score listing → tap badge → Connect → mock pay → masked-number reveal → switch to owner → 4-step wizard → "pending verification" → flip to Verified. Close on the trust-score explainer: "this is the moat."</li>
+    <li><b>Checkpoints with Yogesh:</b> Day 2 deck skeleton + first sketches · Day 4 all wireframes + app scaffold · Day 7 journeys clickable + deck 80% · Day 9 full dry run · Day 10 lock and deploy.</li>
+    <li><b>Definition of done:</b> you can explain every slide and screen without Yogesh in the room.</li>
+  </ul>
+</section>
+
+<section id="artifacts">
+  <span class="chip">07 · Where Everything Lives</span>
+  <h2>Your source files</h2>
+  <p class="intro">Four documents contain everything referenced above. Read them in this order.</p>
+  <div class="files">
+    <div class="file"><div class="fname">1 · PropWeb Solution Pitch (markdown)</div><p>The slide-by-slide content for your deck — 9 slides, headlines, speaker notes, 90-day plan, decision checklist. This is your deck's script.</p></div>
+    <div class="file"><div class="fname">2 · PropWeb_Handover_Brief_Pranav.docx</div><p>Your original brief: PRD, user stories, feature priorities, wireframe specs, demo-app constraints, timeline. The execution contract.</p></div>
+    <div class="file"><div class="fname">3 · PropWeb_Pitch_v2.pptx (+ PDF)</div><p>A rebuilt reference deck showing the narrative flow and visual tone. Use as a starting point or rebuild in your own design — your call.</p></div>
+    <div class="file"><div class="fname">4 · Research reports (2)</div><p>Deep dives: NoBroker/India market blueprint + the full tech build & compensation report. Go here when you need a number's source or more depth.</p></div>
+  </div>
+  <div class="quote"><b>When stuck:</b> first check the solution pitch markdown (it answers 90% of content questions), then the handover brief (it answers 90% of scope questions). Ping Yogesh only for decisions, not for information.</div>
+</section>
+
+</main>
+
+<footer>
+  <b>PropWeb · Knowledge Transfer</b> — prepared by Yogesh (CTO+CPO) for Pranav · July 2026 · Internal & Confidential.<br>
+  Existing portals sell leads. PropWeb sells trust.
+</footer>
+
+</body>
+</html>
