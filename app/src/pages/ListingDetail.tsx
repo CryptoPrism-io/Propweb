@@ -1,1 +1,72 @@
-export default function ListingDetail(){ return null; }
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { MapPin, ArrowLeft } from '@phosphor-icons/react';
+import { useData } from '../hooks/useData';
+import { getOwner } from '../lib/data';
+import { matchScore } from '../lib/matchScore';
+import { TrustScoreToken } from '../components/TrustScoreToken';
+import { MatchChip } from '../components/MatchChip';
+import { VerifiedBadge } from '../components/VerifiedBadge';
+import { Button } from '../components/Button';
+
+export default function ListingDetail() {
+  const { id } = useParams();
+  const nav = useNavigate();
+  const { listings, owners, tenant, loading } = useData();
+  const [showConnect, setShowConnect] = useState(false);
+
+  if (loading) return <div className="p-8 text-coolgrey">Loading…</div>;
+  const listing = listings.find(l => l.id === id);
+  if (!listing || !tenant) return <div className="p-8">Listing not found.</div>;
+  const owner = getOwner(owners, listing.ownerId);
+
+  return (
+    <div className="mx-auto max-w-5xl px-4 py-6">
+      <button onClick={() => nav(-1)} className="mb-4 inline-flex items-center gap-1 text-sm text-blueharbor"><ArrowLeft size={16} /> Back</button>
+
+      <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+        <div>
+          <img src={listing.photos[0]} alt={listing.title} className="h-72 w-full rounded-card object-cover" />
+          <div className="mt-4 flex items-baseline gap-2">
+            <span className="text-2xl font-extrabold">₹{listing.rent.toLocaleString('en-IN')}</span>
+            <span className="text-coolgrey">/mo</span>
+          </div>
+          <div className="font-semibold">{listing.bhk}BHK · {listing.locality}</div>
+          <div className="flex items-center gap-1 text-sm text-coolgrey"><MapPin size={14} /> {listing.address}</div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <TrustScoreToken score={listing.trustScore} />
+            <MatchChip percent={matchScore(listing, tenant)} />
+          </div>
+
+          <h3 className="mt-6 font-bold">Amenities</h3>
+          <div className="mt-2 flex flex-wrap gap-2 text-sm text-coolgrey">
+            {listing.amenities.map(a => <span key={a} className="rounded-full border border-line px-3 py-1">{a}</span>)}
+          </div>
+
+          <h3 className="mt-6 font-bold">Why this Trust Score?</h3>
+          <p className="mt-1 text-sm text-coolgrey">Verification level, owner response rate, listing freshness and reviews combine into the {listing.trustScore}/100 score. Tap the badge on any listing to see what was verified.</p>
+        </div>
+
+        <div className="lg:sticky lg:top-6 h-fit rounded-card border border-line bg-white p-5 shadow-card">
+          <div className="font-semibold">{owner?.name}</div>
+          <div className="mt-1">{listing.verifiedOwner ? <VerifiedBadge kind="owner" /> : <VerifiedBadge kind="owner" pending />}</div>
+          <div className="mt-3 text-sm text-coolgrey">Phone</div>
+          <div className="font-mono text-lg tracking-widest">+91 ●●●●● ●●●●●</div>
+          <Button className="mt-4 w-full" onClick={() => setShowConnect(true)}>Connect</Button>
+          <p className="mt-2 text-center text-xs text-coolgrey">Small fee unlocks the verified owner's contact.</p>
+        </div>
+      </div>
+
+      {showConnect && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-graphite/40 p-4" onClick={() => setShowConnect(false)}>
+          <div className="w-full max-w-sm rounded-card bg-white p-6 text-center shadow-card" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-bold">Pay to connect</h3>
+            <p className="mt-1 text-sm text-coolgrey">Unlock this verified owner's contact for a small fee. (Mock — no real payment.)</p>
+            <Button className="mt-4 w-full" onClick={() => setShowConnect(false)}>Pay ₹49 (mock)</Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
