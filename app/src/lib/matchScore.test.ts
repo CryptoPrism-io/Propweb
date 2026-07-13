@@ -35,4 +35,10 @@ describe('matchScore', () => {
   it('drops move-in points when flat is available after tenant move-in', () => {
     expect(matchScore({ ...base, moveInDate: '2026-09-01' }, tenant)).toBe(90);
   });
+  it('drops furnishing points when furnishing differs', () => {
+    expect(matchScore({ ...base, furnishing: 'unfurnished' }, tenant)).toBe(90);
+  });
+  it('scales budget points linearly at +25% over budget', () => {
+    expect(matchScore({ ...base, rent: 43750 }, tenant)).toBe(80);
+  });
 });
