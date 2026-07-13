@@ -32,11 +32,17 @@ export default function Results() {
 
       <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
         <div className={`${showMapMobile ? 'hidden' : 'block'} lg:block`}>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {tenant && results.map(l => (
-              <ListingCard key={l.id} listing={l} tenant={tenant} onOpen={id => nav(`/listing/${id}`)} />
-            ))}
-          </div>
+          {results.length === 0 ? (
+            <div className="flex h-64 items-center justify-center rounded-card border border-line bg-white text-center text-coolgrey">
+              No matches — try adjusting your filters.
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {tenant && results.map(l => (
+                <ListingCard key={l.id} listing={l} tenant={tenant} onOpen={id => nav(`/listing/${id}`)} />
+              ))}
+            </div>
+          )}
         </div>
         <div className={`${showMapMobile ? 'block' : 'hidden'} lg:block`}>
           <div className="sticky top-6 h-[70vh] overflow-hidden rounded-card border border-line">

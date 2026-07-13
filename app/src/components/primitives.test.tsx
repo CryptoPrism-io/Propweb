@@ -14,7 +14,7 @@ describe('primitives', () => {
     render(<VerifiedBadge kind="owner" pending />);
     expect(screen.getByText(/pending/i)).toBeInTheDocument();
   });
-  it('TrustScoreToken renders the score and colors it by band', () => {
+  it('TrustScoreToken renders the numeric score', () => {
     render(<TrustScoreToken score={95} />);
     const el = screen.getByText('95');
     expect(el).toBeInTheDocument();

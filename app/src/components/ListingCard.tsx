@@ -42,7 +42,7 @@ export function ListingCard({
           {listing.verifiedOwner ? <VerifiedBadge kind="owner" /> : <span className="text-xs text-coolgrey">Unverified</span>}
           <span className="text-xs text-coolgrey">{listing.postedDaysAgo} days ago</span>
         </div>
-        <Button className="mt-4 w-full" onClick={() => onOpen?.(listing.id)}>View Details</Button>
+        <Button className="mt-4 w-full" onClick={(e) => { e.stopPropagation(); onOpen?.(listing.id); }}>View Details</Button>
       </div>
     </div>
   );

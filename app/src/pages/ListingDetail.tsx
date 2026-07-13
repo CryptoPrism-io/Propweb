@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MapPin, ArrowLeft } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
@@ -15,6 +15,15 @@ export default function ListingDetail() {
   const { listings, owners, tenant, loading } = useData();
   const [showConnect, setShowConnect] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
+
+  useEffect(() => {
+    if (!showConnect) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowConnect(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [showConnect]);
 
   if (loading) return <div className="p-8 text-coolgrey">Loading…</div>;
   const listing = listings.find(l => l.id === id);
@@ -74,7 +83,12 @@ export default function ListingDetail() {
 
       {showConnect && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-graphite/40 p-4" onClick={() => setShowConnect(false)}>
-          <div className="w-full max-w-sm rounded-card bg-white p-6 text-center shadow-card" onClick={e => e.stopPropagation()}>
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="w-full max-w-sm rounded-card bg-white p-6 text-center shadow-card"
+            onClick={e => e.stopPropagation()}
+          >
             <h3 className="text-lg font-bold">Pay to connect</h3>
             <p className="mt-1 text-sm text-coolgrey">Unlock this verified owner's contact for a small fee. (Mock — no real payment.)</p>
             <Button className="mt-4 w-full" onClick={() => setShowConnect(false)}>Pay ₹49 (mock)</Button>

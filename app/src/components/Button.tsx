@@ -5,7 +5,7 @@ export function Button({
 }: {
   variant?: 'primary' | 'secondary';
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   className?: string;
 }) {
   const styles =

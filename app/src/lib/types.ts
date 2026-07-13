@@ -26,7 +26,7 @@ export interface Listing {
 export interface Owner {
   id: string;
   name: string;
-  phone: string;           // real number; masked in UI
+  phone: string;           // DEMO-ONLY fictional number; never rendered (UI masks it). Do NOT put real numbers here — this file is served to the client.
   verified: boolean;
   verifiedItems: string[]; // e.g. ["Aadhaar", "PAN", "Ownership proof"]
   verifiedOn: string;      // ISO date
