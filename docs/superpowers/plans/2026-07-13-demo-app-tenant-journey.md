@@ -741,7 +741,7 @@ describe('ListingCard', () => {
   it('renders rent, locality, trust score, match %, and verified badge', () => {
     render(<ListingCard listing={listing} tenant={tenant} />);
     expect(screen.getByText(/35,000/)).toBeInTheDocument();
-    expect(screen.getByText(/Koramangala/)).toBeInTheDocument();
+    expect(screen.getByText('2BHK · Koramangala')).toBeInTheDocument();
     expect(screen.getByText('95')).toBeInTheDocument();
     expect(screen.getByText(/100% match/)).toBeInTheDocument();
     expect(screen.getByText(/Verified Owner/)).toBeInTheDocument();
