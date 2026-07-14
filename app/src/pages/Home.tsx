@@ -23,7 +23,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-graphite/70 via-graphite/40 to-graphite/25" />
         <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center">
           <h1 style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif", fontStyle: 'normal', fontWeight: 900, fontSize: '36px', lineHeight: '40px', color: '#FFFFFF' }}>
-            No Brokers,<br />
+            No Brokers.<br />
             No Fakes.
           </h1>
           {!searchOpen && (
@@ -40,10 +40,10 @@ export default function Home() {
       </section>
 
       <div className="mx-auto max-w-5xl px-5 py-8">
-        <div className="flex flex-wrap gap-4 rounded-[14px] bg-white px-[14px] py-[11px] text-xs font-bold text-graphite border border-line">
-          <span className="inline-flex items-center gap-1"><ShieldCheck size={17} className="text-blueharbor" /> Verified owners & tenants</span>
-          <span className="inline-flex items-center gap-1"><Prohibit size={17} className="text-blueharbor" /> No fake listings</span>
-          <span className="inline-flex items-center gap-1"><PhoneSlash size={17} className="text-blueharbor" /> No spam calls</span>
+        <div className="flex flex-wrap gap-[14px] rounded-[14px] border border-line bg-white px-[14px] py-[11px]">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><ShieldCheck size={17} weight="fill" className="text-blueharbor" /> Verified owners & tenants</span>
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><Prohibit size={17} weight="fill" className="text-blueharbor" /> No fake listings</span>
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><PhoneSlash size={17} weight="fill" className="text-blueharbor" /> No spam calls</span>
         </div>
 
         <h2 className="font-display mt-10 text-lg font-bold">Featured verified rentals</h2>
