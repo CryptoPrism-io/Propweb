@@ -1,4 +1,5 @@
-import { Ruler, Bed, Armchair } from '@phosphor-icons/react';
+import { useState } from 'react';
+import { Ruler, Bed, Armchair, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import type { Listing, Owner, TenantProfile } from '../lib/types';
 import { matchScore } from '../lib/matchScore';
 import { TrustScoreToken } from './TrustScoreToken';
@@ -13,22 +14,52 @@ export function ListingCard({
   listing, tenant, owner, onOpen,
 }: { listing: Listing; tenant: TenantProfile; owner?: Owner; onOpen?: (id: string) => void }) {
   const pct = matchScore(listing, tenant);
+  const photos = listing.photos;
+  const [active, setActive] = useState(0);
+  const step = (e: React.MouseEvent, dir: number) => {
+    e.stopPropagation();
+    setActive(a => (a + dir + photos.length) % photos.length);
+  };
+
   return (
     <div
       onClick={() => onOpen?.(listing.id)}
       className="cursor-pointer rounded-[20px] bg-white p-3 shadow-card"
     >
-      {/* photo */}
+      {/* photo carousel */}
       <div className="relative overflow-hidden rounded-2xl">
-        <img src={listing.photos[0]} alt={listing.title} className="h-44 w-full object-cover" />
+        <img src={photos[active]} alt={listing.title} className="h-44 w-full object-cover" />
         <div className="absolute left-3 top-3"><TrustScoreToken score={listing.trustScore} /></div>
         <div className="absolute right-3 top-3"><MatchChip percent={pct} /></div>
-        {listing.photos.length > 1 && (
-          <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1.5">
-            {listing.photos.slice(0, 5).map((_, i) => (
-              <span key={i} className={`h-1.5 rounded-full ${i === 0 ? 'w-4 bg-white' : 'w-1.5 bg-white/60'}`} />
-            ))}
-          </div>
+
+        {photos.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={e => step(e, -1)}
+              aria-label="Previous photo"
+              className="absolute left-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md"
+            >
+              <CaretLeft size={15} weight="bold" />
+            </button>
+            <button
+              type="button"
+              onClick={e => step(e, 1)}
+              aria-label="Next photo"
+              className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md"
+            >
+              <CaretRight size={15} weight="bold" />
+            </button>
+
+            <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/20 px-2 py-1 ring-1 ring-white/25 backdrop-blur-md">
+              {photos.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 rounded-full transition-all ${i === active ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
+                />
+              ))}
+            </div>
+          </>
         )}
       </div>
 
