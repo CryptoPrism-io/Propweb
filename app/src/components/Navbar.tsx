@@ -22,7 +22,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="border-b border-line bg-white">
+    <header className="bg-transparent">
       <div className="mx-auto grid max-w-5xl grid-cols-3 items-center px-4 py-3">
         {/* left: hamburger */}
         <div className="flex justify-start">
@@ -47,7 +47,7 @@ export function Navbar() {
         <div className="flex justify-end">
           <button
             type="button"
-            className="rounded-full border-[1.5px] border-blueharbor px-4 py-1.5 text-sm font-bold text-blueharbor"
+            className="rounded-lg border-[1.5px] border-blueharbor px-5 py-2 text-[15px] font-bold text-blueharbor"
           >
             Sign in
           </button>

@@ -18,7 +18,10 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-5xl px-5 py-8">
       <div className="rounded-card bg-white p-6 shadow-card border border-line">
-        <h1 className="font-display text-2xl font-extrabold">Rentals you can trust — no brokers, no fakes.</h1>
+        <h1 style={{ fontFamily: "'Object Sans', 'Manrope', system-ui, sans-serif", fontStyle: 'normal', fontWeight: 900, fontSize: '36px', lineHeight: '40px' }}>
+          Rentals you can trust.<br />
+          Verified owners, no brokers, no fakes.
+        </h1>
         <div className="mt-4 grid gap-3 sm:grid-cols-4">
           <select value={locality} onChange={e => setLocality(e.target.value)} className="rounded-lg border border-line px-3 py-2">
             {LOCALITIES.map(l => <option key={l}>{l}</option>)}
