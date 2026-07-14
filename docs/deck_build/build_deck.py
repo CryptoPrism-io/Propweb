@@ -3,13 +3,34 @@ adding the new Act 2 (+Market) slides and presenter notes per
 docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
+from deck_helpers import set_notes, get_slide_text
 
 SOURCE = 'source.pptx'
 OUTPUT = '../PropWeb_Pitch_v2.pptx'
 
+EXISTING_NOTES = {
+    'PROPWEB': "Open cold: this is the one-line pitch. Say it, don't read it — \"PropWeb is India's trust-first, AI-powered rental platform: verified owners meet verified tenants directly, no brokers, no fake listings, no spam calls.\" Pause after the tagline before moving to the problem slide — let the promise land before you justify it.",
+    'Renting in India is broken': "Walk both columns — don't just read the tenant side. The room already knows renting is broken; the point is naming both sides of the pain so the solution slide lands as a genuine two-sided fix, not a tenant-only app. If asked \"isn't this just NoBroker,\" hold that for the next slide.",
+    'The hidden cost is trust': "These four numbers carry the slide — let them breathe, don't rush to the NoBroker line. The NoBroker callout is the pre-emptive answer to \"hasn't this already been solved\" — say revenue and loss together, in the same breath: proof of demand, proof the trust layer is still broken.",
+    'A trust-first rental platform with an AI engine': "Six pillars, but only two are truly new to the room: Pay-to-Connect and the Trust Score — spend your time there. Verified badges and matchmaking are easy to nod along to; the pay-to-connect economics are what actually kills fake enquiries, so be ready to defend the fee-amount question.",
+    'From verified profile to matched move-in': "This is the natural hand-off to the live demo — after \"Connect,\" say \"and I can show you this right now\" and switch to the demo app. Have it already loaded to the Koramangala search before this slide so the transition has no dead air.",
+    'Problems no one in India solves well': "This slide is doing double duty as the moat argument, along with the closing slide — scam prevention, background checks and digital agreements are what a trust-first platform can sell that a lead-selling portal structurally can't retrofit. If a CEO asks \"why can't NoBroker just copy this,\" point back here.",
+    'Two engines: connect today, services tomorrow': "Two engines, two timeframes — be explicit that \"today\" funds the company and \"tomorrow\" is where the real upside is, using NoBroker's own ~50% non-listing mix as the proof point. Don't let this slide turn into a pricing negotiation; final pricing is explicitly TBD with the CEOs.",
+    'Existing portals sell leads': "This is the mic-drop — deliver the two lines slowly, then stop talking. Let \"Existing portals sell leads. PropWeb sells trust.\" sit before you open the floor. If the ask & close slide raised a decision, circle back to it once more before Q&A.",
+}
+
+
+def add_notes_to_existing_slides(prs):
+    for marker, note in EXISTING_NOTES.items():
+        for slide in prs.slides:
+            if marker in get_slide_text(slide):
+                set_notes(slide, note)
+                break
+
 
 def build():
     prs = Presentation(SOURCE)
+    add_notes_to_existing_slides(prs)
     prs.save(OUTPUT)
 
 
