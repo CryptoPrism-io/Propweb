@@ -87,12 +87,13 @@ export default function ListingDetail() {
           </div>
 
           <h3 className="mt-6 font-bold">Amenities</h3>
-          <div className="mt-2 flex flex-wrap gap-2 text-sm text-graphite">
-            {listing.amenities.map(a => {
+          <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold text-graphite">
+            {listing.amenities.map((a, i) => {
               const Icon = AMENITY_ICON[a] ?? CheckCircle;
               return (
-                <span key={a} className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 font-semibold">
-                  <Icon size={16} className="text-blueharbor" /> {a}
+                <span key={a} className="inline-flex items-center gap-1.5">
+                  {i > 0 && <span className="text-line">|</span>}
+                  <Icon size={18} weight="duotone" className="text-blueharbor" /> {a}
                 </span>
               );
             })}
@@ -103,11 +104,10 @@ export default function ListingDetail() {
         </div>
 
         <div className="lg:sticky lg:top-6 h-fit rounded-card border border-line bg-white p-5 shadow-card">
-          <div className="mb-3 font-display text-base font-extrabold">Contact owner</div>
-          <div className="font-semibold">{owner?.name}</div>
-          <div className="mt-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold">{owner?.name}</span>
             {listing.verifiedOwner ? (
-              <button type="button" onClick={() => setExplainer('verified')} aria-label="What was verified" className="appearance-none bg-transparent border-0 p-0 cursor-pointer">
+              <button type="button" onClick={() => setExplainer('verified')} aria-label="What was verified" className="cursor-pointer appearance-none border-0 bg-transparent p-0">
                 <VerifiedBadge kind="owner" />
               </button>
             ) : (
