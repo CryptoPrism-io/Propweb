@@ -1,6 +1,6 @@
 export function MatchChip({ percent }: { percent: number }) {
   return (
-    <span className="inline-flex items-center rounded-full bg-iceblue px-2.5 py-1 text-xs font-semibold text-graphite">
+    <span className="inline-flex items-center rounded-full bg-iceblue text-graphite px-[11px] py-[5px] text-xs font-bold">
       {percent}% match
     </span>
   );

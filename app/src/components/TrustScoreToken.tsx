@@ -5,7 +5,7 @@ import { ShieldCheck } from '@phosphor-icons/react';
 export function TrustScoreToken({ score }: { score: number }) {
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold"
+      className="inline-flex items-center gap-1 rounded-full px-[10px] py-[5px] text-[13px] font-extrabold"
       style={{ backgroundColor: trustColor(score), color: trustTextColor(score) }}
       title="Trust Score"
     >

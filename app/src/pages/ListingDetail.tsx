@@ -71,7 +71,7 @@ export default function ListingDetail() {
           <div className="flex items-center gap-1 text-sm text-coolgrey"><MapPin size={14} /> {listing.address}</div>
 
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" onClick={() => setExplainer('trust')} aria-label="Explain Trust Score">
+            <button type="button" onClick={() => setExplainer('trust')} aria-label="Explain Trust Score" className="appearance-none bg-transparent border-0 p-0 cursor-pointer">
               <TrustScoreToken score={listing.trustScore} />
             </button>
             <MatchChip percent={matchScore(listing, tenant)} />
@@ -90,7 +90,7 @@ export default function ListingDetail() {
           <div className="font-semibold">{owner?.name}</div>
           <div className="mt-1">
             {listing.verifiedOwner ? (
-              <button type="button" onClick={() => setExplainer('verified')} aria-label="What was verified">
+              <button type="button" onClick={() => setExplainer('verified')} aria-label="What was verified" className="appearance-none bg-transparent border-0 p-0 cursor-pointer">
                 <VerifiedBadge kind="owner" />
               </button>
             ) : (

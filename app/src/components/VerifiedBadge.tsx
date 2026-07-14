@@ -6,14 +6,14 @@ export function VerifiedBadge({
   const label = kind === 'owner' ? 'Verified Owner' : 'Verified Tenant';
   if (pending) {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full border border-amber px-2.5 py-1 text-xs font-semibold text-amber">
+      <span className="inline-flex items-center gap-1 rounded-full border-[1.5px] border-amber px-[11px] py-[5px] text-xs font-bold text-amber">
         <SealCheck size={16} weight="fill" /> Verification pending
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-limeglow px-2.5 py-1 text-xs font-semibold text-graphite">
-      <SealCheck size={16} weight="fill" color="#1B1E23" /> {label}
+    <span className="inline-flex items-center gap-1 rounded-full bg-limeglow px-[11px] py-[5px] text-xs font-bold text-graphite">
+      <SealCheck size={16} weight="fill" /> {label}
     </span>
   );
 }

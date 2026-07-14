@@ -43,10 +43,10 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-4 rounded-card bg-moontint p-4 text-sm font-semibold text-graphite border border-line">
-        <span className="inline-flex items-center gap-1"><ShieldCheck size={18} /> Verified owners & tenants</span>
-        <span className="inline-flex items-center gap-1"><Prohibit size={18} /> No fake listings</span>
-        <span className="inline-flex items-center gap-1"><PhoneSlash size={18} /> No spam calls</span>
+      <div className="mt-4 flex flex-wrap gap-4 rounded-[14px] bg-white px-[14px] py-[11px] text-xs font-bold text-graphite border border-line">
+        <span className="inline-flex items-center gap-1"><ShieldCheck size={17} className="text-blueharbor" /> Verified owners & tenants</span>
+        <span className="inline-flex items-center gap-1"><Prohibit size={17} className="text-blueharbor" /> No fake listings</span>
+        <span className="inline-flex items-center gap-1"><PhoneSlash size={17} className="text-blueharbor" /> No spam calls</span>
       </div>
 
       <h2 className="font-display mt-10 text-lg font-bold">Featured verified rentals</h2>
