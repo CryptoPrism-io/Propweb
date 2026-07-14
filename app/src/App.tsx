@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
 import Home from './pages/Home';
 import Results from './pages/Results';
 import ListingDetail from './pages/ListingDetail';
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/owner/new" element={<OwnerWizard />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

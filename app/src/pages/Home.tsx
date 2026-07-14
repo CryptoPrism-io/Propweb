@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div>
       {/* full-bleed hero — image reaches the top of the page, under the transparent navbar */}
-      <section className="relative -mt-16 overflow-hidden rounded-b-3xl">
+      <section className="relative -mt-16 overflow-hidden rounded-b-2xl">
         <img
           src="/Hero%20Image.jpg"
           alt=""
@@ -40,9 +40,9 @@ export default function Home() {
       </section>
 
       <div className="mx-auto max-w-5xl px-5 py-8">
-        <div className="flex flex-wrap gap-[14px] rounded-[14px] border border-line bg-white px-[14px] py-[11px]">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><ShieldCheck size={17} weight="fill" className="text-blueharbor" /> Verified owners & tenants</span>
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><Prohibit size={17} weight="fill" className="text-blueharbor" /> No fake listings</span>
+        <div className="flex flex-nowrap items-center justify-between rounded-[14px] border border-line bg-white px-[14px] py-[11px]">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><ShieldCheck size={17} weight="fill" className="text-blueharbor" /> Verified only</span>
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><Prohibit size={17} weight="fill" className="text-blueharbor" /> No fakes</span>
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><PhoneSlash size={17} weight="fill" className="text-blueharbor" /> No spam calls</span>
         </div>
 
