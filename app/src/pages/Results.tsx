@@ -15,10 +15,12 @@ export default function Results() {
   const locality = params.get('locality') || undefined;
   const bhk = params.get('bhk') ? Number(params.get('bhk')) : undefined;
   const maxRent = params.get('maxRent') ? Number(params.get('maxRent')) : undefined;
+  const furnishing = params.get('furnishing') || undefined;
+  const tenantType = params.get('tenantType') || undefined;
 
   const results = useMemo(
-    () => filterListings(listings, { locality, bhk, maxRent }),
-    [listings, locality, bhk, maxRent],
+    () => filterListings(listings, { locality, bhk, maxRent, furnishing, tenantType }),
+    [listings, locality, bhk, maxRent, furnishing, tenantType],
   );
 
   return (

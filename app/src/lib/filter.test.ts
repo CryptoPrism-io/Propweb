@@ -22,4 +22,12 @@ describe('filterListings', () => {
   it('filters by maxRent', () => {
     expect(filterListings(data, { maxRent: 35000 }).map(l => l.id)).toEqual(['a', 'b']);
   });
+  it('filters by furnishing', () => {
+    const d = [mk({ id: 'a', furnishing: 'semi' }), mk({ id: 'b', furnishing: 'furnished' })];
+    expect(filterListings(d, { furnishing: 'furnished' }).map(l => l.id)).toEqual(['b']);
+  });
+  it('filters by tenantType', () => {
+    const d = [mk({ id: 'a', tenantType: 'family' }), mk({ id: 'b', tenantType: 'bachelor' })];
+    expect(filterListings(d, { tenantType: 'bachelor' }).map(l => l.id)).toEqual(['b']);
+  });
 });
