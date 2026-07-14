@@ -16,7 +16,7 @@ export default function Home() {
       {/* full-bleed hero — image reaches the top of the page, under the transparent navbar */}
       <section className="relative -mt-16 overflow-hidden rounded-b-3xl">
         <img
-          src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80"
+          src="/Hero%20Image.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
