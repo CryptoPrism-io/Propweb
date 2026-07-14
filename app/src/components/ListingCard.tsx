@@ -1,9 +1,13 @@
-import { MapPin, Ruler, Bed } from '@phosphor-icons/react';
+import { Ruler, Bed, Armchair } from '@phosphor-icons/react';
 import type { Listing, Owner, TenantProfile } from '../lib/types';
 import { matchScore } from '../lib/matchScore';
 import { TrustScoreToken } from './TrustScoreToken';
 import { MatchChip } from './MatchChip';
 import { VerifiedBadge } from './VerifiedBadge';
+
+const FURNISH_LABEL: Record<Listing['furnishing'], string> = {
+  unfurnished: 'Unfurnished', semi: 'Semi-furnished', furnished: 'Furnished',
+};
 
 export function ListingCard({
   listing, tenant, owner, onOpen,
@@ -31,24 +35,19 @@ export function ListingCard({
       {/* content */}
       <div className="px-1 pt-3">
         <div className="flex items-baseline gap-1">
-          <span className="text-xl font-extrabold">₹{listing.rent.toLocaleString('en-IN')}</span>
+          <span className="text-2xl font-extrabold">₹{listing.rent.toLocaleString('en-IN')}</span>
           <span className="text-sm text-coolgrey">/month</span>
         </div>
         <div className="mt-1 font-bold">{listing.bhk}BHK · {listing.locality}</div>
-        <div className="mt-0.5 flex items-center gap-1 text-sm text-coolgrey">
-          <MapPin size={14} /> {listing.address}
-        </div>
+        <div className="mt-0.5 text-sm text-coolgrey">{listing.address}</div>
 
-        {/* feature chips */}
-        <div className="mt-3 flex gap-2">
-          <span className="inline-flex items-center gap-2 rounded-xl border border-line px-3 py-2 text-sm font-semibold">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-line"><Ruler size={14} /></span>
-            {listing.areaSqft} sq.ft
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-xl border border-line px-3 py-2 text-sm font-semibold">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-line"><Bed size={14} /></span>
-            {listing.bhk} BHK
-          </span>
+        {/* features — flat, pipe-separated, monotone icons */}
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] font-semibold text-graphite">
+          <span className="inline-flex items-center gap-1"><Ruler size={15} className="text-coolgrey" /> {listing.areaSqft} sq.ft</span>
+          <span className="text-line">|</span>
+          <span className="inline-flex items-center gap-1"><Bed size={15} className="text-coolgrey" /> {listing.bhk} BHK</span>
+          <span className="text-line">|</span>
+          <span className="inline-flex items-center gap-1"><Armchair size={15} className="text-coolgrey" /> {FURNISH_LABEL[listing.furnishing]}</span>
         </div>
 
         {/* owner + verified + posted */}
@@ -59,10 +58,10 @@ export function ListingCard({
           <span className="ml-auto text-xs text-coolgrey">{listing.postedDaysAgo} days ago</span>
         </div>
 
-        {/* view details (dark, per reference) */}
+        {/* view details — vertical gradient, brand palette */}
         <button
           onClick={(e) => { e.stopPropagation(); onOpen?.(listing.id); }}
-          className="mt-4 w-full rounded-full bg-graphite py-3 text-sm font-bold text-white"
+          className="mt-4 w-full rounded-full bg-gradient-to-b from-[#5B93E6] to-blueharbor py-3 text-sm font-bold text-white"
         >
           View Details
         </button>
