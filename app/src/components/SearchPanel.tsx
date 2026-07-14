@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { X, MagnifyingGlass, CaretDown } from '@phosphor-icons/react';
+import { X, MagnifyingGlass } from '@phosphor-icons/react';
+import { Select } from './Select';
 
 const LOCALITIES = ['Koramangala', 'HSR Layout', 'Indiranagar', 'Whitefield', 'JP Nagar'];
 const BHKS = ['1', '2', '3', '3+'];
@@ -72,16 +73,12 @@ export function SearchPanel({ onClose, initial }: { onClose: () => void; initial
       >
         <div>
           <label className="mb-2 block text-sm font-bold">Location</label>
-          <div className="relative">
-            <select
-              value={locality}
-              onChange={e => setLocality(e.target.value)}
-              className="w-full appearance-none rounded-2xl border border-line bg-white px-4 py-3.5 text-sm font-semibold text-graphite outline-none focus:border-blueharbor"
-            >
-              {LOCALITIES.map(l => <option key={l}>{l}</option>)}
-            </select>
-            <CaretDown size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-coolgrey" />
-          </div>
+          <Select
+            value={locality}
+            onChange={setLocality}
+            options={LOCALITIES.map(l => ({ v: l, l }))}
+            ariaLabel="Location"
+          />
         </div>
 
         <div>

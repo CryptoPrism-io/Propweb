@@ -7,6 +7,11 @@ function renderWizard() {
   return render(<MemoryRouter><OwnerWizard /></MemoryRouter>);
 }
 
+function chooseOption(combobox: HTMLElement, optionName: string) {
+  fireEvent.click(combobox);
+  fireEvent.click(screen.getByRole('option', { name: optionName }));
+}
+
 describe('OwnerWizard', () => {
   it('starts on the Details step', () => {
     renderWizard();
@@ -17,10 +22,10 @@ describe('OwnerWizard', () => {
     renderWizard();
     // selects: [0]=BHK, [1]=Locality, [2]=Furnishing, [3]=Preferred tenant
     const selects = screen.getAllByRole('combobox');
-    fireEvent.change(selects[0], { target: { value: '2' } });
-    fireEvent.change(selects[1], { target: { value: 'Koramangala' } });
-    fireEvent.change(selects[2], { target: { value: 'semi' } });
-    fireEvent.change(selects[3], { target: { value: 'family' } });
+    chooseOption(selects[0], '2 BHK');
+    chooseOption(selects[1], 'Koramangala');
+    chooseOption(selects[2], 'Semi-furnished');
+    chooseOption(selects[3], 'Family');
     fireEvent.change(screen.getByPlaceholderText('35000'), { target: { value: '35000' } });
     fireEvent.change(screen.getByPlaceholderText('1100'), { target: { value: '1100' } });
     fireEvent.click(screen.getByText(/Next/));
@@ -30,10 +35,10 @@ describe('OwnerWizard', () => {
   it('publishes and flips to Verified Owner', () => {
     const { container } = renderWizard();
     const selects = screen.getAllByRole('combobox');
-    fireEvent.change(selects[0], { target: { value: '2' } });
-    fireEvent.change(selects[1], { target: { value: 'Koramangala' } });
-    fireEvent.change(selects[2], { target: { value: 'semi' } });
-    fireEvent.change(selects[3], { target: { value: 'family' } });
+    chooseOption(selects[0], '2 BHK');
+    chooseOption(selects[1], 'Koramangala');
+    chooseOption(selects[2], 'Semi-furnished');
+    chooseOption(selects[3], 'Family');
     fireEvent.change(screen.getByPlaceholderText('35000'), { target: { value: '35000' } });
     fireEvent.change(screen.getByPlaceholderText('1100'), { target: { value: '1100' } });
     fireEvent.click(screen.getByText(/Next/));            // -> Photos

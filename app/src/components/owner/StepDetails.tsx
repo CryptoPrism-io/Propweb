@@ -1,4 +1,5 @@
 import type { ListingDraft } from '../../lib/ownerDraft';
+import { Select } from '../Select';
 
 const LOCALITIES = ['Koramangala', 'HSR Layout', 'Indiranagar', 'Whitefield', 'JP Nagar'];
 const label = 'block text-sm font-semibold mb-1';
@@ -13,17 +14,23 @@ export function StepDetails({ draft, set }: { draft: ListingDraft; set: (patch: 
       </div>
       <div>
         <label className={label}>BHK</label>
-        <select className={field} value={draft.bhk || ''} onChange={e => set({ bhk: Number(e.target.value) })}>
-          <option value="">Select</option>
-          {[1, 2, 3].map(b => <option key={b} value={b}>{b} BHK</option>)}
-        </select>
+        <Select
+          compact
+          value={draft.bhk ? String(draft.bhk) : ''}
+          onChange={v => set({ bhk: Number(v) })}
+          options={[{ v: '', l: 'Select' }, ...[1, 2, 3].map(b => ({ v: String(b), l: `${b} BHK` }))]}
+          ariaLabel="BHK"
+        />
       </div>
       <div>
         <label className={label}>Locality</label>
-        <select className={field} value={draft.locality} onChange={e => set({ locality: e.target.value })}>
-          <option value="">Select</option>
-          {LOCALITIES.map(l => <option key={l}>{l}</option>)}
-        </select>
+        <Select
+          compact
+          value={draft.locality}
+          onChange={v => set({ locality: v })}
+          options={[{ v: '', l: 'Select' }, ...LOCALITIES.map(l => ({ v: l, l }))]}
+          ariaLabel="Locality"
+        />
       </div>
       <div>
         <label className={label}>Monthly rent (₹)</label>
@@ -39,21 +46,33 @@ export function StepDetails({ draft, set }: { draft: ListingDraft; set: (patch: 
       </div>
       <div>
         <label className={label}>Furnishing</label>
-        <select className={field} value={draft.furnishing} onChange={e => set({ furnishing: e.target.value as ListingDraft['furnishing'] })}>
-          <option value="">Select</option>
-          <option value="unfurnished">Unfurnished</option>
-          <option value="semi">Semi-furnished</option>
-          <option value="furnished">Furnished</option>
-        </select>
+        <Select
+          compact
+          value={draft.furnishing}
+          onChange={v => set({ furnishing: v as ListingDraft['furnishing'] })}
+          options={[
+            { v: '', l: 'Select' },
+            { v: 'unfurnished', l: 'Unfurnished' },
+            { v: 'semi', l: 'Semi-furnished' },
+            { v: 'furnished', l: 'Furnished' },
+          ]}
+          ariaLabel="Furnishing"
+        />
       </div>
       <div className="sm:col-span-2">
         <label className={label}>Preferred tenant</label>
-        <select className={field} value={draft.tenantType} onChange={e => set({ tenantType: e.target.value as ListingDraft['tenantType'] })}>
-          <option value="">Select</option>
-          <option value="family">Family</option>
-          <option value="bachelor">Bachelor</option>
-          <option value="any">Any</option>
-        </select>
+        <Select
+          compact
+          value={draft.tenantType}
+          onChange={v => set({ tenantType: v as ListingDraft['tenantType'] })}
+          options={[
+            { v: '', l: 'Select' },
+            { v: 'family', l: 'Family' },
+            { v: 'bachelor', l: 'Bachelor' },
+            { v: 'any', l: 'Any' },
+          ]}
+          ariaLabel="Preferred tenant"
+        />
       </div>
     </div>
   );

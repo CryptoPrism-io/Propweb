@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { Rows, MapTrifold, MagnifyingGlass, CaretDown } from '@phosphor-icons/react';
+import { Rows, MapTrifold, MagnifyingGlass } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { filterListings } from '../lib/filter';
 import { ListingCard } from '../components/ListingCard';
 import { MapView } from '../components/MapView';
 import { SearchPanel } from '../components/SearchPanel';
+import { Select } from '../components/Select';
 
 const BHK_OPTS = [{ v: '', l: 'Any BHK' }, { v: '1', l: '1 BHK' }, { v: '2', l: '2 BHK' }, { v: '3', l: '3 BHK' }, { v: '3+', l: '3+ BHK' }];
 const BUDGET_OPTS = [{ v: '', l: 'Any budget' }, { v: '20000', l: '≤ ₹20k' }, { v: '35000', l: '≤ ₹35k' }, { v: '50000', l: '≤ ₹50k' }, { v: '85000', l: '≤ ₹85k' }];
@@ -14,18 +15,7 @@ const FURN_OPTS = [{ v: '', l: 'Any furnishing' }, { v: 'unfurnished', l: 'Unfur
 const TEN_OPTS = [{ v: '', l: 'Any tenant' }, { v: 'family', l: 'Family' }, { v: 'bachelor', l: 'Bachelor' }];
 
 function ChipSelect({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: { v: string; l: string }[] }) {
-  return (
-    <div className="relative">
-      <select
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className="appearance-none rounded-full border border-line bg-white py-1.5 pl-3 pr-8 text-sm font-semibold text-graphite outline-none"
-      >
-        {options.map(o => <option key={o.l} value={o.v}>{o.l}</option>)}
-      </select>
-      <CaretDown size={14} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-coolgrey" />
-    </div>
-  );
+  return <Select variant="pill" value={value} onChange={onChange} options={options} active={value !== ''} />;
 }
 
 export default function Results() {
