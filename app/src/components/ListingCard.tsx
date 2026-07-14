@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Ruler, Bed, Armchair, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import type { Listing, Owner, TenantProfile } from '../lib/types';
 import { matchScore } from '../lib/matchScore';
@@ -20,6 +20,15 @@ export function ListingCard({
     e.stopPropagation();
     setActive(a => (a + dir + photos.length) % photos.length);
   };
+  // swipe (mobile)
+  const startX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (startX.current === null || photos.length < 2) return;
+    const dx = e.changedTouches[0].clientX - startX.current;
+    if (Math.abs(dx) > 40) setActive(a => (a + (dx < 0 ? 1 : -1) + photos.length) % photos.length);
+    startX.current = null;
+  };
 
   return (
     <div
@@ -27,7 +36,7 @@ export function ListingCard({
       className="cursor-pointer rounded-[20px] bg-white p-3 shadow-card"
     >
       {/* photo carousel */}
-      <div className="relative overflow-hidden rounded-2xl">
+      <div className="relative overflow-hidden rounded-2xl" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <img src={photos[active]} alt={listing.title} className="h-44 w-full object-cover" />
         <div className="absolute left-3 top-3"><TrustScoreToken score={listing.trustScore} /></div>
         <div className="absolute right-3 top-3"><MatchChip percent={pct} /></div>
@@ -38,7 +47,7 @@ export function ListingCard({
               type="button"
               onClick={e => step(e, -1)}
               aria-label="Previous photo"
-              className="absolute left-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md"
+              className="absolute left-2 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md lg:flex"
             >
               <CaretLeft size={15} weight="bold" />
             </button>
@@ -46,7 +55,7 @@ export function ListingCard({
               type="button"
               onClick={e => step(e, 1)}
               aria-label="Next photo"
-              className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md"
+              className="absolute right-2 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md lg:flex"
             >
               <CaretRight size={15} weight="bold" />
             </button>

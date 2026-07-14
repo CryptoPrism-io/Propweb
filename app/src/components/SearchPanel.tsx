@@ -20,13 +20,15 @@ const TENANTS = [
 const chip = (active: boolean) =>
   `rounded-full border px-4 py-2 text-sm font-semibold transition ${active ? 'border-blueharbor bg-blueharbor text-white' : 'border-line bg-white text-graphite'}`;
 
-export function SearchPanel({ onClose }: { onClose: () => void }) {
+type Initial = { locality?: string; bhk?: string; maxRent?: string; furnishing?: string; tenantType?: string };
+
+export function SearchPanel({ onClose, initial }: { onClose: () => void; initial?: Initial }) {
   const nav = useNavigate();
-  const [locality, setLocality] = useState('Koramangala');
-  const [bhk, setBhk] = useState('2');
-  const [maxRent, setMaxRent] = useState('35000');
-  const [furnishing, setFurnishing] = useState('');
-  const [tenantType, setTenantType] = useState('');
+  const [locality, setLocality] = useState(initial?.locality ?? 'Koramangala');
+  const [bhk, setBhk] = useState(initial?.bhk ?? '2');
+  const [maxRent, setMaxRent] = useState(initial?.maxRent ?? '35000');
+  const [furnishing, setFurnishing] = useState(initial?.furnishing ?? '');
+  const [tenantType, setTenantType] = useState(initial?.tenantType ?? '');
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };

@@ -1,16 +1,23 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Rows, MapTrifold } from '@phosphor-icons/react';
+import { AnimatePresence } from 'framer-motion';
+import { Rows, MapTrifold, MagnifyingGlass } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { filterListings } from '../lib/filter';
 import { ListingCard } from '../components/ListingCard';
 import { MapView } from '../components/MapView';
+import { SearchPanel } from '../components/SearchPanel';
+
+const FURN_LABEL: Record<string, string> = { unfurnished: 'Unfurnished', semi: 'Semi-furnished', furnished: 'Furnished' };
+const TEN_LABEL: Record<string, string> = { family: 'Family', bachelor: 'Bachelor' };
+const chipCls = 'inline-flex items-center gap-1 rounded-full border border-line bg-white px-3 py-1.5 text-sm font-semibold';
 
 export default function Results() {
   const { listings, owners, tenant } = useData();
   const [params] = useSearchParams();
   const nav = useNavigate();
   const [showMapMobile, setShowMapMobile] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const locality = params.get('locality') || undefined;
   const bhkParam = params.get('bhk') || undefined;
@@ -27,7 +34,23 @@ export default function Results() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
-      <div className="mb-4 flex items-center justify-between">
+      {/* editable search + active filters */}
+      <button
+        onClick={() => setSearchOpen(true)}
+        className="flex w-full items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 shadow-card"
+      >
+        <MagnifyingGlass size={20} className="text-coolgrey" />
+        <span className="flex-1 text-left text-sm font-semibold text-graphite">{locality ?? 'All Bengaluru'}</span>
+        <span className="text-sm font-bold text-blueharbor">Edit</span>
+      </button>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {bhkParam && <button className={chipCls} onClick={() => setSearchOpen(true)}>{bhkParam} BHK</button>}
+        {maxRent && <button className={chipCls} onClick={() => setSearchOpen(true)}>≤ ₹{maxRent.toLocaleString('en-IN')}</button>}
+        {furnishing && <button className={chipCls} onClick={() => setSearchOpen(true)}>{FURN_LABEL[furnishing] ?? furnishing}</button>}
+        {tenantType && <button className={chipCls} onClick={() => setSearchOpen(true)}>{TEN_LABEL[tenantType] ?? tenantType}</button>}
+      </div>
+
+      <div className="mb-4 mt-5 flex items-center justify-between">
         <h1 className="text-lg font-bold">{results.length} rentals{locality ? ` in ${locality}` : ''}</h1>
         <button onClick={() => setShowMapMobile(v => !v)} className="inline-flex items-center gap-1 rounded-full border border-line px-3 py-1.5 text-sm font-semibold lg:hidden">
           {showMapMobile ? <><Rows size={16} /> List</> : <><MapTrifold size={16} /> Map</>}
@@ -54,6 +77,16 @@ export default function Results() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {searchOpen && (
+          <SearchPanel
+            key="results-search"
+            onClose={() => setSearchOpen(false)}
+            initial={{ locality, bhk: bhkParam, maxRent: maxRent ? String(maxRent) : undefined, furnishing, tenantType }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
