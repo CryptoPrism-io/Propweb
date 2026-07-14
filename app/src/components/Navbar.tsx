@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { List, X, House, CaretRight } from '@phosphor-icons/react';
 
 const MENU = [
@@ -13,6 +13,7 @@ const MENU = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const onHero = useLocation().pathname === '/';
 
   useEffect(() => {
     if (!open) return;
@@ -22,15 +23,15 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="bg-transparent">
-      <div className="mx-auto grid max-w-5xl grid-cols-3 items-center px-4 py-3">
+    <header className="absolute inset-x-0 top-0 z-30 bg-transparent">
+      <div className="mx-auto grid h-16 max-w-5xl grid-cols-3 items-center px-4">
         {/* left: hamburger */}
         <div className="flex justify-start">
           <button
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line text-graphite"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border ${onHero ? 'border-white/50 text-white' : 'border-line text-graphite'}`}
           >
             <List size={20} />
           </button>
@@ -38,8 +39,8 @@ export function Navbar() {
 
         {/* center: logo */}
         <div className="flex justify-center">
-          <Link to="/" className="font-display text-xl font-extrabold tracking-wide text-graphite">
-            PROP<span className="text-blueharbor">WEB</span>
+          <Link to="/" className={`font-display text-xl font-extrabold tracking-wide ${onHero ? 'text-white' : 'text-graphite'}`}>
+            PROP<span className={onHero ? 'text-iceblue' : 'text-blueharbor'}>WEB</span>
           </Link>
         </div>
 
@@ -47,7 +48,7 @@ export function Navbar() {
         <div className="flex justify-end">
           <button
             type="button"
-            className="rounded-lg border-[1.5px] border-blueharbor px-5 py-2 text-[15px] font-bold text-blueharbor"
+            className={`rounded-lg border-[1.5px] px-5 py-2 text-[15px] font-bold ${onHero ? 'border-white/70 text-white' : 'border-blueharbor text-blueharbor'}`}
           >
             Sign in
           </button>
