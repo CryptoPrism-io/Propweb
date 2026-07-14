@@ -7,7 +7,7 @@ import { ListingCard } from '../components/ListingCard';
 import { SearchPanel } from '../components/SearchPanel';
 
 export default function Home() {
-  const { listings, tenant } = useData();
+  const { listings, owners, tenant } = useData();
   const nav = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -49,7 +49,7 @@ export default function Home() {
         <h2 className="font-display mt-10 text-lg font-bold">Featured verified rentals</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tenant && listings.slice(0, 3).map(l => (
-            <ListingCard key={l.id} listing={l} tenant={tenant} onOpen={id => nav(`/listing/${id}`)} />
+            <ListingCard key={l.id} listing={l} tenant={tenant} owner={owners.find(o => o.id === l.ownerId)} onOpen={id => nav(`/listing/${id}`)} />
           ))}
         </div>
       </div>

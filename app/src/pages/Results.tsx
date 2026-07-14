@@ -7,7 +7,7 @@ import { ListingCard } from '../components/ListingCard';
 import { MapView } from '../components/MapView';
 
 export default function Results() {
-  const { listings, tenant } = useData();
+  const { listings, owners, tenant } = useData();
   const [params] = useSearchParams();
   const nav = useNavigate();
   const [showMapMobile, setShowMapMobile] = useState(false);
@@ -43,7 +43,7 @@ export default function Results() {
           ) : (
             <div className="grid gap-4 sm:grid-cols-2">
               {tenant && results.map(l => (
-                <ListingCard key={l.id} listing={l} tenant={tenant} onOpen={id => nav(`/listing/${id}`)} />
+                <ListingCard key={l.id} listing={l} tenant={tenant} owner={owners.find(o => o.id === l.ownerId)} onOpen={id => nav(`/listing/${id}`)} />
               ))}
             </div>
           )}
