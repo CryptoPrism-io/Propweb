@@ -7,6 +7,7 @@ from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.oxml.ns import qn
+from lxml import etree
 
 COLORS = {
     'teal': '0E6E5C',
@@ -71,9 +72,27 @@ def add_card(slide, x, y, cx, cy, fill='sand', border='sand_line', adj_raw=6061,
     shape.line.color.rgb = hex_color(border)
     shape.line.width = Emu(border_w_emu)
     shape.shadow.inherit = False
-    gd = shape._element.spPr.find(qn('a:prstGeom')).find(qn('a:avLst')).find(qn('a:gd'))
+    avLst = shape._element.spPr.find(qn('a:prstGeom')).find(qn('a:avLst'))
+    gd = avLst.find(qn('a:gd'))
+    if gd is None:
+        gd = etree.SubElement(avLst, qn('a:gd'))
+        gd.set('name', 'adj')
     gd.set('fmla', f'val {adj_raw}')
     return shape
+
+
+def add_stat_row(slide, stats, y=2103120, height=2377440):
+    n = len(stats)
+    margin = 640080
+    gap = 209832
+    card_w = (12192000 - 2 * margin - gap * (n - 1)) // n
+    for i, s in enumerate(stats):
+        x = margin + i * (card_w + gap)
+        add_card(slide, x, y, card_w, height, fill='sand', border='sand_line', adj_raw=3077)
+        add_textbox(slide, x, y + 274320, card_w, 868680, s['number'],
+                    size_pt=36, bold=True, color='teal', align='ctr')
+        add_textbox(slide, x + 182880, y + 1188720, card_w - 365760, 1051560, s['label'],
+                    size_pt=12.5, color='grey', align='ctr', anchor='top')
 
 
 def set_dark_background(slide):

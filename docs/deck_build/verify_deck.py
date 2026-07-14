@@ -30,7 +30,7 @@ def check_task1():
     check(i == 0, 'source.pptx slide 1 contains PROPWEB title')
 
     out = Presentation(OUTPUT)
-    check(len(out.slides) == 9, 'output still has 9 slides (no new slides added yet)')
+    check(len(out.slides) >= 9, 'output has at least the 9 source slides')
 
 
 EXISTING_NOTES = {
@@ -55,7 +55,17 @@ def check_task2():
         check(notes == expected_note, f'slide {marker!r} note text matches exactly')
 
 
-CHECKS = [check_task1, check_task2]
+def check_task3():
+    prs = Presentation(OUTPUT)
+    i, slide = find_slide_by_text(prs, 'A large market with an unsolved trust gap')
+    check(slide is not None, 'Market opportunity slide exists')
+    text = get_slide_text(slide)
+    for expected in ('THE OPPORTUNITY', '1.3–1.7B', '12–19%', '$20B', 'Bengaluru', '803 Cr'):
+        check(expected in text, f'Market slide contains {expected!r}')
+    check(len(get_notes_text(slide)) > 80, 'Market slide has presenter notes')
+
+
+CHECKS = [check_task1, check_task2, check_task3]
 
 if __name__ == '__main__':
     for fn in CHECKS:

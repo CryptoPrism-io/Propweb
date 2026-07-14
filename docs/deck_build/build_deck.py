@@ -3,7 +3,7 @@ adding the new Act 2 (+Market) slides and presenter notes per
 docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
-from deck_helpers import set_notes, get_slide_text
+from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, set_notes, get_slide_text
 
 SOURCE = 'source.pptx'
 OUTPUT = '../PropWeb_Pitch_v2.pptx'
@@ -19,6 +19,29 @@ EXISTING_NOTES = {
     'Existing portals sell leads': "This is the mic-drop — deliver the two lines slowly, then stop talking. Let \"Existing portals sell leads. PropWeb sells trust.\" sit before you open the floor. If the ask & close slide raised a decision, circle back to it once more before Q&A.",
 }
 
+MARKET_NOTES = ("This slide exists to pre-empt the \"is this market even big enough\" question before it's asked — "
+                "lead with the CAGR, not the dollar figure; growth rate is the more persuasive number in the room. "
+                "Bengaluru isn't arbitrary: name the three reasons (rental velocity, brokerage pain, digital readiness) "
+                "so it reads as a decision, not a default.")
+
+
+def add_market_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'THE OPPORTUNITY', 'A large market with an unsolved trust gap.')
+    add_stat_row(slide, [
+        {'number': '$1.3–1.7B', 'label': 'India proptech market size (2025)'},
+        {'number': '12–19%', 'label': 'CAGR — proptech growth rate'},
+        {'number': '$20B', 'label': 'Indian rental market size'},
+        {'number': 'Bengaluru', 'label': 'launch wedge: highest rental velocity, highest brokerage pain, most digitally-ready renters'},
+    ])
+    add_mixed_textbox(slide, 640080, 4892040, 10972800, 914400, [
+        {'text': 'NoBroker already proved renters will pay to skip brokers — ', 'color': 'grey'},
+        {'text': '₹803 Cr revenue, 30M+ users', 'color': 'graphite', 'bold': True},
+        {'text': ' — inside a market growing double-digit. Demand is proven; the trust gap PropWeb targets is still wide open.', 'color': 'grey'},
+    ], size_pt=14, anchor='ctr')
+    set_notes(slide, MARKET_NOTES)
+    return slide
+
 
 def add_notes_to_existing_slides(prs):
     for marker, note in EXISTING_NOTES.items():
@@ -31,6 +54,7 @@ def add_notes_to_existing_slides(prs):
 def build():
     prs = Presentation(SOURCE)
     add_notes_to_existing_slides(prs)
+    add_market_slide(prs)
     prs.save(OUTPUT)
 
 
