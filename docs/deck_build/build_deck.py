@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 """Rebuilds docs/PropWeb_Pitch_v2.pptx from the pristine 9-slide source,
 adding the new Act 2 (+Market) slides and presenter notes per
 docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
-from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text
+from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text, add_table, remove_slide_by_text
 
 SOURCE = 'source.pptx'
 OUTPUT = '../PropWeb_Pitch_v2.pptx'
@@ -30,6 +31,11 @@ ARCHITECTURE_NOTES = ("Keep this slide short on stage — the point is reassuran
                        "five-person team for the first year.\" If a CEO with a technical background pushes on "
                        "scaling, the honest answer is that a modular monolith splits into services later without "
                        "a rewrite — say that only if asked.")
+
+
+STACK_NOTES = ("Don't read the table row by row — the room doesn't need to know what Typesense is. The only two "
+               "numbers worth saying out loud are the Algolia cost comparison and the AWS Mumbai/DPDP compliance "
+               "line, because those are the ones a CEO will actually remember and repeat to an investor.")
 
 
 def add_architecture_slide(prs):
@@ -73,6 +79,44 @@ def add_market_slide(prs):
     return slide
 
 
+def add_stack_slide(prs):
+    slides_list = list(prs.slides)
+    old_stack_index = None
+    for i, s in enumerate(slides_list):
+        if 'BUILT TO SCALE' in get_slide_text(s):
+            old_stack_index = i
+            break
+
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'THE STACK', 'A modern stack, corrected for India economics.')
+    rows = [
+        ("Layer", "Choice", "Why it wins"),
+        ("Frontend", "Next.js (React)", "SEO locality pages = free Google traffic"),
+        ("Backend", "Node.js + TypeScript", "One language, small team moves fast"),
+        ("Database", "PostgreSQL + PostGIS", "'Flats within 3 km' queries, reliably"),
+        ("Search", "Typesense (self-hosted)", "~$69/mo vs Algolia ~$525/mo"),
+        ("Maps", "Ola Maps / MapmyIndia", "Free tier + best Indian locality data"),
+        ("Cloud", "AWS Mumbai", "KYC data stays in India (DPDP compliance)"),
+        ("Payments", "Razorpay (UPI-first)", "UPI at 0% MDR by RBI mandate"),
+        ("Call masking", "Exotel", "Virtual numbers keep owner phones private"),
+        ("KYC APIs", "Surepass/IDfy class vendors", "PAN ~1-3/check; Aadhaar via offline XML/DigiLocker"),
+        ("Agreements", "Leegality/Digio", "Aadhaar eSign 10-40/signature + state-wise e-stamping"),
+    ]
+    add_table(slide, 640080, 2103120, 10911840, 3800000, rows,
+              col_widths=(2743680, 3200000, 4968160))
+    add_textbox(slide, 640080, 6100000, 10911840, 600000,
+                "Cost traps avoided: Typesense keeps ~80% of Algolia's power at ~20% of the cost; Google Maps "
+                "stays a free-tier fallback, not the primary, ahead of its post-2027 pricing changes.",
+                size_pt=12, color='grey', anchor='top')
+    set_notes(slide, STACK_NOTES)
+
+    if old_stack_index is not None:
+        from deck_helpers import remove_slide
+        remove_slide(prs, old_stack_index)
+
+    return slide
+
+
 def add_notes_to_existing_slides(prs):
     for marker, note in EXISTING_NOTES.items():
         for slide in prs.slides:
@@ -86,6 +130,7 @@ def build():
     add_notes_to_existing_slides(prs)
     add_market_slide(prs)
     add_architecture_slide(prs)
+    add_stack_slide(prs)
     prs.save(OUTPUT)
 
 

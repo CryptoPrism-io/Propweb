@@ -76,7 +76,20 @@ def check_task4():
     check(len(get_notes_text(slide)) > 80, 'Architecture slide has presenter notes')
 
 
-CHECKS = [check_task1, check_task2, check_task3, check_task4]
+def check_task5():
+    prs = Presentation(OUTPUT)
+    matches = [i for i, s in enumerate(prs.slides)
+               if 'A modern stack, corrected for India economics' in get_slide_text(s)]
+    check(len(matches) == 1, f'exactly one Stack slide exists (found {len(matches)})')
+    slide = list(prs.slides)[matches[0]]
+    text = get_slide_text(slide)
+    for expected in ('THE STACK', 'Next.js', 'Typesense', 'Algolia', 'Leegality', 'DigiLocker', 'AWS Mumbai'):
+        check(expected in text, f'Stack slide contains {expected!r}')
+    check('12-month build budget' not in text, 'old budget line removed from Stack slide (budget has its own slide now)')
+    check(len(get_notes_text(slide)) > 80, 'Stack slide has presenter notes')
+
+
+CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5]
 
 if __name__ == '__main__':
     for fn in CHECKS:

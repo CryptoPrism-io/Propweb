@@ -129,6 +129,13 @@ def get_slide_text(slide):
             for p in shape.text_frame.paragraphs:
                 for r in p.runs:
                     chunks.append(r.text)
+        elif shape.has_table:
+            table = shape.table
+            for row in table.rows:
+                for cell in row.cells:
+                    for p in cell.text_frame.paragraphs:
+                        for r in p.runs:
+                            chunks.append(r.text)
     return ' '.join(chunks)
 
 
@@ -136,3 +143,40 @@ def get_notes_text(slide):
     if not slide.has_notes_slide:
         return ''
     return slide.notes_slide.notes_text_frame.text
+
+
+def add_table(slide, x, y, cx, cy, rows, col_widths):
+    n_rows, n_cols = len(rows), len(rows[0])
+    graphic_frame = slide.shapes.add_table(n_rows, n_cols, Emu(x), Emu(y), Emu(cx), Emu(cy))
+    table = graphic_frame.table
+    for c, w in enumerate(col_widths):
+        table.columns[c].width = Emu(w)
+    for r, row in enumerate(rows):
+        for c, text in enumerate(row):
+            cell = table.cell(r, c)
+            cell.text = str(text)
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = hex_color('sand' if (r == 0 or r % 2 == 0) else 'white')
+            run = cell.text_frame.paragraphs[0].runs[0]
+            run.font.name = 'Calibri'
+            run.font.size = Pt(12 if r else 12.5)
+            run.font.bold = (r == 0)
+            run.font.color.rgb = hex_color('graphite' if r == 0 else 'grey')
+    return table
+
+
+def remove_slide(prs, index):
+    xml_slides = prs.slides._sldIdLst
+    slide_id_elements = list(xml_slides)
+    r_id = slide_id_elements[index].get(qn('r:id'))
+    prs.part.drop_rel(r_id)
+    xml_slides.remove(slide_id_elements[index])
+
+
+def remove_slide_by_text(prs, substr):
+    slides_list = list(prs.slides)
+    for i, slide in enumerate(slides_list):
+        if substr in get_slide_text(slide):
+            remove_slide(prs, i)
+            return
+    raise ValueError(f'no slide found containing {substr!r}')
