@@ -1,24 +1,29 @@
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { TenantVerificationProvider } from './hooks/useTenantVerification';
 import Home from './pages/Home';
 import Results from './pages/Results';
 import ListingDetail from './pages/ListingDetail';
 import OwnerWizard from './pages/OwnerWizard';
+import TenantKyc from './pages/TenantKyc';
 
 export default function App() {
   return (
-    <div className="relative overflow-x-hidden">
-      <Navbar />
-      <div className="pt-16">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/listing/:id" element={<ListingDetail />} />
-          <Route path="/owner/new" element={<OwnerWizard />} />
-        </Routes>
+    <TenantVerificationProvider>
+      <div className="relative overflow-x-hidden">
+        <Navbar />
+        <div className="pt-16">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/listing/:id" element={<ListingDetail />} />
+            <Route path="/owner/new" element={<OwnerWizard />} />
+            <Route path="/tenant/verify" element={<TenantKyc />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </TenantVerificationProvider>
   );
 }
