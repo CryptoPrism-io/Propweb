@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { MagnifyingGlass, ShieldCheck, Prohibit, PhoneSlash, House } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
+import { MagnifyingGlass, ShieldCheck, Prohibit, PhoneSlash } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { ListingCard } from '../components/ListingCard';
 
@@ -17,17 +17,7 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-8">
-      <div className="flex items-center justify-between">
-        <div className="font-display text-xl font-extrabold tracking-wide">PROP<span className="text-blueharbor">WEB</span></div>
-        <div className="flex items-center gap-3">
-          <Link to="/owner/new" className="inline-flex items-center gap-1 text-sm font-semibold text-blueharbor">
-            <House size={16} /> List your property
-          </Link>
-          <span className="text-sm text-coolgrey">Bengaluru</span>
-        </div>
-      </div>
-
-      <div className="mt-10 rounded-card bg-white p-6 shadow-card border border-line">
+      <div className="rounded-card bg-white p-6 shadow-card border border-line">
         <h1 className="font-display text-2xl font-extrabold">Rentals you can trust — no brokers, no fakes.</h1>
         <div className="mt-4 grid gap-3 sm:grid-cols-4">
           <select value={locality} onChange={e => setLocality(e.target.value)} className="rounded-lg border border-line px-3 py-2">
