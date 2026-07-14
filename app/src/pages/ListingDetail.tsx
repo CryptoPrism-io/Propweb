@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, ArrowLeft } from '@phosphor-icons/react';
+import { MapPin, ArrowLeft, Phone, WhatsappLogo, CheckCircle } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { getOwner } from '../lib/data';
 import { matchScore } from '../lib/matchScore';
@@ -11,11 +11,17 @@ import { Button } from '../components/Button';
 import { TrustScoreExplainer } from '../components/TrustScoreExplainer';
 import { VerifiedInfo } from '../components/VerifiedInfo';
 
+function formatPhone(raw: string): string {
+  const digits = raw.replace(/\D/g, '').slice(-10);
+  return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
+}
+
 export default function ListingDetail() {
   const { id } = useParams();
   const nav = useNavigate();
   const { listings, owners, tenant, loading } = useData();
   const [showConnect, setShowConnect] = useState(false);
+  const [connected, setConnected] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
   const [explainer, setExplainer] = useState<'trust' | 'verified' | null>(null);
 
@@ -35,6 +41,7 @@ export default function ListingDetail() {
   const listing = listings.find(l => l.id === id);
   if (!listing || !tenant) return <div className="p-8">Listing not found.</div>;
   const owner = getOwner(owners, listing.ownerId);
+  const waNumber = owner ? owner.phone.replace(/\D/g, '') : '';
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6">
@@ -91,9 +98,22 @@ export default function ListingDetail() {
             )}
           </div>
           <div className="mt-3 text-sm text-coolgrey">Phone</div>
-          <div className="font-mono text-lg tracking-widest">+91 ●●●●● ●●●●●</div>
-          <Button className="mt-4 w-full" onClick={() => setShowConnect(true)}>Connect</Button>
-          <p className="mt-2 text-center text-xs text-coolgrey">Small fee unlocks the verified owner's contact.</p>
+          {connected && owner ? (
+            <>
+              <div className="font-mono text-lg tracking-wide">{formatPhone(owner.phone)}</div>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <a href={`tel:${owner.phone}`} className="inline-flex items-center justify-center gap-1 rounded-full bg-blueharbor px-3 py-2 text-sm font-semibold text-white"><Phone size={16} /> Call</a>
+                <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-1 rounded-full border border-blueharbor px-3 py-2 text-sm font-semibold text-blueharbor"><WhatsappLogo size={16} /> WhatsApp</a>
+              </div>
+              <p className="mt-2 inline-flex w-full items-center justify-center gap-1 text-center text-xs font-semibold text-graphite"><CheckCircle size={14} weight="fill" className="text-blueharbor" /> Contact unlocked</p>
+            </>
+          ) : (
+            <>
+              <div className="font-mono text-lg tracking-widest">+91 ●●●●● ●●●●●</div>
+              <Button className="mt-4 w-full" onClick={() => setShowConnect(true)}>Connect</Button>
+              <p className="mt-2 text-center text-xs text-coolgrey">Small fee unlocks the verified owner's contact.</p>
+            </>
+          )}
         </div>
       </div>
 
@@ -105,9 +125,25 @@ export default function ListingDetail() {
             className="w-full max-w-sm rounded-card bg-white p-6 text-center shadow-card"
             onClick={e => e.stopPropagation()}
           >
-            <h3 className="text-lg font-bold">Pay to connect</h3>
-            <p className="mt-1 text-sm text-coolgrey">Unlock this verified owner's contact for a small fee. (Mock — no real payment.)</p>
-            <Button className="mt-4 w-full" onClick={() => setShowConnect(false)}>Pay ₹49 (mock)</Button>
+            {connected ? (
+              <>
+                <CheckCircle size={44} weight="fill" className="mx-auto text-blueharbor" />
+                <h3 className="mt-2 text-lg font-bold">Contact unlocked!</h3>
+                <p className="mt-1 text-sm text-coolgrey">You can now reach {owner?.name} directly.</p>
+                <div className="mt-3 font-mono text-lg tracking-wide">{owner && formatPhone(owner.phone)}</div>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <a href={`tel:${owner?.phone}`} className="inline-flex items-center justify-center gap-1 rounded-full bg-blueharbor px-3 py-2 text-sm font-semibold text-white"><Phone size={16} /> Call</a>
+                  <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-1 rounded-full border border-blueharbor px-3 py-2 text-sm font-semibold text-blueharbor"><WhatsappLogo size={16} /> WhatsApp</a>
+                </div>
+                <button onClick={() => setShowConnect(false)} className="mt-5 w-full rounded-full border border-line py-2 text-sm font-semibold">Done</button>
+              </>
+            ) : (
+              <>
+                <h3 className="text-lg font-bold">Pay to connect</h3>
+                <p className="mt-1 text-sm text-coolgrey">Unlock this verified owner's contact for a small fee. (Mock — no real payment.)</p>
+                <Button className="mt-4 w-full" onClick={() => setConnected(true)}>Pay ₹49 (mock)</Button>
+              </>
+            )}
           </div>
         </div>
       )}
