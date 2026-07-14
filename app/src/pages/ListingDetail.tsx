@@ -8,6 +8,8 @@ import { TrustScoreToken } from '../components/TrustScoreToken';
 import { MatchChip } from '../components/MatchChip';
 import { VerifiedBadge } from '../components/VerifiedBadge';
 import { Button } from '../components/Button';
+import { TrustScoreExplainer } from '../components/TrustScoreExplainer';
+import { VerifiedInfo } from '../components/VerifiedInfo';
 
 export default function ListingDetail() {
   const { id } = useParams();
@@ -15,15 +17,19 @@ export default function ListingDetail() {
   const { listings, owners, tenant, loading } = useData();
   const [showConnect, setShowConnect] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
+  const [explainer, setExplainer] = useState<'trust' | 'verified' | null>(null);
 
   useEffect(() => {
-    if (!showConnect) return;
+    if (!showConnect && !explainer) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowConnect(false);
+      if (e.key === 'Escape') {
+        setShowConnect(false);
+        setExplainer(null);
+      }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [showConnect]);
+  }, [showConnect, explainer]);
 
   if (loading) return <div className="p-8 text-coolgrey">Loading…</div>;
   const listing = listings.find(l => l.id === id);
@@ -58,7 +64,9 @@ export default function ListingDetail() {
           <div className="flex items-center gap-1 text-sm text-coolgrey"><MapPin size={14} /> {listing.address}</div>
 
           <div className="mt-3 flex flex-wrap gap-2">
-            <TrustScoreToken score={listing.trustScore} />
+            <button type="button" onClick={() => setExplainer('trust')} aria-label="Explain Trust Score">
+              <TrustScoreToken score={listing.trustScore} />
+            </button>
             <MatchChip percent={matchScore(listing, tenant)} />
           </div>
 
@@ -73,7 +81,15 @@ export default function ListingDetail() {
 
         <div className="lg:sticky lg:top-6 h-fit rounded-card border border-line bg-white p-5 shadow-card">
           <div className="font-semibold">{owner?.name}</div>
-          <div className="mt-1">{listing.verifiedOwner ? <VerifiedBadge kind="owner" /> : <VerifiedBadge kind="owner" pending />}</div>
+          <div className="mt-1">
+            {listing.verifiedOwner ? (
+              <button type="button" onClick={() => setExplainer('verified')} aria-label="What was verified">
+                <VerifiedBadge kind="owner" />
+              </button>
+            ) : (
+              <VerifiedBadge kind="owner" pending />
+            )}
+          </div>
           <div className="mt-3 text-sm text-coolgrey">Phone</div>
           <div className="font-mono text-lg tracking-widest">+91 ●●●●● ●●●●●</div>
           <Button className="mt-4 w-full" onClick={() => setShowConnect(true)}>Connect</Button>
@@ -92,6 +108,15 @@ export default function ListingDetail() {
             <h3 className="text-lg font-bold">Pay to connect</h3>
             <p className="mt-1 text-sm text-coolgrey">Unlock this verified owner's contact for a small fee. (Mock — no real payment.)</p>
             <Button className="mt-4 w-full" onClick={() => setShowConnect(false)}>Pay ₹49 (mock)</Button>
+          </div>
+        </div>
+      )}
+
+      {explainer && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-graphite/40 p-4" onClick={() => setExplainer(null)}>
+          <div role="dialog" aria-modal="true" className="w-full max-w-sm rounded-card bg-white p-6 shadow-card" onClick={e => e.stopPropagation()}>
+            {explainer === 'trust' ? <TrustScoreExplainer score={listing.trustScore} /> : <VerifiedInfo owner={owner} />}
+            <button onClick={() => setExplainer(null)} className="mt-5 w-full rounded-full border border-line py-2 text-sm font-semibold">Close</button>
           </div>
         </div>
       )}
