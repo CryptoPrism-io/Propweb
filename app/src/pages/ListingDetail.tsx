@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, ArrowLeft, Phone, WhatsappLogo, CheckCircle } from '@phosphor-icons/react';
+import { MapPin, ArrowLeft, Phone, WhatsappLogo, CheckCircle, X, Car, ShieldCheck, WifiHigh, Barbell, Lightning, Waves } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { getOwner } from '../lib/data';
 import { matchScore } from '../lib/matchScore';
@@ -15,6 +15,15 @@ function formatPhone(raw: string): string {
   const digits = raw.replace(/\D/g, '').slice(-10);
   return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
 }
+
+const AMENITY_ICON: Record<string, typeof CheckCircle> = {
+  Parking: Car,
+  Security: ShieldCheck,
+  'Wi-Fi': WifiHigh,
+  Gym: Barbell,
+  'Power backup': Lightning,
+  Pool: Waves,
+};
 
 export default function ListingDetail() {
   const { id } = useParams();
@@ -78,8 +87,15 @@ export default function ListingDetail() {
           </div>
 
           <h3 className="mt-6 font-bold">Amenities</h3>
-          <div className="mt-2 flex flex-wrap gap-2 text-sm text-coolgrey">
-            {listing.amenities.map(a => <span key={a} className="rounded-full border border-line px-3 py-1">{a}</span>)}
+          <div className="mt-2 flex flex-wrap gap-2 text-sm text-graphite">
+            {listing.amenities.map(a => {
+              const Icon = AMENITY_ICON[a] ?? CheckCircle;
+              return (
+                <span key={a} className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 font-semibold">
+                  <Icon size={16} className="text-blueharbor" /> {a}
+                </span>
+              );
+            })}
           </div>
 
           <h3 className="mt-6 font-bold">Why this Trust Score?</h3>
@@ -87,6 +103,7 @@ export default function ListingDetail() {
         </div>
 
         <div className="lg:sticky lg:top-6 h-fit rounded-card border border-line bg-white p-5 shadow-card">
+          <div className="mb-3 font-display text-base font-extrabold">Contact owner</div>
           <div className="font-semibold">{owner?.name}</div>
           <div className="mt-1">
             {listing.verifiedOwner ? (
@@ -109,7 +126,10 @@ export default function ListingDetail() {
             </>
           ) : (
             <>
-              <div className="font-mono text-lg tracking-widest">+91 ●●●●● ●●●●●</div>
+              <div className="relative inline-block">
+                <span className="select-none font-mono text-lg tracking-wide text-graphite">{owner ? formatPhone(owner.phone) : '+91 98765 43210'}</span>
+                <div className="absolute inset-0 rounded-md bg-white/10 backdrop-blur-[6px]" />
+              </div>
               <Button className="mt-4 w-full" onClick={() => setShowConnect(true)}>Connect</Button>
               <p className="mt-2 text-center text-xs text-coolgrey">Small fee unlocks the verified owner's contact.</p>
             </>
@@ -150,9 +170,15 @@ export default function ListingDetail() {
 
       {explainer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-graphite/40 p-4" onClick={() => setExplainer(null)}>
-          <div role="dialog" aria-modal="true" className="w-full max-w-sm rounded-card bg-white p-6 shadow-card" onClick={e => e.stopPropagation()}>
+          <div role="dialog" aria-modal="true" className="relative w-full max-w-sm rounded-card bg-white p-6 shadow-card" onClick={e => e.stopPropagation()}>
+            <button
+              onClick={() => setExplainer(null)}
+              aria-label="Close"
+              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-moontint text-coolgrey transition hover:bg-line hover:text-graphite"
+            >
+              <X size={18} />
+            </button>
             {explainer === 'trust' ? <TrustScoreExplainer score={listing.trustScore} /> : <VerifiedInfo owner={owner} />}
-            <button onClick={() => setExplainer(null)} className="mt-5 w-full rounded-full border border-line py-2 text-sm font-semibold">Close</button>
           </div>
         </div>
       )}

@@ -1,16 +1,32 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { Rows, MapTrifold, MagnifyingGlass } from '@phosphor-icons/react';
+import { Rows, MapTrifold, MagnifyingGlass, CaretDown } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { filterListings } from '../lib/filter';
 import { ListingCard } from '../components/ListingCard';
 import { MapView } from '../components/MapView';
 import { SearchPanel } from '../components/SearchPanel';
 
-const FURN_LABEL: Record<string, string> = { unfurnished: 'Unfurnished', semi: 'Semi-furnished', furnished: 'Furnished' };
-const TEN_LABEL: Record<string, string> = { family: 'Family', bachelor: 'Bachelor' };
-const chipCls = 'inline-flex items-center gap-1 rounded-full border border-line bg-white px-3 py-1.5 text-sm font-semibold';
+const BHK_OPTS = [{ v: '', l: 'Any BHK' }, { v: '1', l: '1 BHK' }, { v: '2', l: '2 BHK' }, { v: '3', l: '3 BHK' }, { v: '3+', l: '3+ BHK' }];
+const BUDGET_OPTS = [{ v: '', l: 'Any budget' }, { v: '20000', l: '≤ ₹20k' }, { v: '35000', l: '≤ ₹35k' }, { v: '50000', l: '≤ ₹50k' }, { v: '85000', l: '≤ ₹85k' }];
+const FURN_OPTS = [{ v: '', l: 'Any furnishing' }, { v: 'unfurnished', l: 'Unfurnished' }, { v: 'semi', l: 'Semi' }, { v: 'furnished', l: 'Furnished' }];
+const TEN_OPTS = [{ v: '', l: 'Any tenant' }, { v: 'family', l: 'Family' }, { v: 'bachelor', l: 'Bachelor' }];
+
+function ChipSelect({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: { v: string; l: string }[] }) {
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="appearance-none rounded-full border border-line bg-white py-1.5 pl-3 pr-8 text-sm font-semibold text-graphite outline-none"
+      >
+        {options.map(o => <option key={o.l} value={o.v}>{o.l}</option>)}
+      </select>
+      <CaretDown size={14} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-coolgrey" />
+    </div>
+  );
+}
 
 export default function Results() {
   const { listings, owners, tenant } = useData();
@@ -32,6 +48,12 @@ export default function Results() {
     [listings, locality, bhk, minBhk, maxRent, furnishing, tenantType],
   );
 
+  const setParam = (key: string, value: string) => {
+    const p = new URLSearchParams(params);
+    if (value) p.set(key, value); else p.delete(key);
+    nav(`/results?${p.toString()}`);
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
       {/* editable search + active filters */}
@@ -44,10 +66,10 @@ export default function Results() {
         <span className="text-sm font-bold text-blueharbor">Edit</span>
       </button>
       <div className="mt-3 flex flex-wrap gap-2">
-        {bhkParam && <button className={chipCls} onClick={() => setSearchOpen(true)}>{bhkParam} BHK</button>}
-        {maxRent && <button className={chipCls} onClick={() => setSearchOpen(true)}>≤ ₹{maxRent.toLocaleString('en-IN')}</button>}
-        {furnishing && <button className={chipCls} onClick={() => setSearchOpen(true)}>{FURN_LABEL[furnishing] ?? furnishing}</button>}
-        {tenantType && <button className={chipCls} onClick={() => setSearchOpen(true)}>{TEN_LABEL[tenantType] ?? tenantType}</button>}
+        <ChipSelect value={bhkParam ?? ''} onChange={v => setParam('bhk', v)} options={BHK_OPTS} />
+        <ChipSelect value={maxRent ? String(maxRent) : ''} onChange={v => setParam('maxRent', v)} options={BUDGET_OPTS} />
+        <ChipSelect value={furnishing ?? ''} onChange={v => setParam('furnishing', v)} options={FURN_OPTS} />
+        <ChipSelect value={tenantType ?? ''} onChange={v => setParam('tenantType', v)} options={TEN_OPTS} />
       </div>
 
       <div className="mb-4 mt-5 flex items-center justify-between">
