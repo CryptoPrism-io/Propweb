@@ -7,7 +7,7 @@ import OwnerWizard from './pages/OwnerWizard';
 
 export default function App() {
   return (
-    <>
+    <div className="relative overflow-x-hidden">
       <Navbar />
       <div className="pt-16">
         <Routes>
@@ -17,6 +17,6 @@ export default function App() {
           <Route path="/owner/new" element={<OwnerWizard />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }

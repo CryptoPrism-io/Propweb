@@ -18,14 +18,14 @@ export default function Home() {
   return (
     <div>
       {/* full-bleed hero — image reaches the top of the page, under the transparent navbar */}
-      <section className="relative -mt-16 overflow-hidden">
+      <section className="relative -mt-16 min-h-[480px] overflow-hidden rounded-b-3xl">
         <img
           src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-graphite/70 via-graphite/40 to-graphite/25" />
-        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10">
+        <div className="relative mx-auto flex min-h-[480px] max-w-5xl flex-col justify-end px-5 pb-10 pt-24">
           <h1 style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif", fontStyle: 'normal', fontWeight: 900, fontSize: '36px', lineHeight: '40px', color: '#FFFFFF' }}>
             Rentals you can trust.<br />
             No brokers.<br />
