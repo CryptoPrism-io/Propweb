@@ -99,8 +99,8 @@ def add_stack_slide(prs):
         ("Cloud", "AWS Mumbai", "KYC data stays in India (DPDP compliance)"),
         ("Payments", "Razorpay (UPI-first)", "UPI at 0% MDR by RBI mandate"),
         ("Call masking", "Exotel", "Virtual numbers keep owner phones private"),
-        ("KYC APIs", "Surepass/IDfy class vendors", "PAN ~1-3/check; Aadhaar via offline XML/DigiLocker"),
-        ("Agreements", "Leegality/Digio", "Aadhaar eSign 10-40/signature + state-wise e-stamping"),
+        ("KYC APIs", "Surepass/IDfy class vendors", "PAN ≈₹1–3/check; Aadhaar via offline XML/DigiLocker"),
+        ("Agreements", "Leegality/Digio", "Aadhaar eSign ₹10–40/signature + state-wise e-stamping"),
     ]
     add_table(slide, 640080, 2103120, 10911840, 3800000, rows,
               col_widths=(2743680, 3200000, 4968160))
