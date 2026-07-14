@@ -65,7 +65,18 @@ def check_task3():
     check(len(get_notes_text(slide)) > 80, 'Market slide has presenter notes')
 
 
-CHECKS = [check_task1, check_task2, check_task3]
+def check_task4():
+    prs = Presentation(OUTPUT)
+    i, slide = find_slide_by_text(prs, 'One well-organised building, not eleven services')
+    check(slide is not None, 'Architecture slide exists')
+    text = get_slide_text(slide)
+    for expected in ('ARCHITECTURE', 'modular monolith', 'Listings & Search', 'Trust & KYC',
+                      'Matching Engine', 'Connect & Payments', 'TypeScript'):
+        check(expected in text, f'Architecture slide contains {expected!r}')
+    check(len(get_notes_text(slide)) > 80, 'Architecture slide has presenter notes')
+
+
+CHECKS = [check_task1, check_task2, check_task3, check_task4]
 
 if __name__ == '__main__':
     for fn in CHECKS:

@@ -3,7 +3,7 @@ adding the new Act 2 (+Market) slides and presenter notes per
 docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
-from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, set_notes, get_slide_text
+from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text
 
 SOURCE = 'source.pptx'
 OUTPUT = '../PropWeb_Pitch_v2.pptx'
@@ -23,6 +23,36 @@ MARKET_NOTES = ("This slide exists to pre-empt the \"is this market even big eno
                 "lead with the CAGR, not the dollar figure; growth rate is the more persuasive number in the room. "
                 "Bengaluru isn't arbitrary: name the three reasons (rental velocity, brokerage pain, digital readiness) "
                 "so it reads as a decision, not a default.")
+
+
+ARCHITECTURE_NOTES = ("Keep this slide short on stage — the point is reassurance, not a systems-design lecture. "
+                       "One sentence: \"one well-built application, not eleven fragile services, because we're a "
+                       "five-person team for the first year.\" If a CEO with a technical background pushes on "
+                       "scaling, the honest answer is that a modular monolith splits into services later without "
+                       "a rewrite — say that only if asked.")
+
+
+def add_architecture_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'ARCHITECTURE', 'One well-organised building, not eleven services.')
+    add_card(slide, 640080, 2103120, 10911840, 3474720, fill='sand', border='sand_line', adj_raw=3000)
+    add_textbox(slide, 868680, 2377440, 10454640, 365760,
+                'PropWeb — modular monolith', size_pt=15, bold=True, color='graphite')
+    blocks = ['Listings & Search', 'Trust & KYC', 'Matching Engine', 'Connect & Payments']
+    n = len(blocks)
+    gap = 182880
+    inner_w = 10454640
+    card_w = (inner_w - gap * (n - 1)) // n
+    for idx, label in enumerate(blocks):
+        x = 868680 + idx * (card_w + gap)
+        add_card(slide, x, 2960000, card_w, 1000000, fill='white', border='sand_line', adj_raw=6061)
+        add_textbox(slide, x, 2960000, card_w, 1000000, label, size_pt=13, bold=True,
+                    color='teal', align='ctr')
+    add_textbox(slide, 640080, 5738160, 10911840, 365760,
+                'Small team, one codebase, one language (TypeScript) — ship fast without distributed-systems overhead.',
+                size_pt=14, color='grey')
+    set_notes(slide, ARCHITECTURE_NOTES)
+    return slide
 
 
 def add_market_slide(prs):
@@ -55,6 +85,7 @@ def build():
     prs = Presentation(SOURCE)
     add_notes_to_existing_slides(prs)
     add_market_slide(prs)
+    add_architecture_slide(prs)
     prs.save(OUTPUT)
 
 
