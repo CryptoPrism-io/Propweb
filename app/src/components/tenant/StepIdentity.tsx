@@ -20,7 +20,7 @@ export function StepIdentity({ draft, set }: { draft: TenantKycDraft; set: (patc
           onChange={e => set({ aadhaar: e.target.value.replace(/\D/g, '').slice(0, 12) })}
           placeholder="234567890123"
         />
-        <p className="mt-1 text-xs text-coolgrey">Demo only — verified via the legal route (offline XML/DigiLocker), never entered directly.</p>
+        <p className="mt-1 text-xs text-coolgrey">Demo only — in production this is verified via offline XML/DigiLocker, not typed in.</p>
       </div>
       <div>
         <label className={label}>PAN</label>

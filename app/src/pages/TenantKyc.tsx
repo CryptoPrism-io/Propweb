@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import { emptyKycDraft, isKycStepComplete, type TenantKycDraft, type KycStep } from '../lib/tenantKyc';
 import { useTenantVerification } from '../hooks/useTenantVerification';
-import { WizardProgress } from '../components/owner/WizardProgress';
+import { WizardProgress } from '../components/shared/WizardProgress';
 import { StepIdentity } from '../components/tenant/StepIdentity';
 import { StepEmployment } from '../components/tenant/StepEmployment';
 import { StepKycReview } from '../components/tenant/StepKycReview';

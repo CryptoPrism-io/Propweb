@@ -13,7 +13,7 @@ A new `TenantVerificationProvider` (React Context) is mounted once in `App.tsx`,
 
 ```
 type TenantVerificationStatus = 'unverified' | 'pending' | 'verified';
-{ status: TenantVerificationStatus; kyc: TenantKycDraft | null }
+{ status: TenantVerificationStatus; kyc: TenantKycDraft }
 ```
 
 with actions `submitKyc(draft)` (→ `pending`) and `completeVerification()` (→ `verified`).

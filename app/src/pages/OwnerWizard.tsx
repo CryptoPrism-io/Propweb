@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import { emptyDraft, isStepComplete, type ListingDraft, type WizardStep } from '../lib/ownerDraft';
-import { WizardProgress } from '../components/owner/WizardProgress';
+import { WizardProgress } from '../components/shared/WizardProgress';
 import { StepDetails } from '../components/owner/StepDetails';
 import { StepPhotos } from '../components/owner/StepPhotos';
 import { StepPreferences } from '../components/owner/StepPreferences';
