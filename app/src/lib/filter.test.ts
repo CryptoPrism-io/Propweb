@@ -30,4 +30,8 @@ describe('filterListings', () => {
     const d = [mk({ id: 'a', tenantType: 'family' }), mk({ id: 'b', tenantType: 'bachelor' })];
     expect(filterListings(d, { tenantType: 'bachelor' }).map(l => l.id)).toEqual(['b']);
   });
+  it('filters by minBhk (3+)', () => {
+    const d = [mk({ id: 'a', bhk: 2 }), mk({ id: 'b', bhk: 3 }), mk({ id: 'c', bhk: 4 })];
+    expect(filterListings(d, { minBhk: 3 }).map(l => l.id)).toEqual(['b', 'c']);
+  });
 });

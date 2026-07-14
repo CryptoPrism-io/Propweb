@@ -13,14 +13,16 @@ export default function Results() {
   const [showMapMobile, setShowMapMobile] = useState(false);
 
   const locality = params.get('locality') || undefined;
-  const bhk = params.get('bhk') ? Number(params.get('bhk')) : undefined;
+  const bhkParam = params.get('bhk') || undefined;
+  const bhk = bhkParam && bhkParam !== '3+' ? Number(bhkParam) : undefined;
+  const minBhk = bhkParam === '3+' ? 3 : undefined;
   const maxRent = params.get('maxRent') ? Number(params.get('maxRent')) : undefined;
   const furnishing = params.get('furnishing') || undefined;
   const tenantType = params.get('tenantType') || undefined;
 
   const results = useMemo(
-    () => filterListings(listings, { locality, bhk, maxRent, furnishing, tenantType }),
-    [listings, locality, bhk, maxRent, furnishing, tenantType],
+    () => filterListings(listings, { locality, bhk, minBhk, maxRent, furnishing, tenantType }),
+    [listings, locality, bhk, minBhk, maxRent, furnishing, tenantType],
   );
 
   return (

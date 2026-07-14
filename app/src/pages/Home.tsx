@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { MagnifyingGlass, ShieldCheck, Prohibit, PhoneSlash } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { ListingCard } from '../components/ListingCard';
@@ -20,18 +21,21 @@ export default function Home() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-graphite/70 via-graphite/40 to-graphite/25" />
-        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10">
+        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center">
           <h1 style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif", fontStyle: 'normal', fontWeight: 900, fontSize: '36px', lineHeight: '40px', color: '#FFFFFF' }}>
             No Brokers,<br />
             No Fakes.
           </h1>
-          <button
-            onClick={() => setSearchOpen(true)}
-            className="mt-6 flex w-full max-w-md items-center gap-3 rounded-2xl bg-white px-4 py-4 text-left shadow-card"
-          >
-            <MagnifyingGlass size={22} className="text-coolgrey" />
-            <span className="text-sm font-semibold text-coolgrey">Search location, budget, filters…</span>
-          </button>
+          {!searchOpen && (
+            <motion.button
+              layoutId="searchbar"
+              onClick={() => setSearchOpen(true)}
+              className="mx-auto mt-6 flex w-full max-w-md items-center gap-3 rounded-2xl bg-white px-4 py-4 text-left shadow-card"
+            >
+              <MagnifyingGlass size={22} className="text-coolgrey" />
+              <span className="text-sm font-semibold text-coolgrey">Search location, budget, filters…</span>
+            </motion.button>
+          )}
         </div>
       </section>
 
@@ -50,7 +54,9 @@ export default function Home() {
         </div>
       </div>
 
-      <SearchPanel open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <AnimatePresence>
+        {searchOpen && <SearchPanel key="searchpanel" onClose={() => setSearchOpen(false)} />}
+      </AnimatePresence>
     </div>
   );
 }
