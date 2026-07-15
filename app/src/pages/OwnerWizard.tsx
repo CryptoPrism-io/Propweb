@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import { emptyDraft, isStepComplete, type ListingDraft, type WizardStep } from '../lib/ownerDraft';
-import { WizardProgress } from '../components/owner/WizardProgress';
+import { WizardProgress } from '../components/shared/WizardProgress';
 import { StepDetails } from '../components/owner/StepDetails';
 import { StepPhotos } from '../components/owner/StepPhotos';
 import { StepPreferences } from '../components/owner/StepPreferences';
 import { StepReview } from '../components/owner/StepReview';
 import { PublishedState } from '../components/owner/PublishedState';
 import { Button } from '../components/Button';
+
+const LABELS = ['Details', 'Photos', 'Preferences', 'Review'];
 
 export default function OwnerWizard() {
   const nav = useNavigate();
@@ -36,7 +38,7 @@ export default function OwnerWizard() {
         <ArrowLeft size={16} /> Home
       </button>
       <h1 className="font-display mb-4 text-2xl font-extrabold">List your property</h1>
-      <WizardProgress step={step} />
+      <WizardProgress step={step} labels={LABELS} />
 
       <div className="rounded-card border border-line bg-white p-5 shadow-card">
         {step === 1 && <StepDetails draft={draft} set={set} />}

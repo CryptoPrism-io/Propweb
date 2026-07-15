@@ -1,9 +1,7 @@
-const LABELS = ['Details', 'Photos', 'Preferences', 'Review'];
-
-export function WizardProgress({ step }: { step: number }) {
+export function WizardProgress({ step, labels }: { step: number; labels: string[] }) {
   return (
     <ol className="mb-6 flex items-center gap-2">
-      {LABELS.map((label, i) => {
+      {labels.map((label, i) => {
         const n = i + 1;
         const active = n === step;
         const done = n < step;
@@ -17,7 +15,7 @@ export function WizardProgress({ step }: { step: number }) {
               {n}
             </span>
             <span className={`text-xs font-semibold ${active ? 'text-graphite' : 'text-coolgrey'}`}>{label}</span>
-            {n < LABELS.length && <span className="h-px flex-1 bg-line" />}
+            {n < labels.length && <span className="h-px flex-1 bg-line" />}
           </li>
         );
       })}

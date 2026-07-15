@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { MapPin, ArrowLeft, Phone, WhatsappLogo, CheckCircle, X, Car, ShieldCheck, WifiHigh, Barbell, Lightning, Waves } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { getOwner } from '../lib/data';
@@ -10,6 +10,7 @@ import { VerifiedBadge } from '../components/VerifiedBadge';
 import { Button } from '../components/Button';
 import { TrustScoreExplainer } from '../components/TrustScoreExplainer';
 import { VerifiedInfo } from '../components/VerifiedInfo';
+import { useTenantVerification } from '../hooks/useTenantVerification';
 
 function formatPhone(raw: string): string {
   const digits = raw.replace(/\D/g, '').slice(-10);
@@ -29,6 +30,7 @@ export default function ListingDetail() {
   const { id } = useParams();
   const nav = useNavigate();
   const { listings, owners, tenant, loading } = useData();
+  const { status: tenantStatus } = useTenantVerification();
   const [showConnect, setShowConnect] = useState(false);
   const [connected, setConnected] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
@@ -161,6 +163,16 @@ export default function ListingDetail() {
               <>
                 <h3 className="text-lg font-bold">Pay to connect</h3>
                 <p className="mt-1 text-sm text-coolgrey">Unlock this verified owner's contact for a small fee. (Mock — no real payment.)</p>
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  {tenantStatus === 'verified' && <VerifiedBadge kind="tenant" />}
+                  {tenantStatus === 'pending' && <VerifiedBadge kind="tenant" pending />}
+                  {tenantStatus === 'unverified' && (
+                    <Link to="/tenant/verify" onClick={() => setShowConnect(false)} className="text-xs font-semibold text-blueharbor underline">
+                      Not verified yet — Get your Verified Tenant badge
+                    </Link>
+                  )}
+                </div>
+                {tenantStatus === 'verified' && <p className="mt-1 text-xs text-coolgrey">Connecting as a Verified Tenant.</p>}
                 <Button className="mt-4 w-full" onClick={() => setConnected(true)}>Pay ₹49 (mock)</Button>
               </>
             )}

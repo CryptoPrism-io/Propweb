@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { List, X, House, CaretRight, MagnifyingGlass, Info, ShieldCheck, Tag, Question } from '@phosphor-icons/react';
+import { List, X, House, CaretRight, MagnifyingGlass, Info, ShieldCheck, Tag, Question, SealCheck } from '@phosphor-icons/react';
 
 const MENU = [
   { label: 'Home', to: '/', icon: House },
   { label: 'Browse rentals', to: '/', icon: MagnifyingGlass },
+  { label: 'Get Verified Tenant badge', to: '/tenant/verify', icon: SealCheck },
   { label: 'How it works', to: '/', icon: Info },
   { label: 'Trust & verification', to: '/', icon: ShieldCheck },
   { label: 'Pricing', to: '/', icon: Tag },
