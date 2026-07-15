@@ -67,25 +67,28 @@ export function HeroSearchCard() {
   };
 
   return (
-    <div className="rounded-lg bg-white p-4 shadow-card sm:p-5">
-      <div className="flex items-center gap-1">
+    <div className="w-full">
+      {/* tabs — a separate div sitting above the search card, not sharing its background */}
+      <div className="inline-flex gap-1 rounded-md bg-white/20 p-1.5 backdrop-blur-sm">
         <button
           type="button"
           onClick={() => setTab('rentals')}
-          className={`${tabBase} ${tab === 'rentals' ? 'bg-blueharbor text-white' : 'text-coolgrey hover:text-graphite'}`}
+          className={`${tabBase} ${tab === 'rentals' ? 'bg-white text-blueharbor' : 'text-white/85 hover:text-white'}`}
         >
           Rentals
         </button>
         <button
           type="button"
           onClick={() => setTab('owners')}
-          className={`${tabBase} ${tab === 'owners' ? 'bg-blueharbor text-white' : 'text-coolgrey hover:text-graphite'}`}
+          className={`${tabBase} ${tab === 'owners' ? 'bg-white text-blueharbor' : 'text-white/85 hover:text-white'}`}
         >
           Owners
         </button>
-        <Link to="/tenant/verify" className={`${tabBase} text-coolgrey hover:text-graphite`}>Tenants</Link>
+        <Link to="/tenant/verify" className={`${tabBase} text-white/85 hover:text-white`}>Tenants</Link>
       </div>
 
+      {/* search card — separate div below the tabs */}
+      <div className="mt-2 rounded-lg bg-white p-4 shadow-card sm:p-5">
       {tab === 'rentals' && (
         <>
           {rentalAi.thinking ? (
@@ -158,6 +161,7 @@ export function HeroSearchCard() {
           </Link>
         </div>
       )}
+      </div>
     </div>
   );
 }
