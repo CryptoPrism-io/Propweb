@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const STEP_DELAY_MS = 550;
 
@@ -30,6 +30,13 @@ export function useAiThinking(steps: string[], onDone: () => void) {
       }, steps.length * STEP_DELAY_MS),
     );
   }, [steps, onDone]);
+
+  // Clean up any pending timers when the component unmounts
+  useEffect(() => {
+    return () => {
+      timers.current.forEach(clearTimeout);
+    };
+  }, []);
 
   return { thinking, currentStep: steps[stepIndex], start };
 }

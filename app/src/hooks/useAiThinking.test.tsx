@@ -24,4 +24,22 @@ describe('useAiThinking', () => {
     expect(result.current.thinking).toBe(false);
     expect(onDone).toHaveBeenCalledTimes(1);
   });
+
+  it('clears pending timers when the component unmounts', () => {
+    const onDone = vi.fn();
+    const { result, unmount } = renderHook(() => useAiThinking(['Reading…', 'Matching…', 'Done'], onDone));
+
+    act(() => result.current.start());
+    expect(result.current.thinking).toBe(true);
+
+    // Unmount before the sequence completes (after only 300ms of 1650ms total)
+    act(() => { vi.advanceTimersByTime(300); });
+    act(() => { unmount(); });
+
+    // Advance past the full sequence duration
+    act(() => { vi.advanceTimersByTime(1650); });
+
+    // onDone should NOT have been called because timers were cleaned up
+    expect(onDone).not.toHaveBeenCalled();
+  });
 });
