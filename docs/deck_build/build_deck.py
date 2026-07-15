@@ -56,6 +56,12 @@ TEAM_PLAN_NOTES = ("The headline is \"small team, sequenced hiring\" — resist 
                     "that hire yet.")
 
 
+BUDGET_NOTES = ("Present all three scenarios before anyone asks which one to pick — this is a menu, not a "
+                 "recommendation, and the ask on the next slide is a decision between them, not an approval of a "
+                 "single number. If pressed for a personal recommendation, Base is the defensible middle: it "
+                 "funds the full hiring sequence without the Lean scenario's slack risk.")
+
+
 def add_architecture_slide(prs):
     slide = add_blank_slide(prs, light=True)
     add_header(slide, 'ARCHITECTURE', 'One well-organised building, not eleven services.')
@@ -180,6 +186,28 @@ def add_team_plan_slide(prs):
     return slide
 
 
+def add_budget_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'BUDGET', 'Three scenarios, months 0–12.')
+    rows = [
+        ('Cost line', 'Lean', 'Base', 'Comfortable'),
+        ('Engineering payroll', '₹40L', '₹60L', '₹90L'),
+        ('CTO+CPO cash (reduced)', '₹12L', '₹24L', '₹36L'),
+        ('Cloud & infrastructure', '₹3L', '₹6L', '₹12L'),
+        ('Third-party APIs', '₹3L', '₹6L', '₹12L'),
+        ('Tools & licenses', '₹1.5L', '₹3L', '₹5L'),
+        ('Contingency (~15%)', '₹9L', '₹15L', '₹23L'),
+        ('TOTAL (0–12 months)', '≈₹68L', '≈₹1.14 Cr', '≈₹1.78 Cr'),
+    ]
+    add_table(slide, 640080, 2103120, 10911840, 3800000, rows,
+              col_widths=(4200000, 2237280, 2237280, 2237280))
+    add_textbox(slide, 640080, 6100000, 10911840, 500000,
+                'Team of 5–6 + fractional roles; one-city MVP achievable in 4 months.',
+                size_pt=13, color='grey')
+    set_notes(slide, BUDGET_NOTES)
+    return slide
+
+
 def add_notes_to_existing_slides(prs):
     for marker, note in EXISTING_NOTES.items():
         for slide in prs.slides:
@@ -197,6 +225,7 @@ def build():
     add_trust_pipeline_slide(prs)
     add_build_phases_slide(prs)
     add_team_plan_slide(prs)
+    add_budget_slide(prs)
     # Old combined tech+budget slide is retired only after every new slide has
     # been added: python-pptx's slide-partname generator is a naive
     # len(sldIdLst)+1 counter (pptx/parts/presentation.py _next_slide_partname),
