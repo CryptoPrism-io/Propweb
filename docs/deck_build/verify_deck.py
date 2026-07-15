@@ -89,7 +89,17 @@ def check_task5():
     check(len(get_notes_text(slide)) > 80, 'Stack slide has presenter notes')
 
 
-CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5]
+def check_task6():
+    prs = Presentation(OUTPUT)
+    i, slide = find_slide_by_text(prs, 'Verification, the legal way')
+    check(slide is not None, 'Trust pipeline slide exists')
+    text = get_slide_text(slide)
+    for expected in ('THE TRUST PIPELINE', 'Aadhaar offline XML', 'DigiLocker', 'PAN', 'Puttaswamy', '2018'):
+        check(expected in text, f'Trust pipeline slide contains {expected!r}')
+    check(len(get_notes_text(slide)) > 80, 'Trust pipeline slide has presenter notes')
+
+
+CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6]
 
 if __name__ == '__main__':
     for fn in CHECKS:

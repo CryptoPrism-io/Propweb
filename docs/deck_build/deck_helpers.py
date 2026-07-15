@@ -95,6 +95,25 @@ def add_stat_row(slide, stats, y=2103120, height=2377440):
                     size_pt=12.5, color='grey', align='ctr', anchor='top')
 
 
+def add_flow_steps(slide, steps, y=2103120, height=2827656):
+    n = len(steps)
+    margin = 640080
+    gap = 228600
+    card_w = (12192000 - 2 * margin - gap * (n - 1)) // n
+    for i, step in enumerate(steps):
+        x = margin + i * (card_w + gap)
+        add_card(slide, x, y, card_w, height, fill='sand', border='sand_line', adj_raw=6061)
+        add_textbox(slide, x + 228600, y + 228600, card_w - 457200, 320040,
+                    step['prefix'], size_pt=12, bold=True, color='teal', spc=200)
+        add_textbox(slide, x + 228600, y + 640080, card_w - 457200, 548640,
+                    step['title'], size_pt=15, bold=True, color='graphite', anchor='top')
+        add_textbox(slide, x + 228600, y + 1280160, card_w - 457200, height - 1280160 - 228600,
+                    step['body'], size_pt=12, color='grey', anchor='top')
+        if i < n - 1:
+            add_textbox(slide, x + card_w, y + height // 2 - 200000, gap, 400000,
+                        '→', size_pt=20, bold=True, color='teal', align='ctr')
+
+
 def set_dark_background(slide):
     slide.background.fill.solid()
     slide.background.fill.fore_color.rgb = hex_color('graphite')

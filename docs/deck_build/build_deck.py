@@ -4,7 +4,7 @@ adding the new Act 2 (+Market) slides and presenter notes per
 docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
-from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text, add_table, remove_slide_by_text
+from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text, add_table, remove_slide_by_text, add_flow_steps
 
 SOURCE = 'source.pptx'
 OUTPUT = '../PropWeb_Pitch_v2.pptx'
@@ -36,6 +36,13 @@ ARCHITECTURE_NOTES = ("Keep this slide short on stage — the point is reassuran
 STACK_NOTES = ("Don't read the table row by row — the room doesn't need to know what Typesense is. The only two "
                "numbers worth saying out loud are the Algolia cost comparison and the AWS Mumbai/DPDP compliance "
                "line, because those are the ones a CEO will actually remember and repeat to an investor.")
+
+
+TRUST_PIPELINE_NOTES = ("This is the slide to slow down on — say the Puttaswamy line exactly as written on the "
+                         "box, word for word, because it's the one legal fact that must not be garbled on stage. "
+                         "If asked \"so we can't use Aadhaar at all,\" the answer is we can, just not by calling "
+                         "the eKYC API directly — offline XML, DigiLocker, and licensed partners are all legal "
+                         "and all in this pipeline.")
 
 
 def add_architecture_slide(prs):
@@ -80,13 +87,6 @@ def add_market_slide(prs):
 
 
 def add_stack_slide(prs):
-    slides_list = list(prs.slides)
-    old_stack_index = None
-    for i, s in enumerate(slides_list):
-        if 'BUILT TO SCALE' in get_slide_text(s):
-            old_stack_index = i
-            break
-
     slide = add_blank_slide(prs, light=True)
     add_header(slide, 'THE STACK', 'A modern stack, corrected for India economics.')
     rows = [
@@ -109,11 +109,29 @@ def add_stack_slide(prs):
                 "stays a free-tier fallback, not the primary, ahead of its post-2027 pricing changes.",
                 size_pt=12, color='grey', anchor='top')
     set_notes(slide, STACK_NOTES)
+    return slide
 
-    if old_stack_index is not None:
-        from deck_helpers import remove_slide
-        remove_slide(prs, old_stack_index)
 
+def add_trust_pipeline_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'THE TRUST PIPELINE', 'Verification, the legal way.')
+    add_flow_steps(slide, [
+        {'prefix': '01 · IDENTITY', 'title': 'Aadhaar offline XML / DigiLocker',
+         'body': 'Identity proof through the legal offline route — no direct Aadhaar eKYC call.'},
+        {'prefix': '02 · PAN CHECK', 'title': 'PAN verification API',
+         'body': '₹1–3 per check via a licensed KYC API partner.'},
+        {'prefix': '03 · OWNERSHIP', 'title': 'Ownership-proof review',
+         'body': 'Property tax receipt, electricity bill or sale deed — manual review.'},
+        {'prefix': '04 · BADGE', 'title': 'Badge issued',
+         'body': 'Verified Owner / Verified Tenant mark goes live on the profile and every listing.'},
+    ])
+    add_card(slide, 640080, 4892040, 10911840, 1280160, fill='white', border='amber', adj_raw=1500, border_w_emu=19050)
+    add_textbox(slide, 868680, 4938840, 10454640, 1188720,
+                'The one legal fact that must not be gotten wrong on stage: private companies cannot call Aadhaar '
+                'eKYC APIs directly (Supreme Court, Puttaswamy 2018). PropWeb verifies identity only through the '
+                'legal routes — Aadhaar offline XML, DigiLocker, or a licensed KYC partner.',
+                size_pt=13, color='graphite', anchor='ctr')
+    set_notes(slide, TRUST_PIPELINE_NOTES)
     return slide
 
 
@@ -131,6 +149,13 @@ def build():
     add_market_slide(prs)
     add_architecture_slide(prs)
     add_stack_slide(prs)
+    add_trust_pipeline_slide(prs)
+    # Old combined tech+budget slide is retired only after every new slide has
+    # been added: python-pptx's slide-partname generator is a naive
+    # len(sldIdLst)+1 counter (pptx/parts/presentation.py _next_slide_partname),
+    # so removing a slide and then adding another later reuses a partname that's
+    # still in the zip and silently corrupts the deck. Removing last avoids that.
+    remove_slide_by_text(prs, 'BUILT TO SCALE')
     prs.save(OUTPUT)
 
 
