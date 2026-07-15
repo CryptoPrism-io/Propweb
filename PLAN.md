@@ -58,5 +58,13 @@ Existing v2 deck (teal+sand) must be reskinned to this later.
 - [x] Design spec approved.
 - [x] Wrote implementation plan for demo-app foundation + tenant journey (3 core screens).
   Plan: `docs/superpowers/plans/2026-07-13-demo-app-tenant-journey.md` (8 tasks, Vite+React+TS+Tailwind, app in `app/`).
-- [ ] Execute the plan (build the tenant journey). ← NEXT
-- [ ] Later plans: owner journey + wizard/KYC · remaining wireframes · deck reskin · costing slides · deploy.
+- [x] Execute the plan (build the tenant journey).
+- [x] Deck deliverable complete: `docs/PropWeb_Pitch_v2.pptx` extended from 9 to 16 slides (Act 1 Product
+  1–8, Act 2 Technology 9–16), real presenter notes on every slide, teal+sand/Calibri grammar preserved.
+  Built via a Python/python-pptx pipeline in `docs/deck_build/` (`build_deck.py` rebuilds it from
+  `source.pptx`; `verify_deck.py` is the 11-check-group acceptance test, all passing).
+  Plan: `docs/superpowers/plans/2026-07-14-pitch-deck-build.md`. Merged to master.
+  Outstanding: a manual visual QA pass in PowerPoint/LibreOffice on slides 4, 10, 14 is recommended before
+  the real pitch — the automated canvas-bounds check can't detect PowerPoint table auto-growth pushing
+  content past its declared box.
+- [ ] Later: owner journey + wizard/KYC (in progress elsewhere) · remaining wireframes · costing slides · deploy.
