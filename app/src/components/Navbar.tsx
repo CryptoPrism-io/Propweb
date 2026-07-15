@@ -24,37 +24,82 @@ export function Navbar() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
+  const DESKTOP_LINKS = [
+    { label: 'Browse rentals', to: '/' },
+    { label: 'How it works', to: '/' },
+    { label: 'Trust & verification', to: '/' },
+    { label: 'Pricing', to: '/' },
+  ];
+
   return (
-    <header className="absolute inset-x-0 top-0 z-30 bg-transparent">
-      <div className="mx-auto grid h-16 max-w-5xl grid-cols-3 items-center px-4">
-        <div className="flex justify-start">
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border ${onHero ? 'border-white/50 text-white' : 'border-line text-graphite'}`}
-          >
-            <List size={20} />
-          </button>
-        </div>
+    <header className="relative z-30">
+      {/* mobile bar — absolute overlay on the hero, unchanged behavior below lg */}
+      <div className="absolute inset-x-0 top-0 bg-transparent lg:hidden">
+        <div className="mx-auto grid h-16 max-w-5xl grid-cols-3 items-center px-4">
+          <div className="flex justify-start">
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border ${onHero ? 'border-white/50 text-white' : 'border-line text-graphite'}`}
+            >
+              <List size={20} />
+            </button>
+          </div>
 
-        <div className="flex justify-center">
-          <Link to="/" className={`font-display text-xl font-extrabold tracking-wide ${onHero ? 'text-white' : 'text-graphite'}`}>
-            PROP<span className={onHero ? 'text-iceblue' : 'text-blueharbor'}>WEB</span>
-          </Link>
-        </div>
+          <div className="flex justify-center">
+            <Link to="/" className={`font-display text-xl font-extrabold tracking-wide ${onHero ? 'text-white' : 'text-graphite'}`}>
+              PROP<span className={onHero ? 'text-iceblue' : 'text-blueharbor'}>WEB</span>
+            </Link>
+          </div>
 
-        <div className="flex justify-end">
-          <button
-            type="button"
-            className={`rounded-lg border-[1.5px] px-5 py-2 text-[15px] font-bold ${onHero ? 'border-white/70 text-white' : 'border-blueharbor text-blueharbor'}`}
-          >
-            Sign in
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className={`rounded-lg border-[1.5px] px-5 py-2 text-[15px] font-bold ${onHero ? 'border-white/70 text-white' : 'border-blueharbor text-blueharbor'}`}
+            >
+              Sign in
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* slide-in menu drawer */}
+      {/* desktop bar — solid, in normal document flow, separated from the hero below it */}
+      <div className="hidden border-b border-line bg-white lg:block">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-8">
+          <div className="flex items-center gap-10">
+            <Link to="/" className="font-display text-xl font-extrabold tracking-wide text-graphite">
+              PROP<span className="text-blueharbor">WEB</span>
+            </Link>
+            <nav className="flex items-center gap-8">
+              {DESKTOP_LINKS.map(l => (
+                <Link key={l.label} to={l.to} className="text-sm font-semibold text-graphite transition hover:text-blueharbor">
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line text-graphite"
+            >
+              <List size={20} />
+            </button>
+            <button
+              type="button"
+              className="rounded-lg border-[1.5px] border-blueharbor px-5 py-2 text-[15px] font-bold text-blueharbor"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* slide-in menu drawer — shared by both bars */}
       <AnimatePresence>
         {open && (
           <motion.div
