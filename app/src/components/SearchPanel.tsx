@@ -3,20 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { X, MagnifyingGlass } from '@phosphor-icons/react';
 import { Select } from './Select';
-
-const LOCALITIES = ['Koramangala', 'HSR Layout', 'Indiranagar', 'Whitefield', 'JP Nagar'];
-const BHKS = ['1', '2', '3', '3+'];
-const FURNISH = [
-  { v: '', l: 'Any' },
-  { v: 'unfurnished', l: 'Unfurnished' },
-  { v: 'semi', l: 'Semi' },
-  { v: 'furnished', l: 'Furnished' },
-];
-const TENANTS = [
-  { v: '', l: 'Any' },
-  { v: 'family', l: 'Family' },
-  { v: 'bachelor', l: 'Bachelor' },
-];
+import { LOCALITIES, BHKS, FURNISH, TENANTS } from '../lib/searchFilters';
 
 const chip = (active: boolean) =>
   `rounded-full border px-4 py-2 text-sm font-semibold transition ${active ? 'border-blueharbor bg-blueharbor text-white' : 'border-line bg-white text-graphite'}`;
