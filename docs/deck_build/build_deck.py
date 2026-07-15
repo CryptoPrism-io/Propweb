@@ -62,6 +62,37 @@ BUDGET_NOTES = ("Present all three scenarios before anyone asks which one to pic
                  "funds the full hiring sequence without the Lean scenario's slack risk.")
 
 
+ASK_CLOSE_NOTES = ("This is the actual decision slide — say the ask in one sentence before showing the success "
+                    "metrics: \"we need a budget scenario approved and a start date for the founding engineer "
+                    "hire.\" The month-12 metrics exist to answer \"how will we know this worked,\" not to be "
+                    "read verbatim.")
+
+
+def add_ask_close_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'THE ASK', 'What we need from you, next 90 days.')
+    add_textbox(slide, 640080, 2103120, 10911840, 640080,
+                'The decision: approve one budget scenario (Lean / Base / Comfortable) and a start date for the '
+                'founding engineer hire.',
+                size_pt=15, bold=True, color='graphite', anchor='top')
+    add_card(slide, 640080, 2960000, 10911840, 1600000, fill='sand', border='sand_line', adj_raw=3000)
+    add_textbox(slide, 868680, 3050000, 10454640, 365760,
+                'Next 90 days', size_pt=15, bold=True, color='teal')
+    add_textbox(slide, 868680, 3450000, 10454640, 1000000,
+                'Phase 0 setup (weeks 0–4) → founding engineer hired and Phase 1 MVP build under way, '
+                'targeting the one-city Bengaluru launch inside 4 months.',
+                size_pt=13, color='grey', anchor='top')
+    add_card(slide, 640080, 4740000, 10911840, 1750000, fill='white', border='sand_line', adj_raw=3000)
+    add_textbox(slide, 868680, 4830000, 10454640, 365760,
+                'What success looks like at month 12', size_pt=15, bold=True, color='teal')
+    add_textbox(slide, 868680, 5230000, 10454640, 1200000,
+                '200+ verified owner listings per launch locality  ·  >8% free-to-paid connect conversion  '
+                '·  >40% contact-to-visit rate  ·  >70% of live inventory verified.',
+                size_pt=13, color='grey', anchor='top')
+    set_notes(slide, ASK_CLOSE_NOTES)
+    return slide
+
+
 def add_architecture_slide(prs):
     slide = add_blank_slide(prs, light=True)
     add_header(slide, 'ARCHITECTURE', 'One well-organised building, not eleven services.')
@@ -226,6 +257,7 @@ def build():
     add_build_phases_slide(prs)
     add_team_plan_slide(prs)
     add_budget_slide(prs)
+    add_ask_close_slide(prs)
     # Old combined tech+budget slide is retired only after every new slide has
     # been added: python-pptx's slide-partname generator is a naive
     # len(sldIdLst)+1 counter (pptx/parts/presentation.py _next_slide_partname),

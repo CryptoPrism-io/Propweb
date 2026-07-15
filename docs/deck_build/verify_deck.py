@@ -129,7 +129,17 @@ def check_task9():
     check(len(get_notes_text(slide)) > 80, 'Budget slide has presenter notes')
 
 
-CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6, check_task7, check_task8, check_task9]
+def check_task10():
+    prs = Presentation(OUTPUT)
+    i, slide = find_slide_by_text(prs, 'What we need from you, next 90 days')
+    check(slide is not None, 'Ask & close slide exists')
+    text = get_slide_text(slide)
+    for expected in ('THE ASK', 'founding engineer', '200+', '>8%', '>40%', '>70%'):
+        check(expected in text, f'Ask & close slide contains {expected!r}')
+    check(len(get_notes_text(slide)) > 80, 'Ask & close slide has presenter notes')
+
+
+CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6, check_task7, check_task8, check_task9, check_task10]
 
 if __name__ == '__main__':
     for fn in CHECKS:
