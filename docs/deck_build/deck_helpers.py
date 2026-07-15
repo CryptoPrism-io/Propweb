@@ -199,3 +199,17 @@ def remove_slide_by_text(prs, substr):
             remove_slide(prs, i)
             return
     raise ValueError(f'no slide found containing {substr!r}')
+
+
+def reorder_slides(prs, markers):
+    current = list(prs.slides)
+    order_indices = []
+    for marker in markers:
+        idx = next(i for i, s in enumerate(current) if marker in get_slide_text(s))
+        order_indices.append(idx)
+    xml_slides = prs.slides._sldIdLst
+    slide_id_elements = list(xml_slides)
+    for el in slide_id_elements:
+        xml_slides.remove(el)
+    for idx in order_indices:
+        xml_slides.append(slide_id_elements[idx])

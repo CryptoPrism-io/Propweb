@@ -4,10 +4,29 @@ adding the new Act 2 (+Market) slides and presenter notes per
 docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
-from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text, add_table, remove_slide_by_text, add_flow_steps
+from deck_helpers import add_blank_slide, add_header, add_stat_row, add_mixed_textbox, add_card, add_textbox, set_notes, get_slide_text, add_table, remove_slide_by_text, add_flow_steps, reorder_slides
 
 SOURCE = 'source.pptx'
 OUTPUT = '../PropWeb_Pitch_v2.pptx'
+
+FINAL_ORDER_MARKERS = [
+    'PROPWEB',
+    'Renting in India is broken',
+    'The hidden cost is trust',
+    'A large market with an unsolved trust gap',
+    'A trust-first rental platform with an AI engine',
+    'From verified profile to matched move-in',
+    'Problems no one in India solves well',
+    'Two engines: connect today, services tomorrow',
+    'One well-organised building, not eleven services',
+    'A modern stack, corrected for India economics',
+    'Verification, the legal way',
+    'Four phases, one city first',
+    'Small team, sequenced hiring',
+    'Three scenarios, months 0–12',
+    'What we need from you, next 90 days',
+    'Existing portals sell leads',
+]
 
 EXISTING_NOTES = {
     'PROPWEB': "Open cold: this is the one-line pitch. Say it, don't read it — \"PropWeb is India's trust-first, AI-powered rental platform: verified owners meet verified tenants directly, no brokers, no fake listings, no spam calls.\" Pause after the tagline before moving to the problem slide — let the promise land before you justify it.",
@@ -264,6 +283,7 @@ def build():
     # so removing a slide and then adding another later reuses a partname that's
     # still in the zip and silently corrupts the deck. Removing last avoids that.
     remove_slide_by_text(prs, 'BUILT TO SCALE')
+    reorder_slides(prs, FINAL_ORDER_MARKERS)
     prs.save(OUTPUT)
 
 

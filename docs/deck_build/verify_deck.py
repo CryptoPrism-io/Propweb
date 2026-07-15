@@ -139,7 +139,48 @@ def check_task10():
     check(len(get_notes_text(slide)) > 80, 'Ask & close slide has presenter notes')
 
 
-CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6, check_task7, check_task8, check_task9, check_task10]
+FINAL_ORDER_MARKERS = [
+    'PROPWEB',
+    'Renting in India is broken',
+    'The hidden cost is trust',
+    'A large market with an unsolved trust gap',
+    'A trust-first rental platform with an AI engine',
+    'From verified profile to matched move-in',
+    'Problems no one in India solves well',
+    'Two engines: connect today, services tomorrow',
+    'One well-organised building, not eleven services',
+    'A modern stack, corrected for India economics',
+    'Verification, the legal way',
+    'Four phases, one city first',
+    'Small team, sequenced hiring',
+    'Three scenarios, months 0–12',
+    'What we need from you, next 90 days',
+    'Existing portals sell leads',
+]
+
+
+def check_task11():
+    prs = Presentation(OUTPUT)
+    check(len(prs.slides) == 16, f'deck has 16 slides (found {len(prs.slides)})')
+    for expected_index, marker in enumerate(FINAL_ORDER_MARKERS):
+        text = get_slide_text(list(prs.slides)[expected_index])
+        check(marker in text, f'slide {expected_index + 1} is {marker!r} (got: {text[:60]!r}...)')
+    for i, slide in enumerate(prs.slides):
+        notes = get_notes_text(slide)
+        check(len(notes) > 60, f'slide {i + 1} has real presenter notes (got {len(notes)} chars)')
+    W, H = prs.slide_width, prs.slide_height
+    for i, slide in enumerate(prs.slides):
+        for shape in slide.shapes:
+            if shape.left is None:
+                continue
+            check(shape.left >= 0 and shape.top >= 0
+                  and shape.left + shape.width <= W and shape.top + shape.height <= H,
+                  f'slide {i + 1} shape "{shape.name}" within canvas bounds')
+    # round-trip load sanity check: a corrupted pptx would raise here
+    Presentation(OUTPUT)
+
+
+CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6, check_task7, check_task8, check_task9, check_task10, check_task11]
 
 if __name__ == '__main__':
     for fn in CHECKS:
