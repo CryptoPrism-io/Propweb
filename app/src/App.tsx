@@ -7,6 +7,7 @@ import Results from './pages/Results';
 import ListingDetail from './pages/ListingDetail';
 import OwnerWizard from './pages/OwnerWizard';
 import TenantKyc from './pages/TenantKyc';
+import OwnerMatches from './pages/OwnerMatches';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
             <Route path="/listing/:id" element={<ListingDetail />} />
             <Route path="/owner/new" element={<OwnerWizard />} />
             <Route path="/tenant/verify" element={<TenantKyc />} />
+            <Route path="/owner/matches" element={<OwnerMatches />} />
           </Routes>
         </div>
         <Footer />
