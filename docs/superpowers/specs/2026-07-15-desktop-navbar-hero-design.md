@@ -48,10 +48,42 @@ mobile/desktop component tree — consistent with existing `sm:`/`lg:` usage els
 White rounded card, overlapping the hero image bottom edge, mirroring the reference's structure:
 
 1. **Tab row** (Bayut-style pills, first active):
-   - **Rentals** (default/active) — shows the two search bars below.
-   - **Owners** — navigates straight to `/owner/new` (no search bars shown; it's a direct link
-     styled as a tab).
-   - **Tenants** — navigates straight to `/tenant/verify`.
+   - **Rentals** (default/active) — a real tab: shows the two tenant-side search bars below.
+   - **Owners** — also a real tab (not a plain link): shows the owner-side AI search bar
+     (see Addendum below). A small secondary link under it still offers the direct route to the
+     listing wizard: "or list your property instead →" → `/owner/new`.
+   - **Tenants** — stays a direct link (no search UI needed) → `/tenant/verify`.
+
+## Addendum (2026-07-15): mocked AI search + owner→tenant search direction
+
+Two additions on top of the above, both still rule-based/mocked — no real ML/NLP, per PLAN.md.
+
+**1. Mocked "AI thinking" sequence.** Both AI bars (tenant-side on the Rentals tab, owner-side on
+the Owners tab), instead of navigating immediately on submit, show a brief staged sequence of
+status lines (e.g. "Reading your request…" → "Matching verified listings…" → "Found your
+matches"), then navigate. Implemented as a small reusable `useAiThinking` hook (steps array +
+`onDone` callback), driven by `setTimeout`, ~550ms per step. Purely cosmetic — the actual
+rule-based parsing (`parseAiQuery`/`parseOwnerAiQuery`) already ran synchronously before the
+sequence starts; the "thinking" is a UI-only delay to sell the AI framing for the pitch.
+
+**2. Owner-side AI search for tenants.** A tenant-search-for-listings AI bar already existed
+(Rentals tab). This adds the mirror direction: an owner types something like *"Tenants near me
+willing to pay ₹30k min rent"*; `parseOwnerAiQuery` extracts `{ locality?, minRent? }` using the
+same keyword/regex approach as `parseAiQuery`; after the thinking sequence, navigates to a new
+`/owner/matches?locality=...&minRent=...` route.
+
+- **New mock data:** `public/data/tenants.json` — a pool of 10 `TenantProfile` records (reusing
+  the existing type as-is) spanning all 5 localities, budgets ₹15k–85k, mixed family/bachelor and
+  furnishing preferences. (The existing `tenant.json` stays as the single demo *tenant's own*
+  profile used elsewhere in the app; `tenants.json` is the separate pool owners search over.)
+- **New scoring function**, `tenantMatchScore(tenant, { locality?, minRent? })` in
+  `lib/matchScore.ts`, mirroring `matchScore`'s weighting style: locality match 50% (full if the
+  tenant prefers the queried locality, or no locality was given), rent-willingness 50% (full if
+  `tenant.budgetMax >= minRent`, linearly reduced to 0 at 50% under, or full if no `minRent`
+  given).
+- **New page**, `OwnerMatches` at `/owner/matches`: loads the tenant pool, ranks by
+  `tenantMatchScore` descending, renders tenant cards (name, budget range, preferred localities,
+  tenant type, furnishing) each with the existing `MatchChip` showing the score.
 2. **AI search bar (mock)** — single input + "Ask AI" button (sparkle icon), placeholder text:
    *"Try asking for '2BHK under ₹35k in Koramangala, furnished'"*. On submit: simple keyword
    parsing against the known vocab (`LOCALITIES`, `BHKS`, `FURNISH`, `TENANTS` from
