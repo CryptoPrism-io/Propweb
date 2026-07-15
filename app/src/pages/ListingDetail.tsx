@@ -116,6 +116,7 @@ export default function ListingDetail() {
               <VerifiedBadge kind="owner" pending />
             )}
           </div>
+          {listing.verifiedOwner && <p className="mt-2 text-xs text-coolgrey">Tap the Verified Owner badge to see what was verified.</p>}
           <div className="mt-3 text-sm text-coolgrey">Phone</div>
           {connected && owner ? (
             <>

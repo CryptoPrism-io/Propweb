@@ -8,6 +8,7 @@ import { StepPhotos } from '../components/owner/StepPhotos';
 import { StepPreferences } from '../components/owner/StepPreferences';
 import { StepReview } from '../components/owner/StepReview';
 import { PublishedState } from '../components/owner/PublishedState';
+import { OwnerVerification } from '../components/owner/OwnerVerification';
 import { Button } from '../components/Button';
 
 const LABELS = ['Details', 'Photos', 'Preferences', 'Review'];
@@ -18,13 +19,24 @@ export default function OwnerWizard() {
   const [draft, setDraft] = useState<ListingDraft>(emptyDraft());
   const [published, setPublished] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [verifying, setVerifying] = useState(false);
   const set = (patch: Partial<ListingDraft>) => setDraft(d => ({ ...d, ...patch }));
   const canNext = isStepComplete(step, draft);
 
   if (published) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-6">
-        <PublishedState draft={draft} verified={verified} onVerify={() => setVerified(true)} />
+        {verifying ? (
+          <OwnerVerification
+            onBack={() => setVerifying(false)}
+            onComplete={() => {
+              setVerified(true);
+              setVerifying(false);
+            }}
+          />
+        ) : (
+          <PublishedState draft={draft} verified={verified} onVerify={() => setVerifying(true)} />
+        )}
         <div className="mt-5 text-center">
           <Button variant="secondary" onClick={() => nav('/')}>Back to Home</Button>
         </div>

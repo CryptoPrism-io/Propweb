@@ -32,8 +32,8 @@ describe('OwnerWizard', () => {
     expect(screen.getByText(/Select photos for your listing/)).toBeInTheDocument();
   });
 
-  it('publishes and flips to Verified Owner', () => {
-    const { container } = renderWizard();
+  it('queues a listing until verification, then makes it live', () => {
+    renderWizard();
     const selects = screen.getAllByRole('combobox');
     chooseOption(selects[0], '2 BHK');
     chooseOption(selects[1], 'Koramangala');
@@ -44,14 +44,20 @@ describe('OwnerWizard', () => {
     fireEvent.click(screen.getByText(/Next/));            // -> Photos
     fireEvent.click(screen.getAllByRole('button').find(b => b.querySelector('img'))!); // select first preset photo
     fireEvent.click(screen.getByText(/Next/));            // -> Preferences
-    const dateInput = container.querySelector('input[type=date]');
+    const dateInput = document.querySelector('input[type=date]');
     expect(dateInput).toBeTruthy();
     fireEvent.change(dateInput!, { target: { value: '2026-09-01' } });
     fireEvent.click(screen.getByText(/Next/));            // -> Review
     fireEvent.click(screen.getByText(/Publish listing/));
-    expect(screen.getByText('Listing published')).toBeInTheDocument();
+    expect(screen.getByText('Listing queued for verification')).toBeInTheDocument();
+    expect(screen.getByText(/not visible on PropWeb yet/)).toBeInTheDocument();
     expect(screen.getByText(/Verification pending/)).toBeInTheDocument();
-    fireEvent.click(screen.getByText(/Complete verification/));
+    fireEvent.click(screen.getByText(/Verify listing/));
+    expect(screen.getByText('Verify your listing')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /Connect DigiLocker/ }));
+    expect(screen.getByText(/DigiLocker linked/)).toBeInTheDocument();
+    fireEvent.click(screen.getByText(/Continue to verification/));
     expect(screen.getByText('Verified Owner')).toBeInTheDocument();
+    expect(screen.getByText('Listing is live')).toBeInTheDocument();
   });
 });

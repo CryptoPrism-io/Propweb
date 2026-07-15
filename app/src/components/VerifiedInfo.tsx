@@ -10,7 +10,7 @@ export function VerifiedInfo({ owner }: { owner?: Owner }) {
       </h3>
       {owner?.verified ? (
         <>
-          <p className="mt-1 text-sm text-coolgrey">Verified on {owner.verifiedOn}. The following were checked:</p>
+          <p className="mt-1 text-sm text-coolgrey">Verified on {owner.verifiedOn}. PropWeb checked:</p>
           <ul className="mt-3 space-y-2">
             {items.map(it => (
               <li key={it} className="inline-flex w-full items-center gap-2 rounded-lg bg-moontint px-3 py-2 text-sm font-semibold">

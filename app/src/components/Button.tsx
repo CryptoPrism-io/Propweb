@@ -1,12 +1,13 @@
-import type { ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 export function Button({
-  variant = 'primary', children, onClick, className = '',
+  variant = 'primary', children, onClick, className = '', disabled = false,
 }: {
   variant?: 'primary' | 'secondary';
   children: ReactNode;
   onClick?: (e: React.MouseEvent) => void;
   className?: string;
+  disabled?: ButtonHTMLAttributes<HTMLButtonElement>['disabled'];
 }) {
   const styles =
     variant === 'primary'
@@ -15,7 +16,8 @@ export function Button({
   return (
     <button
       onClick={onClick}
-      className={`rounded-full font-bold transition inline-flex items-center justify-center gap-1.5 ${styles} ${className}`}
+      disabled={disabled}
+      className={`rounded-full font-bold transition inline-flex items-center justify-center gap-1.5 disabled:cursor-not-allowed disabled:opacity-40 ${styles} ${className}`}
     >
       {children}
     </button>

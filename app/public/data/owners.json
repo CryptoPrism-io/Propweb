@@ -1,12 +1,12 @@
 [
-  { "id": "o1", "name": "Rohan Mehta", "phone": "+919845012345", "verified": true, "verifiedItems": ["Aadhaar", "PAN", "Ownership proof"], "verifiedOn": "2026-06-20", "responseRate": 96 },
-  { "id": "o2", "name": "Priya Nair", "phone": "+919845067890", "verified": true, "verifiedItems": ["Aadhaar", "PAN"], "verifiedOn": "2026-06-28", "responseRate": 88 },
+  { "id": "o1", "name": "Rohan Mehta", "phone": "+919845012345", "verified": true, "verifiedItems": ["Aadhaar identity (Offline XML/DigiLocker)", "Property ownership documents"], "verifiedOn": "2026-06-20", "responseRate": 96 },
+  { "id": "o2", "name": "Priya Nair", "phone": "+919845067890", "verified": true, "verifiedItems": ["Aadhaar identity (Offline XML/DigiLocker)", "Property ownership documents"], "verifiedOn": "2026-06-28", "responseRate": 88 },
   { "id": "o3", "name": "Suresh Kumar", "phone": "+919886023456", "verified": false, "verifiedItems": [], "verifiedOn": "", "responseRate": 58 },
-  { "id": "o4", "name": "Ananya Reddy", "phone": "+919902078901", "verified": true, "verifiedItems": ["Aadhaar", "Ownership proof"], "verifiedOn": "2026-05-15", "responseRate": 91 },
+  { "id": "o4", "name": "Ananya Reddy", "phone": "+919902078901", "verified": true, "verifiedItems": ["Aadhaar identity (Offline XML/DigiLocker)", "Property ownership documents"], "verifiedOn": "2026-05-15", "responseRate": 91 },
   { "id": "o5", "name": "Vikram Singh", "phone": "+919740034567", "verified": false, "verifiedItems": ["Aadhaar"], "verifiedOn": "", "responseRate": 64 },
-  { "id": "o6", "name": "Kavita Iyer", "phone": "+919686089012", "verified": true, "verifiedItems": ["Aadhaar", "PAN", "Ownership proof"], "verifiedOn": "2026-04-30", "responseRate": 99 },
+  { "id": "o6", "name": "Kavita Iyer", "phone": "+919686089012", "verified": true, "verifiedItems": ["Aadhaar identity (Offline XML/DigiLocker)", "Property ownership documents"], "verifiedOn": "2026-04-30", "responseRate": 99 },
   { "id": "o7", "name": "Arjun Rao", "phone": "+919448045678", "verified": false, "verifiedItems": [], "verifiedOn": "", "responseRate": 49 },
-  { "id": "o8", "name": "Meera Pillai", "phone": "+919008090123", "verified": true, "verifiedItems": ["Aadhaar", "PAN"], "verifiedOn": "2026-07-02", "responseRate": 84 },
+  { "id": "o8", "name": "Meera Pillai", "phone": "+919008090123", "verified": true, "verifiedItems": ["Aadhaar identity (Offline XML/DigiLocker)", "Property ownership documents"], "verifiedOn": "2026-07-02", "responseRate": 84 },
   { "id": "o9", "name": "Deepak Gowda", "phone": "+918971056789", "verified": false, "verifiedItems": ["Aadhaar"], "verifiedOn": "", "responseRate": 71 },
-  { "id": "o10", "name": "Sneha Kulkarni", "phone": "+916360012340", "verified": true, "verifiedItems": ["Aadhaar", "PAN", "Ownership proof"], "verifiedOn": "2026-06-10", "responseRate": 93 }
+  { "id": "o10", "name": "Sneha Kulkarni", "phone": "+916360012340", "verified": true, "verifiedItems": ["Aadhaar identity (Offline XML/DigiLocker)", "Property ownership documents"], "verifiedOn": "2026-06-10", "responseRate": 93 }
 ]

@@ -53,6 +53,8 @@ Mockup: `mockups/listing-screen-mobile.html` (mobile Results screen preview).
 Existing v2 deck (teal+sand) must be reskinned to this later.
 
 ## Progress log
+
+- [x] Demo app: added owner listing verification. Aadhaar Offline XML/DigiLocker and property-document controls are mocked for the pitch flow; owners can continue without uploads, while listings remain queued and hidden until verification is completed. The badge explains what was checked when tapped.
 - [x] Read all docs, scoped the work, wrote PLAN.md + CLAUDE.md.
 - [x] Brainstormed + locked design system (palette, components, 3 core screen layouts).
 - [x] Design spec approved.
