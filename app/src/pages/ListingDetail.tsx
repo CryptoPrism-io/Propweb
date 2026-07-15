@@ -11,6 +11,7 @@ import { Button } from '../components/Button';
 import { TrustScoreExplainer } from '../components/TrustScoreExplainer';
 import { VerifiedInfo } from '../components/VerifiedInfo';
 import { useTenantVerification } from '../hooks/useTenantVerification';
+import { MapView } from '../components/MapView';
 
 function formatPhone(raw: string): string {
   const digits = raw.replace(/\D/g, '').slice(-10);
@@ -105,8 +106,9 @@ export default function ListingDetail() {
           <p className="mt-1 text-sm text-coolgrey">Verification level, owner response rate, listing freshness and reviews combine into the {listing.trustScore}/100 score. Tap the badge on any listing to see what was verified.</p>
         </div>
 
-        <div className="lg:sticky lg:top-6 h-fit rounded-card border border-line bg-white p-5 shadow-card">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="h-fit lg:sticky lg:top-6">
+          <div className="rounded-card border border-line bg-white p-5 shadow-card">
+            <div className="flex flex-wrap items-center gap-2">
             <span className="font-semibold">{owner?.name}</span>
             {listing.verifiedOwner ? (
               <button type="button" onClick={() => setExplainer('verified')} aria-label="What was verified" className="cursor-pointer appearance-none border-0 bg-transparent p-0">
@@ -116,9 +118,9 @@ export default function ListingDetail() {
               <VerifiedBadge kind="owner" pending />
             )}
           </div>
-          {listing.verifiedOwner && <p className="mt-2 text-xs text-coolgrey">Tap the Verified Owner badge to see what was verified.</p>}
-          <div className="mt-3 text-sm text-coolgrey">Phone</div>
-          {connected && owner ? (
+            {listing.verifiedOwner && <p className="mt-2 text-xs text-coolgrey">Tap the Verified Owner badge to see what was verified.</p>}
+            <div className="mt-3 text-sm text-coolgrey">Phone</div>
+            {connected && owner ? (
             <>
               <div className="font-mono text-lg tracking-wide">{formatPhone(owner.phone)}</div>
               <div className="mt-3 grid grid-cols-2 gap-2">
@@ -136,7 +138,12 @@ export default function ListingDetail() {
               <Button className="mt-4 w-full" onClick={() => setShowConnect(true)}>Connect</Button>
               <p className="mt-2 text-center text-xs text-coolgrey">Small fee unlocks the verified owner's contact.</p>
             </>
-          )}
+            )}
+          </div>
+          <section className="mt-4 overflow-hidden rounded-card border border-line bg-white shadow-card">
+            <div className="flex items-center gap-1.5 px-4 py-3 text-sm font-bold text-graphite"><MapPin size={16} className="text-blueharbor" /> Property location</div>
+            <div className="h-44"><MapView listings={[listing]} activeId={listing.id} /></div>
+          </section>
         </div>
       </div>
 
