@@ -6,7 +6,7 @@ import { useAiThinking } from '../hooks/useAiThinking';
 import { LOCALITIES, BHKS, FURNISH, TENANTS, parseAiQuery, parseOwnerAiQuery } from '../lib/searchFilters';
 
 const BHK_OPTS = [{ v: '', l: 'Any BHK' }, ...BHKS.map(b => ({ v: b, l: `${b} BHK` }))];
-const tabBase = 'rounded-full px-3.5 py-2 text-xs sm:px-4 sm:text-sm font-bold transition whitespace-nowrap';
+const tabBase = 'rounded-md px-3.5 py-2 text-xs sm:px-4 sm:text-sm font-bold transition whitespace-nowrap';
 const RENT_STEPS = ['Reading your request…', 'Matching verified listings…', 'Found your matches'];
 const OWNER_STEPS = ['Reading your request…', 'Scanning nearby tenants…', 'Found your matches'];
 
@@ -67,28 +67,25 @@ export function HeroSearchCard() {
   };
 
   return (
-    <div className="w-full">
-      {/* tab strip — visually separate from the card below, sits on the hero image */}
-      <div className="inline-flex gap-1 rounded-t-2xl bg-white/20 p-1.5 backdrop-blur-sm">
+    <div className="rounded-lg bg-white p-4 shadow-card sm:p-5">
+      <div className="flex items-center gap-1">
         <button
           type="button"
           onClick={() => setTab('rentals')}
-          className={`${tabBase} ${tab === 'rentals' ? 'bg-white text-blueharbor shadow-card' : 'text-white/85 hover:text-white'}`}
+          className={`${tabBase} ${tab === 'rentals' ? 'bg-blueharbor text-white' : 'text-coolgrey hover:text-graphite'}`}
         >
           Rentals
         </button>
         <button
           type="button"
           onClick={() => setTab('owners')}
-          className={`${tabBase} ${tab === 'owners' ? 'bg-white text-blueharbor shadow-card' : 'text-white/85 hover:text-white'}`}
+          className={`${tabBase} ${tab === 'owners' ? 'bg-blueharbor text-white' : 'text-coolgrey hover:text-graphite'}`}
         >
           Owners
         </button>
-        <Link to="/tenant/verify" className={`${tabBase} text-white/85 hover:text-white`}>Tenants</Link>
+        <Link to="/tenant/verify" className={`${tabBase} text-coolgrey hover:text-graphite`}>Tenants</Link>
       </div>
 
-      {/* search card — large rounded corners, flush with the tab strip's top-left */}
-      <div className="rounded-tr-3xl rounded-bl-3xl rounded-br-3xl bg-white p-4 shadow-card sm:p-5">
       {tab === 'rentals' && (
         <>
           {rentalAi.thinking ? (
@@ -161,7 +158,6 @@ export function HeroSearchCard() {
           </Link>
         </div>
       )}
-      </div>
     </div>
   );
 }
