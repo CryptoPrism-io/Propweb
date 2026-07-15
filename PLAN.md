@@ -55,6 +55,7 @@ Existing v2 deck (teal+sand) must be reskinned to this later.
 ## Progress log
 
 - [x] Demo app: moved the three-item trust reassurance strip into the home hero, directly below search; it now uses concise label-only copy and a pill shape. Added a compact location map below the owner contact card on listing details.
+- [x] Demo app: fixed mobile listing-card spacing so owner verification badges have clearance above the View Details button.
 - [x] Demo app: added owner listing verification. Aadhaar Offline XML/DigiLocker and property-document controls are mocked for the pitch flow; owners can continue without uploads, while listings remain queued and hidden until verification is completed. The badge explains what was checked when tapped.
 - [x] Read all docs, scoped the work, wrote PLAN.md + CLAUDE.md.
 - [x] Brainstormed + locked design system (palette, components, 3 core screen layouts).

@@ -91,7 +91,7 @@ export function ListingCard({
         </div>
 
         {/* owner + verified + posted */}
-        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-2">
           <span className="text-sm text-coolgrey">By</span>
           <span className="text-sm font-bold">{owner?.name}</span>
           {listing.verifiedOwner && <VerifiedBadge kind="owner" />}
@@ -101,7 +101,7 @@ export function ListingCard({
         {/* view details — vertical gradient, brand palette */}
         <button
           onClick={(e) => { e.stopPropagation(); onOpen?.(listing.id); }}
-          className="mt-auto w-full rounded-full bg-gradient-to-b from-[#5B93E6] to-blueharbor py-3 text-sm font-bold text-white"
+          className="mt-4 w-full rounded-full bg-gradient-to-b from-[#5B93E6] to-blueharbor py-3 text-sm font-bold text-white lg:mt-auto"
         >
           View Details
         </button>
