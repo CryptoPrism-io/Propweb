@@ -36,12 +36,6 @@ export default function Home() {
       </section>
 
       <div className="mx-auto max-w-5xl px-5 py-8">
-        <div className="hidden text-center lg:block lg:mb-5">
-          <h2 className="font-display text-xl font-bold text-graphite">Built on trust, not luck</h2>
-          <p className="mx-auto mt-1 max-w-lg text-sm font-medium text-coolgrey">
-            Every owner and tenant is verified before you ever pick up the phone — so what you see is exactly what you get.
-          </p>
-        </div>
         <div className="flex flex-nowrap items-center justify-between rounded-[14px] border border-line bg-gradient-to-r from-moontint via-white to-moontint px-[14px] py-[11px]">
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><ShieldCheck size={17} weight="fill" className="text-blueharbor" /> Verified only</span>
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><Prohibit size={17} weight="fill" className="text-blueharbor" /> No fakes</span>
