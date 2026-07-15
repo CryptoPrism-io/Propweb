@@ -69,7 +69,7 @@ export function HeroSearchCard() {
   return (
     <div className="w-full">
       {/* tabs — a separate div sitting above the search card, not sharing its background */}
-      <div className="inline-flex gap-1 rounded-md bg-white/20 p-1.5 backdrop-blur-sm">
+      <div className="inline-flex gap-1 rounded-md bg-white/25 p-1.5 backdrop-blur-md">
         <button
           type="button"
           onClick={() => setTab('rentals')}
@@ -87,8 +87,8 @@ export function HeroSearchCard() {
         <Link to="/tenant/verify" className={`${tabBase} text-white/85 hover:text-white`}>Tenants</Link>
       </div>
 
-      {/* search card — separate div below the tabs */}
-      <div className="mt-2 rounded-lg bg-white p-4 shadow-card sm:p-5">
+      {/* search card — separate div below the tabs, thick glassmorphic surface over the hero image */}
+      <div className="mt-2 rounded-lg border border-white/40 bg-white/75 p-4 shadow-card backdrop-blur-xl sm:p-5">
       {tab === 'rentals' && (
         <>
           {rentalAi.thinking ? (
@@ -110,7 +110,7 @@ export function HeroSearchCard() {
 
           <div className="relative mt-4 text-center">
             <div className="absolute inset-x-0 top-1/2 border-t border-line" />
-            <span className="relative bg-white px-3 text-xs font-semibold text-coolgrey">or continue using the filters below</span>
+            <span className="relative bg-white/75 px-3 text-xs font-semibold text-coolgrey">or continue using the filters below</span>
           </div>
 
           <form onSubmit={submitManual} className="mt-3">

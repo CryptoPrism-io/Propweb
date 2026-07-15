@@ -17,7 +17,7 @@ export default function Home() {
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-graphite/70 via-graphite/40 to-graphite/25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-graphite/45 via-graphite/22 to-graphite/10" />
         <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center lg:max-w-7xl lg:px-8 lg:pb-24 lg:pt-20">
           <h1
             style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif" }}
@@ -36,7 +36,13 @@ export default function Home() {
       </section>
 
       <div className="mx-auto max-w-5xl px-5 py-8">
-        <div className="flex flex-nowrap items-center justify-between rounded-[14px] border border-line bg-white px-[14px] py-[11px]">
+        <div className="hidden text-center lg:block lg:mb-5">
+          <h2 className="font-display text-xl font-bold text-graphite">Built on trust, not luck</h2>
+          <p className="mx-auto mt-1 max-w-lg text-sm font-medium text-coolgrey">
+            Every owner and tenant is verified before you ever pick up the phone — so what you see is exactly what you get.
+          </p>
+        </div>
+        <div className="flex flex-nowrap items-center justify-between rounded-[14px] border border-line bg-gradient-to-r from-moontint via-white to-moontint px-[14px] py-[11px]">
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><ShieldCheck size={17} weight="fill" className="text-blueharbor" /> Verified only</span>
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><Prohibit size={17} weight="fill" className="text-blueharbor" /> No fakes</span>
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-graphite"><PhoneSlash size={17} weight="fill" className="text-blueharbor" /> No spam calls</span>
