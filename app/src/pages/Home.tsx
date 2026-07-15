@@ -5,6 +5,7 @@ import { MagnifyingGlass, ShieldCheck, Prohibit, PhoneSlash } from '@phosphor-ic
 import { useData } from '../hooks/useData';
 import { ListingCard } from '../components/ListingCard';
 import { SearchPanel } from '../components/SearchPanel';
+import { HeroSearchCard } from '../components/HeroSearchCard';
 
 export default function Home() {
   const { listings, owners, tenant } = useData();
@@ -14,28 +15,37 @@ export default function Home() {
   return (
     <div>
       {/* full-bleed hero — image reaches the top of the page, under the transparent navbar */}
-      <section className="relative -mt-16 overflow-hidden rounded-b-2xl">
+      <section className="relative -mt-16 overflow-hidden rounded-b-2xl lg:mt-0 lg:rounded-none">
         <img
           src="/Hero%20Image.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-graphite/70 via-graphite/40 to-graphite/25" />
-        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center">
-          <h1 style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif", fontStyle: 'normal', fontWeight: 900, fontSize: '36px', lineHeight: '40px', color: '#FFFFFF' }}>
-            No Brokers.<br />
+        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center lg:max-w-7xl lg:px-8 lg:pb-24 lg:pt-20 lg:text-left">
+          <h1
+            style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif" }}
+            className="text-[36px] font-black leading-[40px] text-white lg:text-[48px] lg:leading-[52px]"
+          >
+            No Brokers.<br className="lg:hidden" />
             No Fakes.
           </h1>
+          <p className="hidden text-base font-semibold text-white/85 lg:mt-3 lg:block lg:max-w-md">
+            Verified listings only. Direct from owners.
+          </p>
           {!searchOpen && (
             <motion.button
               layoutId="searchbar"
               onClick={() => setSearchOpen(true)}
-              className="mx-auto mt-6 flex w-full max-w-md items-center gap-3 rounded-2xl bg-white px-4 py-4 text-left shadow-card"
+              className="mx-auto mt-6 flex w-full max-w-md items-center gap-3 rounded-2xl bg-white px-4 py-4 text-left shadow-card lg:hidden"
             >
               <MagnifyingGlass size={22} className="text-coolgrey" />
               <span className="text-sm font-semibold text-coolgrey">Search location, budget, filters…</span>
             </motion.button>
           )}
+          <div className="hidden lg:mt-8 lg:block lg:max-w-2xl">
+            <HeroSearchCard />
+          </div>
         </div>
       </section>
 

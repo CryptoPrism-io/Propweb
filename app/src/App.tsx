@@ -14,7 +14,7 @@ export default function App() {
     <TenantVerificationProvider>
       <div className="relative overflow-x-hidden">
         <Navbar />
-        <div className="pt-16">
+        <div className="pt-16 lg:pt-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
