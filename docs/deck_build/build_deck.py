@@ -50,6 +50,12 @@ BUILD_PHASES_NOTES = ("Anchor the room on the one-city, four-month MVP commitmen
                        "letting the phase labels speak for themselves.")
 
 
+TEAM_PLAN_NOTES = ("The headline is \"small team, sequenced hiring\" — resist the urge to justify each hire "
+                    "individually. If asked why the founding engineer comes before a designer, the honest answer "
+                    "is that the demo app already exists as proof the frontend/product work doesn't block on "
+                    "that hire yet.")
+
+
 def add_architecture_slide(prs):
     slide = add_blank_slide(prs, light=True)
     add_header(slide, 'ARCHITECTURE', 'One well-organised building, not eleven services.')
@@ -157,6 +163,23 @@ def add_build_phases_slide(prs):
     return slide
 
 
+def add_team_plan_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'TEAM', 'Small team, sequenced hiring.')
+    add_flow_steps(slide, [
+        {'prefix': 'MONTHS 1–3', 'title': '₹2.75L / month',
+         'body': 'Founding full-stack engineer (₹2L/mo) + contract designer (₹75k/mo).'},
+        {'prefix': 'MONTHS 4–6', 'title': '₹5.35L / month',
+         'body': '+ Backend engineer (₹1.6L/mo) + frontend engineer (₹1L/mo).'},
+        {'prefix': 'MONTHS 7–12', 'title': '₹6.65L / month',
+         'body': '+ QA/ops (₹70k/mo) + fractional DevOps (₹60k/mo).'},
+    ])
+    add_textbox(slide, 640080, 5400000, 10911840, 500000,
+                '12-month engineering payroll: ₹55–65 lakh.', size_pt=16, bold=True, color='teal')
+    set_notes(slide, TEAM_PLAN_NOTES)
+    return slide
+
+
 def add_notes_to_existing_slides(prs):
     for marker, note in EXISTING_NOTES.items():
         for slide in prs.slides:
@@ -173,6 +196,7 @@ def build():
     add_stack_slide(prs)
     add_trust_pipeline_slide(prs)
     add_build_phases_slide(prs)
+    add_team_plan_slide(prs)
     # Old combined tech+budget slide is retired only after every new slide has
     # been added: python-pptx's slide-partname generator is a naive
     # len(sldIdLst)+1 counter (pptx/parts/presentation.py _next_slide_partname),
