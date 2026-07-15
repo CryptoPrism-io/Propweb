@@ -17,6 +17,7 @@
 - Every one of the 16 final slides must have a real presenter-note paragraph (not the placeholder page-number run that exists today).
 - `build_deck.py` always rebuilds from `docs/deck_build/source.pptx` (a pristine, git-tracked copy of the original 9-slide deck) and overwrites `docs/PropWeb_Pitch_v2.pptx` — it is not incremental/idempotent-on-the-output, so re-running it after a manual PowerPoint edit of the output would clobber that edit. This is intentional for reproducibility; call it out if it ever matters.
 - Out of scope: the standalone "2 costing slides" deliverable, wireframes, demo app. Do not touch `app/` (a separate session/agent is actively working there).
+- All build/verify commands are run as `cd docs/deck_build && python build_deck.py && python verify_deck.py` — `SOURCE`/`OUTPUT` path constants in `build_deck.py`/`verify_deck.py` are script-directory-relative (`'source.pptx'` / `'../PropWeb_Pitch_v2.pptx'`), not repo-root-relative. Root `.gitignore` includes `__pycache__/` and `*.pyc` — never commit bytecode cache from this harness.
 
 ---
 
@@ -30,7 +31,7 @@
 
 **Interfaces:**
 - Produces (used by every later task): `deck_helpers.COLORS: dict`, `deck_helpers.hex_color(name_or_hex: str) -> RGBColor`, `deck_helpers.add_textbox(slide, x, y, cx, cy, text, size_pt=12.5, bold=False, color='graphite', align='l', anchor='ctr', spc=None, font='Calibri') -> shape`, `deck_helpers.add_mixed_textbox(slide, x, y, cx, cy, runs: list[dict], size_pt=14, align='l', anchor='ctr', font='Calibri') -> shape`, `deck_helpers.add_card(slide, x, y, cx, cy, fill='sand', border='sand_line', adj_raw=6061, border_w_emu=9525) -> shape`, `deck_helpers.set_dark_background(slide)`, `deck_helpers.set_light_background(slide)`, `deck_helpers.add_blank_slide(prs, light=True) -> slide`, `deck_helpers.add_header(slide, eyebrow_text, h1_text)`, `deck_helpers.set_notes(slide, text)`, `deck_helpers.get_slide_text(slide) -> str`, `deck_helpers.get_notes_text(slide) -> str`.
-- Produces: `build_deck.SOURCE = 'docs/deck_build/source.pptx'`, `build_deck.OUTPUT = 'docs/PropWeb_Pitch_v2.pptx'`, `build_deck.build()`.
+- Produces: `build_deck.SOURCE = 'source.pptx'`, `build_deck.OUTPUT = '../PropWeb_Pitch_v2.pptx'` (both script-directory-relative, since every task's verification command below runs `cd docs/deck_build && python build_deck.py`), `build_deck.build()`.
 - Produces: `verify_deck.check(condition: bool, message: str)` (prints PASS/FAIL, raises `AssertionError` on failure), `verify_deck.find_slide_by_text(prs, substr: str) -> tuple[int, slide|None]`.
 
 - [ ] **Step 1: Copy the pristine source deck**
@@ -173,8 +174,8 @@ docs/superpowers/specs/2026-07-14-pitch-deck-design.md."""
 
 from pptx import Presentation
 
-SOURCE = 'docs/deck_build/source.pptx'
-OUTPUT = 'docs/PropWeb_Pitch_v2.pptx'
+SOURCE = 'source.pptx'
+OUTPUT = '../PropWeb_Pitch_v2.pptx'
 
 
 def build():
@@ -196,8 +197,8 @@ Each check_taskN function is appended by its corresponding plan task."""
 from pptx import Presentation
 from deck_helpers import get_slide_text, get_notes_text
 
-SOURCE = 'docs/deck_build/source.pptx'
-OUTPUT = 'docs/PropWeb_Pitch_v2.pptx'
+SOURCE = 'source.pptx'
+OUTPUT = '../PropWeb_Pitch_v2.pptx'
 
 
 def check(condition, message):
