@@ -25,3 +25,26 @@ export function matchScore(listing: Listing, tenant: TenantProfile): number {
 
   return Math.round(score);
 }
+
+export function tenantMatchScore(tenant: TenantProfile, query: { locality?: string; minRent?: number }): number {
+  let score = 0;
+
+  // Locality — 50%. Full if the tenant prefers the queried locality, or no locality was given.
+  if (!query.locality || tenant.preferredLocalities.includes(query.locality)) {
+    score += 50;
+  } else {
+    score += 15;
+  }
+
+  // Rent willingness — 50%. Full if budgetMax covers the owner's ask; linear to 0 at -50% under.
+  if (!query.minRent) {
+    score += 50;
+  } else if (tenant.budgetMax >= query.minRent) {
+    score += 50;
+  } else {
+    const under = (query.minRent - tenant.budgetMax) / query.minRent;
+    score += Math.max(0, 50 * (1 - under / 0.5));
+  }
+
+  return Math.round(score);
+}

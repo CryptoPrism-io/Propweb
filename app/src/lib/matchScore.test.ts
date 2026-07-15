@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { matchScore } from './matchScore';
+import { matchScore, tenantMatchScore } from './matchScore';
 import type { Listing, TenantProfile } from './types';
 
 const tenant: TenantProfile = {
@@ -40,5 +40,23 @@ describe('matchScore', () => {
   });
   it('scales budget points linearly at +25% over budget', () => {
     expect(matchScore({ ...base, rent: 43750 }, tenant)).toBe(80);
+  });
+});
+
+describe('tenantMatchScore', () => {
+  it('is 100 when locality matches and budgetMax covers the minRent ask', () => {
+    expect(tenantMatchScore(tenant, { locality: 'Koramangala', minRent: 30000 })).toBe(100);
+  });
+  it('is 100 for an unqualified query (no locality/minRent given)', () => {
+    expect(tenantMatchScore(tenant, {})).toBe(100);
+  });
+  it('drops locality points when the tenant does not prefer that locality', () => {
+    expect(tenantMatchScore(tenant, { locality: 'Whitefield' })).toBe(65); // 15 + 50
+  });
+  it('reduces rent points as budgetMax falls under the minRent ask, hitting 0 at -50%', () => {
+    expect(tenantMatchScore(tenant, { minRent: 70000 })).toBe(50); // 50 (locality unspecified) + 0
+  });
+  it('scales rent points proportionally for a partial shortfall', () => {
+    expect(tenantMatchScore(tenant, { minRent: 45500 })).toBe(77); // 50 + ~27
   });
 });

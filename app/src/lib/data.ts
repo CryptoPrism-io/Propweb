@@ -9,6 +9,7 @@ async function getJson<T>(path: string): Promise<T> {
 export const loadListings = () => getJson<Listing[]>('/data/listings.json');
 export const loadOwners = () => getJson<Owner[]>('/data/owners.json');
 export const loadTenant = () => getJson<TenantProfile>('/data/tenant.json');
+export const loadTenants = () => getJson<TenantProfile[]>('/data/tenants.json');
 
 export function getOwner(owners: Owner[], id: string): Owner | undefined {
   return owners.find(o => o.id === id);

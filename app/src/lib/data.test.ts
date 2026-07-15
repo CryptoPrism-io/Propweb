@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { loadListings, loadOwners, loadTenant, getOwner } from './data';
+import { loadListings, loadOwners, loadTenant, loadTenants, getOwner } from './data';
 
 const LOCALITIES = ['Koramangala', 'HSR Layout', 'Indiranagar', 'Whitefield', 'JP Nagar'];
 
@@ -40,5 +40,12 @@ describe('seed data', () => {
     const t = await loadTenant();
     expect(t.budgetMax).toBeGreaterThan(t.budgetMin);
     expect(t.preferredLocalities.length).toBeGreaterThan(0);
+  });
+
+  it('has a tenant pool of at least 8 profiles spanning multiple localities', async () => {
+    const tenants = await loadTenants();
+    expect(tenants.length).toBeGreaterThanOrEqual(8);
+    const covered = new Set(tenants.flatMap(t => t.preferredLocalities));
+    for (const loc of LOCALITIES) expect(covered.has(loc)).toBe(true);
   });
 });

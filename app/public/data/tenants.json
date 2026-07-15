@@ -1,0 +1,12 @@
+[
+  { "id": "t1", "name": "Ananya Rao", "budgetMin": 20000, "budgetMax": 35000, "preferredLocalities": ["Koramangala", "HSR Layout"], "tenantType": "family", "furnishing": "semi", "moveInDate": "2026-08-01" },
+  { "id": "t2", "name": "Rahul Menon", "budgetMin": 15000, "budgetMax": 25000, "preferredLocalities": ["Whitefield"], "tenantType": "bachelor", "furnishing": "furnished", "moveInDate": "2026-08-10" },
+  { "id": "t3", "name": "Priya Sharma", "budgetMin": 40000, "budgetMax": 60000, "preferredLocalities": ["Indiranagar", "Koramangala"], "tenantType": "family", "furnishing": "furnished", "moveInDate": "2026-09-01" },
+  { "id": "t4", "name": "Arjun Kulkarni", "budgetMin": 18000, "budgetMax": 30000, "preferredLocalities": ["JP Nagar"], "tenantType": "bachelor", "furnishing": "unfurnished", "moveInDate": "2026-08-15" },
+  { "id": "t5", "name": "Divya Iyer", "budgetMin": 30000, "budgetMax": 45000, "preferredLocalities": ["HSR Layout", "Koramangala"], "tenantType": "family", "furnishing": "semi", "moveInDate": "2026-08-20" },
+  { "id": "t6", "name": "Karthik Reddy", "budgetMin": 50000, "budgetMax": 85000, "preferredLocalities": ["Indiranagar"], "tenantType": "family", "furnishing": "furnished", "moveInDate": "2026-09-10" },
+  { "id": "t7", "name": "Sneha Pillai", "budgetMin": 20000, "budgetMax": 32000, "preferredLocalities": ["Whitefield", "JP Nagar"], "tenantType": "bachelor", "furnishing": "semi", "moveInDate": "2026-08-05" },
+  { "id": "t8", "name": "Vikram Nair", "budgetMin": 25000, "budgetMax": 40000, "preferredLocalities": ["Koramangala"], "tenantType": "bachelor", "furnishing": "unfurnished", "moveInDate": "2026-08-25" },
+  { "id": "t9", "name": "Meera Joshi", "budgetMin": 35000, "budgetMax": 55000, "preferredLocalities": ["HSR Layout", "Indiranagar"], "tenantType": "family", "furnishing": "furnished", "moveInDate": "2026-09-05" },
+  { "id": "t10", "name": "Aditya Verma", "budgetMin": 18000, "budgetMax": 28000, "preferredLocalities": ["JP Nagar", "Whitefield"], "tenantType": "bachelor", "furnishing": "unfurnished", "moveInDate": "2026-08-12" }
+]
