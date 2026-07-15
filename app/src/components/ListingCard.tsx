@@ -33,7 +33,7 @@ export function ListingCard({
   return (
     <div
       onClick={() => onOpen?.(listing.id)}
-      className="cursor-pointer rounded-[20px] bg-white p-3 shadow-card"
+      className="flex h-full cursor-pointer flex-col rounded-[20px] bg-white p-3 shadow-card"
     >
       {/* photo carousel */}
       <div className="relative overflow-hidden rounded-2xl" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
@@ -73,7 +73,7 @@ export function ListingCard({
       </div>
 
       {/* content */}
-      <div className="px-1 pt-3">
+      <div className="flex flex-1 flex-col px-1 pt-3">
         <div className="flex items-baseline gap-1">
           <span className="text-2xl font-extrabold">₹{listing.rent.toLocaleString('en-IN')}</span>
           <span className="text-sm text-coolgrey">/month</span>
@@ -101,7 +101,7 @@ export function ListingCard({
         {/* view details — vertical gradient, brand palette */}
         <button
           onClick={(e) => { e.stopPropagation(); onOpen?.(listing.id); }}
-          className="mt-4 w-full rounded-full bg-gradient-to-b from-[#5B93E6] to-blueharbor py-3 text-sm font-bold text-white"
+          className="mt-auto w-full rounded-full bg-gradient-to-b from-[#5B93E6] to-blueharbor py-3 text-sm font-bold text-white"
         >
           View Details
         </button>

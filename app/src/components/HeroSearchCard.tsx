@@ -6,6 +6,8 @@ import { useAiThinking } from '../hooks/useAiThinking';
 import { LOCALITIES, BHKS, FURNISH, TENANTS, parseAiQuery, parseOwnerAiQuery } from '../lib/searchFilters';
 
 const BHK_OPTS = [{ v: '', l: 'Any BHK' }, ...BHKS.map(b => ({ v: b, l: `${b} BHK` }))];
+const FURNISH_OPTS = FURNISH.map(f => (f.v === '' ? { v: '', l: 'Furnishing' } : f));
+const TENANT_OPTS = TENANTS.map(t => (t.v === '' ? { v: '', l: 'Tenant type' } : t));
 const tabBase = 'rounded-md px-3.5 py-2 text-xs sm:px-4 sm:text-sm font-bold transition whitespace-nowrap';
 const RENT_STEPS = ['Reading your request…', 'Matching verified listings…', 'Found your matches'];
 const OWNER_STEPS = ['Reading your request…', 'Scanning nearby tenants…', 'Found your matches'];
@@ -22,7 +24,7 @@ type SearchParams = {
 
 function ThinkingStatus({ text }: { text: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-line px-4 py-3.5">
+    <div className="flex items-center gap-3 rounded-full border border-line px-4 py-3.5">
       <span className="h-2 w-2 animate-pulse rounded-full bg-blueharbor" />
       <span className="text-sm font-semibold text-graphite">{text}</span>
     </div>
@@ -94,7 +96,7 @@ export function HeroSearchCard() {
           {rentalAi.thinking ? (
             <div className="mt-4"><ThinkingStatus text={rentalAi.currentStep} /></div>
           ) : (
-            <form onSubmit={submitRentalAi} className="mt-4 flex items-center gap-3 rounded-2xl border border-line px-4 py-3.5">
+            <form onSubmit={submitRentalAi} className="mt-4 flex items-center gap-3 rounded-full border border-line px-4 py-3.5">
               <Sparkle size={20} weight="fill" className="shrink-0 text-blueharbor" />
               <input
                 value={aiQuery}
@@ -118,8 +120,8 @@ export function HeroSearchCard() {
               <div className="min-w-[160px] flex-1">
                 <Select value={locality} onChange={setLocality} options={LOCALITIES.map(l => ({ v: l, l }))} ariaLabel="Location" />
               </div>
-              <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-blueharbor px-5 py-2 text-sm font-bold text-white">
-                <MagnifyingGlass size={16} weight="bold" /> Search
+              <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-blueharbor px-7 py-3 text-base font-bold text-white">
+                <MagnifyingGlass size={18} weight="bold" /> Search
               </button>
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -129,10 +131,10 @@ export function HeroSearchCard() {
                 onChange={e => setMaxRent(e.target.value)}
                 inputMode="numeric"
                 placeholder="Max ₹/mo"
-                className="w-28 rounded-full border border-line px-3.5 py-1.5 text-sm font-semibold text-graphite outline-none focus:border-blueharbor"
+                className="w-28 rounded-lg border border-line px-3.5 py-1.5 text-sm font-semibold text-graphite outline-none focus:border-blueharbor"
               />
-              <Select variant="pill" value={furnishing} onChange={setFurnishing} options={FURNISH} active={furnishing !== ''} ariaLabel="Furnishing" />
-              <Select variant="pill" value={tenantType} onChange={setTenantType} options={TENANTS} active={tenantType !== ''} ariaLabel="Tenant type" />
+              <Select variant="pill" value={furnishing} onChange={setFurnishing} options={FURNISH_OPTS} active={furnishing !== ''} ariaLabel="Furnishing" />
+              <Select variant="pill" value={tenantType} onChange={setTenantType} options={TENANT_OPTS} active={tenantType !== ''} ariaLabel="Tenant type" />
             </div>
           </form>
         </>
@@ -143,7 +145,7 @@ export function HeroSearchCard() {
           {ownerAi.thinking ? (
             <ThinkingStatus text={ownerAi.currentStep} />
           ) : (
-            <form onSubmit={submitOwnerAi} className="flex items-center gap-3 rounded-2xl border border-line px-4 py-3.5">
+            <form onSubmit={submitOwnerAi} className="flex items-center gap-3 rounded-full border border-line px-4 py-3.5">
               <Sparkle size={20} weight="fill" className="shrink-0 text-blueharbor" />
               <input
                 value={ownerQuery}
