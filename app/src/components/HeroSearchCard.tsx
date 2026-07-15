@@ -6,7 +6,7 @@ import { useAiThinking } from '../hooks/useAiThinking';
 import { LOCALITIES, BHKS, FURNISH, TENANTS, parseAiQuery, parseOwnerAiQuery } from '../lib/searchFilters';
 
 const BHK_OPTS = [{ v: '', l: 'Any BHK' }, ...BHKS.map(b => ({ v: b, l: `${b} BHK` }))];
-const tabBase = 'rounded-full px-4 py-2 text-sm font-bold transition';
+const tabBase = 'rounded-full px-3.5 py-2 text-xs sm:px-4 sm:text-sm font-bold transition whitespace-nowrap';
 const RENT_STEPS = ['Reading your request…', 'Matching verified listings…', 'Found your matches'];
 const OWNER_STEPS = ['Reading your request…', 'Scanning nearby tenants…', 'Found your matches'];
 
@@ -67,25 +67,28 @@ export function HeroSearchCard() {
   };
 
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-card">
-      <div className="flex items-center gap-2">
+    <div className="w-full">
+      {/* tab strip — visually separate from the card below, sits on the hero image */}
+      <div className="inline-flex gap-1 rounded-t-2xl bg-white/20 p-1.5 backdrop-blur-sm">
         <button
           type="button"
           onClick={() => setTab('rentals')}
-          className={`${tabBase} ${tab === 'rentals' ? 'bg-blueharbor text-white' : 'text-coolgrey hover:text-graphite'}`}
+          className={`${tabBase} ${tab === 'rentals' ? 'bg-white text-blueharbor shadow-card' : 'text-white/85 hover:text-white'}`}
         >
           Rentals
         </button>
         <button
           type="button"
           onClick={() => setTab('owners')}
-          className={`${tabBase} ${tab === 'owners' ? 'bg-blueharbor text-white' : 'text-coolgrey hover:text-graphite'}`}
+          className={`${tabBase} ${tab === 'owners' ? 'bg-white text-blueharbor shadow-card' : 'text-white/85 hover:text-white'}`}
         >
           Owners
         </button>
-        <Link to="/tenant/verify" className={`${tabBase} text-coolgrey hover:text-graphite`}>Tenants</Link>
+        <Link to="/tenant/verify" className={`${tabBase} text-white/85 hover:text-white`}>Tenants</Link>
       </div>
 
+      {/* search card — large rounded corners, flush with the tab strip's top-left */}
+      <div className="rounded-tr-3xl rounded-bl-3xl rounded-br-3xl bg-white p-4 shadow-card sm:p-5">
       {tab === 'rentals' && (
         <>
           {rentalAi.thinking ? (
@@ -105,23 +108,32 @@ export function HeroSearchCard() {
             </form>
           )}
 
-          <form onSubmit={submitManual} className="mt-3 flex flex-wrap items-center gap-2 border-t border-line pt-3">
-            <div className="min-w-[160px] flex-1">
-              <Select value={locality} onChange={setLocality} options={LOCALITIES.map(l => ({ v: l, l }))} ariaLabel="Location" />
+          <div className="relative mt-4 text-center">
+            <div className="absolute inset-x-0 top-1/2 border-t border-line" />
+            <span className="relative bg-white px-3 text-xs font-semibold text-coolgrey">or continue using the filters below</span>
+          </div>
+
+          <form onSubmit={submitManual} className="mt-3">
+            <div className="flex items-center gap-2">
+              <div className="min-w-[160px] flex-1">
+                <Select value={locality} onChange={setLocality} options={LOCALITIES.map(l => ({ v: l, l }))} ariaLabel="Location" />
+              </div>
+              <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-blueharbor px-5 py-2 text-sm font-bold text-white">
+                <MagnifyingGlass size={16} weight="bold" /> Search
+              </button>
             </div>
-            <Select variant="pill" value={bhk} onChange={setBhk} options={BHK_OPTS} active={bhk !== ''} ariaLabel="BHK" />
-            <input
-              value={maxRent}
-              onChange={e => setMaxRent(e.target.value)}
-              inputMode="numeric"
-              placeholder="Max ₹/mo"
-              className="w-28 rounded-full border border-line px-3.5 py-1.5 text-sm font-semibold text-graphite outline-none focus:border-blueharbor"
-            />
-            <Select variant="pill" value={furnishing} onChange={setFurnishing} options={FURNISH} active={furnishing !== ''} ariaLabel="Furnishing" />
-            <Select variant="pill" value={tenantType} onChange={setTenantType} options={TENANTS} active={tenantType !== ''} ariaLabel="Tenant type" />
-            <button type="submit" className="ml-auto inline-flex items-center gap-2 rounded-full bg-blueharbor px-5 py-2 text-sm font-bold text-white">
-              <MagnifyingGlass size={16} weight="bold" /> Search
-            </button>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <Select variant="pill" value={bhk} onChange={setBhk} options={BHK_OPTS} active={bhk !== ''} ariaLabel="BHK" />
+              <input
+                value={maxRent}
+                onChange={e => setMaxRent(e.target.value)}
+                inputMode="numeric"
+                placeholder="Max ₹/mo"
+                className="w-28 rounded-full border border-line px-3.5 py-1.5 text-sm font-semibold text-graphite outline-none focus:border-blueharbor"
+              />
+              <Select variant="pill" value={furnishing} onChange={setFurnishing} options={FURNISH} active={furnishing !== ''} ariaLabel="Furnishing" />
+              <Select variant="pill" value={tenantType} onChange={setTenantType} options={TENANTS} active={tenantType !== ''} ariaLabel="Tenant type" />
+            </div>
           </form>
         </>
       )}
@@ -149,6 +161,7 @@ export function HeroSearchCard() {
           </Link>
         </div>
       )}
+      </div>
     </div>
   );
 }

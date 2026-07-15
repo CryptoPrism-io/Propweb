@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { MagnifyingGlass, ShieldCheck, Prohibit, PhoneSlash } from '@phosphor-icons/react';
+import { ShieldCheck, Prohibit, PhoneSlash } from '@phosphor-icons/react';
 import { useData } from '../hooks/useData';
 import { ListingCard } from '../components/ListingCard';
-import { SearchPanel } from '../components/SearchPanel';
 import { HeroSearchCard } from '../components/HeroSearchCard';
 
 export default function Home() {
   const { listings, owners, tenant } = useData();
   const nav = useNavigate();
-  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <div>
@@ -22,7 +18,7 @@ export default function Home() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-graphite/70 via-graphite/40 to-graphite/25" />
-        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center lg:max-w-7xl lg:px-8 lg:pb-24 lg:pt-20 lg:text-left">
+        <div className="relative mx-auto max-w-5xl px-5 pt-24 pb-10 text-center lg:max-w-7xl lg:px-8 lg:pb-24 lg:pt-20">
           <h1
             style={{ fontFamily: "'Onest', 'Manrope', system-ui, sans-serif" }}
             className="text-[36px] font-black leading-[40px] text-white lg:text-[48px] lg:leading-[52px]"
@@ -30,20 +26,10 @@ export default function Home() {
             No Brokers.<br className="lg:hidden" />
             No Fakes.
           </h1>
-          <p className="hidden text-base font-semibold text-white/85 lg:mt-3 lg:block lg:max-w-md">
+          <p className="mx-auto mt-2 max-w-md text-sm font-semibold text-white/85 lg:mt-3 lg:text-base">
             Verified listings only. Direct from owners.
           </p>
-          {!searchOpen && (
-            <motion.button
-              layoutId="searchbar"
-              onClick={() => setSearchOpen(true)}
-              className="mx-auto mt-6 flex w-full max-w-md items-center gap-3 rounded-2xl bg-white px-4 py-4 text-left shadow-card lg:hidden"
-            >
-              <MagnifyingGlass size={22} className="text-coolgrey" />
-              <span className="text-sm font-semibold text-coolgrey">Search location, budget, filters…</span>
-            </motion.button>
-          )}
-          <div className="hidden lg:mt-8 lg:block lg:max-w-2xl">
+          <div className="mx-auto mt-6 max-w-2xl lg:mt-8">
             <HeroSearchCard />
           </div>
         </div>
@@ -63,10 +49,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {searchOpen && <SearchPanel key="searchpanel" onClose={() => setSearchOpen(false)} />}
-      </AnimatePresence>
     </div>
   );
 }
