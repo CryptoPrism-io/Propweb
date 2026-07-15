@@ -99,7 +99,17 @@ def check_task6():
     check(len(get_notes_text(slide)) > 80, 'Trust pipeline slide has presenter notes')
 
 
-CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6]
+def check_task7():
+    prs = Presentation(OUTPUT)
+    i, slide = find_slide_by_text(prs, 'Four phases, one city first')
+    check(slide is not None, 'Build phases slide exists')
+    text = get_slide_text(slide)
+    for expected in ('ROADMAP', 'PHASE 0', 'weeks 0–4', 'PHASE 1', 'months 1–4', 'PHASE 3', 'multi-city'):
+        check(expected in text, f'Build phases slide contains {expected!r}')
+    check(len(get_notes_text(slide)) > 80, 'Build phases slide has presenter notes')
+
+
+CHECKS = [check_task1, check_task2, check_task3, check_task4, check_task5, check_task6, check_task7]
 
 if __name__ == '__main__':
     for fn in CHECKS:

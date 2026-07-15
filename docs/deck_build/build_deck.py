@@ -45,6 +45,11 @@ TRUST_PIPELINE_NOTES = ("This is the slide to slow down on — say the Puttaswam
                          "and all in this pipeline.")
 
 
+BUILD_PHASES_NOTES = ("Anchor the room on the one-city, four-month MVP commitment — that's the number a CEO will "
+                       "hold you to, so say \"4 months to a working one-city product\" explicitly rather than "
+                       "letting the phase labels speak for themselves.")
+
+
 def add_architecture_slide(prs):
     slide = add_blank_slide(prs, light=True)
     add_header(slide, 'ARCHITECTURE', 'One well-organised building, not eleven services.')
@@ -135,6 +140,23 @@ def add_trust_pipeline_slide(prs):
     return slide
 
 
+def add_build_phases_slide(prs):
+    slide = add_blank_slide(prs, light=True)
+    add_header(slide, 'ROADMAP', 'Four phases, one city first.')
+    add_flow_steps(slide, [
+        {'prefix': 'PHASE 0 · weeks 0–4', 'title': 'Setup',
+         'body': 'Team hiring starts, tooling and accounts provisioned, design system finalized.'},
+        {'prefix': 'PHASE 1 · months 1–4', 'title': 'MVP, one city',
+         'body': 'Bengaluru launch: search, listings, trust badges, pay-to-connect live.'},
+        {'prefix': 'PHASE 2 · months 4–9', 'title': 'Depth',
+         'body': 'AI Match Score, digital rent agreements, fraud/broker detection.'},
+        {'prefix': 'PHASE 3 · months 9–15', 'title': 'Services + multi-city',
+         'body': 'Affiliate services marketplace launches; expansion beyond Bengaluru.'},
+    ])
+    set_notes(slide, BUILD_PHASES_NOTES)
+    return slide
+
+
 def add_notes_to_existing_slides(prs):
     for marker, note in EXISTING_NOTES.items():
         for slide in prs.slides:
@@ -150,6 +172,7 @@ def build():
     add_architecture_slide(prs)
     add_stack_slide(prs)
     add_trust_pipeline_slide(prs)
+    add_build_phases_slide(prs)
     # Old combined tech+budget slide is retired only after every new slide has
     # been added: python-pptx's slide-partname generator is a naive
     # len(sldIdLst)+1 counter (pptx/parts/presentation.py _next_slide_partname),
