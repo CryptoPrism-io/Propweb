@@ -1,0 +1,187 @@
+<title>PropWeb × Trinetry — Engagement One-Pager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --moontint:#F3F6FF; --white:#FFFFFF; --blue:#3770BF; --ice:#8DC2FF;
+    --lime:#C3EA4F; --amber:#E8A13D; --red:#E5533D; --ink:#1B1E23;
+    --grey:#5B6470; --line:#DDE3EE;
+    --bg:var(--moontint); --surface:var(--white); --text:var(--ink);
+    --muted:var(--grey); --edge:var(--line);
+    --shadow:0 2px 12px rgba(27,30,35,.07);
+    --disp:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#12151B; --surface:#1B2029; --text:#EAEEF6; --muted:#9AA4B4;
+      --edge:#2B323E; --blue:#6BA2E6; --shadow:0 2px 14px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12151B; --surface:#1B2029; --text:#EAEEF6; --muted:#9AA4B4;
+    --edge:#2B323E; --blue:#6BA2E6; --shadow:0 2px 14px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#F3F6FF; --surface:#FFFFFF; --text:#1B1E23; --muted:#5B6470;
+    --edge:#DDE3EE; --blue:#3770BF; --shadow:0 2px 12px rgba(27,30,35,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);
+    line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:1120px;margin:0 auto;padding:32px 28px 40px;}
+  .disp{font-family:var(--disp)}
+  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* top bar */
+  .top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding-bottom:14px;border-bottom:1.5px solid var(--edge);flex-wrap:wrap}
+  .wm{font-family:var(--disp);font-weight:800;font-size:21px;letter-spacing:.09em;color:var(--text)}
+  .wm b{color:var(--blue)}
+  .draft{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--amber);border:1.5px solid var(--amber);border-radius:999px;padding:4px 11px}
+
+  h1{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.4vw,31px);
+    line-height:1.18;margin:22px 0 4px;text-wrap:balance;max-width:22ch}
+  h1 .num{color:var(--blue)}
+  .sub{color:var(--muted);font-size:14.5px;font-weight:500;max-width:60ch;margin:0}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .card{background:var(--surface);border:1px solid var(--edge);border-radius:16px;
+    box-shadow:var(--shadow);padding:18px 20px;position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .card.blue::before{background:var(--blue)}
+  .card.amber::before{background:var(--amber)}
+  .card .lbl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .big{font-family:var(--disp);font-weight:800;font-size:29px;line-height:1.05;margin:6px 0 2px;
+    font-variant-numeric:tabular-nums}
+  .to{font-family:var(--disp);font-weight:700;font-size:15px;color:var(--muted)}
+  .card p{margin:8px 0 0;font-size:13.5px;color:var(--muted)}
+  .chip{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:4px 10px;
+    background:rgba(232,161,61,.16);color:var(--amber);margin-top:10px}
+  .sep-note{text-align:center;font-size:12.5px;font-weight:600;color:var(--muted);margin:12px 0 0}
+  .sep-note b{color:var(--text)}
+
+  .section-h{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.02em;
+    margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+  .section-h::after{content:"";flex:1;height:1px;background:var(--edge)}
+
+  /* milestones */
+  .miles{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:720px){.miles{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:440px){.miles{grid-template-columns:1fr}}
+  .m{background:var(--surface);border:1px solid var(--edge);border-radius:14px;padding:13px 12px;position:relative}
+  .m .code{font-family:var(--disp);font-weight:800;font-size:13.5px;color:var(--blue)}
+  .m .amt{font-family:var(--disp);font-weight:800;font-size:16px;margin:4px 0 0;font-variant-numeric:tabular-nums}
+  .m .pct{font-size:11.5px;font-weight:700;color:var(--muted)}
+  .m .wk{font-size:11px;font-weight:600;color:var(--muted);margin-top:6px}
+  .m .desc{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.35}
+  .miletot{display:flex;justify-content:flex-end;gap:8px;align-items:baseline;margin-top:10px;
+    font-size:12.5px;color:var(--muted)}
+  .miletot b{font-family:var(--disp);font-weight:800;font-size:15px;color:var(--text);font-variant-numeric:tabular-nums}
+
+  /* scope */
+  .scope{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.scope{grid-template-columns:1fr}}
+  .scol{background:var(--surface);border:1px solid var(--edge);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px}
+  .scol h3{font-family:var(--disp);font-weight:800;font-size:13.5px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+  .scol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .scol li{font-size:13px;display:flex;gap:9px;align-items:flex-start;color:var(--text)}
+  .mk{flex:none;width:16px;height:16px;border-radius:50%;margin-top:2px;display:grid;place-items:center;
+    font-size:10px;font-weight:800}
+  .in .mk{background:var(--lime);color:#1B1E23}
+  .out li{color:var(--muted)}
+  .out .mk{border:1.5px solid var(--muted);color:var(--muted)}
+  .scol .foot{font-size:11.5px;color:var(--muted);margin-top:11px;padding-top:10px;border-top:1px solid var(--edge)}
+
+  /* team strip */
+  .team{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+  .tcard{flex:1 1 220px;background:var(--surface);border:1px solid var(--edge);border-radius:14px;padding:13px 16px}
+  .tcard .k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .tcard .v{font-family:var(--disp);font-weight:700;font-size:15px;margin-top:3px}
+  .tcard .d{font-size:12px;color:var(--muted);margin-top:2px}
+
+  footer{margin-top:28px;padding-top:14px;border-top:1.5px solid var(--edge);
+    font-size:11.5px;color:var(--muted);line-height:1.55}
+  footer b{color:var(--text)}
+</style>
+
+<div class="sheet">
+  <div class="top">
+    <div class="wm">Prop<b>Web</b> <span style="color:var(--muted);font-weight:600">×</span> Trinetry</div>
+    <span class="draft">Draft · opening position</span>
+  </div>
+
+  <h1>Trinetry builds PropWeb's MVP — <span class="num">₹50L</span>, fully functional, P0 launch set.</h1>
+  <p class="sub">A reduced-scope but real product — verified rentals for Bengaluru, on live infrastructure. Not the demo. One deal, two separate threads.</p>
+
+  <div class="grid2">
+    <div class="card blue">
+      <div class="lbl">Build fee → Trinetry Pvt Ltd</div>
+      <div class="big">₹50,00,000 <span class="to">+ GST</span></div>
+      <div class="to">Fixed price · milestone-linked</div>
+      <p>Trinetry delivers the build as vendor. Payment released on acceptance of each milestone.</p>
+    </div>
+    <div class="card amber">
+      <div class="lbl">Equity → Yogesh (personal)</div>
+      <div class="big">30%</div>
+      <div class="to">CTO + CPO · 3-mo cliff · 1-yr vest</div>
+      <p>Personal stake for the ongoing product + tech role. Not consideration for the build.</p>
+      <span class="chip">Opening ask — negotiable</span>
+    </div>
+  </div>
+  <p class="sep-note">Cash flows to <b>Trinetry</b>; equity flows to <b>Yogesh</b>. Kept legally separate on purpose.</p>
+
+  <div class="section-h disp">Milestones · ~18 weeks to Bengaluru go-live</div>
+  <div class="miles">
+    <div class="m"><div class="code">M0</div><div class="amt">₹7.5L</div><div class="pct">15%</div><div class="wk">On signing</div><div class="desc">Mobilize pod, provision environments</div></div>
+    <div class="m"><div class="code">M1</div><div class="amt">₹7.5L</div><div class="pct">15%</div><div class="wk">Week 4</div><div class="desc">AWS Mumbai, CI/CD, OTP auth, schema, design system</div></div>
+    <div class="m"><div class="code">M2</div><div class="amt">₹10L</div><div class="pct">20%</div><div class="wk">Week 8</div><div class="desc">Search + map, listing create, detail — live data</div></div>
+    <div class="m"><div class="code">M3</div><div class="amt">₹10L</div><div class="pct">20%</div><div class="wk">Week 12</div><div class="desc">KYC, Verified badges, Rental Trust Score</div></div>
+    <div class="m"><div class="code">M4</div><div class="amt">₹7.5L</div><div class="pct">15%</div><div class="wk">Week 15</div><div class="desc">Pay-to-connect (Razorpay), masking (Exotel), dashboard</div></div>
+    <div class="m"><div class="code">M5</div><div class="amt">₹7.5L</div><div class="pct">15%</div><div class="wk">Week 18</div><div class="desc">Hardening, UAT, production go-live</div></div>
+  </div>
+  <div class="miletot">Total <b>₹50,00,000</b> · 100%</div>
+
+  <div class="section-h disp">Scope — reduced, but fully functional</div>
+  <div class="scope">
+    <div class="scol in">
+      <h3>In · P0 launch set, delivered live</h3>
+      <ul>
+        <li><span class="mk">✓</span>Search &amp; map discovery — locality, filters, list + map</li>
+        <li><span class="mk">✓</span>Owner listing creation — photos, rent, geotag</li>
+        <li><span class="mk">✓</span>Trust badges — Verified Owner &amp; Verified Tenant (KYC)</li>
+        <li><span class="mk">✓</span>Rental Trust Score (0–100)</li>
+        <li><span class="mk">✓</span>Pay-to-connect (Razorpay) + contact masking (Exotel)</li>
+        <li><span class="mk">✓</span>OTP auth, KYC flows, owner dashboard — on a real backend</li>
+      </ul>
+      <div class="foot">Bengaluru · rentals only · web-first · Node/TS · PostgreSQL+PostGIS · AWS Mumbai</div>
+    </div>
+    <div class="scol out">
+      <h3>Out · future phases (separate fee)</h3>
+      <ul>
+        <li><span class="mk">–</span>AI Match Score (incl. rule-based)</li>
+        <li><span class="mk">–</span>Digital rent agreement / eSign / e-stamping</li>
+        <li><span class="mk">–</span>Fraud &amp; broker / duplicate-photo detection</li>
+        <li><span class="mk">–</span>Services marketplace (movers, cleaning, interiors)</li>
+        <li><span class="mk">–</span>Resale flows · native apps · in-app rent payment</li>
+        <li><span class="mk">–</span>Multi-city expansion</li>
+      </ul>
+      <div class="foot">Any of these brought forward = written change order + fee.</div>
+    </div>
+  </div>
+
+  <div class="section-h disp">Team &amp; offices</div>
+  <div class="team">
+    <div class="tcard"><div class="k">Bombay — PropWeb office</div><div class="v">1 engineer, embedded</div><div class="d">Coordination, integration, knowledge transfer</div></div>
+    <div class="tcard"><div class="k">Trinetry office</div><div class="v">Rest of the pod</div><div class="d">Full-stack lead, backend, frontend, fractional design/DevOps</div></div>
+    <div class="tcard"><div class="k">Basis</div><div class="v">Fixed price</div><div class="d">Staffing at Trinetry's discretion if milestones &amp; timeline hold</div></div>
+  </div>
+
+  <footer>
+    <b>Draft for negotiation — not legal, tax, or financial advice.</b> Figures (incl. 30% equity) are opening positions. Entity names, CINs, jurisdiction and a few numbers remain <b>[bracketed]</b> in the term sheet and must be completed before signing. Independent legal + CA/tax review required — GST, TDS, stamp duty, and equity issuance (SHA vs ESOP). · PropWeb × Trinetry · July 2026.
+  </footer>
+</div>
