@@ -104,6 +104,14 @@
   .tcard .v{font-family:var(--disp);font-weight:700;font-size:15px;margin-top:3px}
   .tcard .d{font-size:12px;color:var(--muted);margin-top:2px}
 
+  /* details section */
+  .details{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.details{grid-template-columns:1fr}}
+  .dcard{background:var(--surface);border:1px solid var(--edge);border-radius:16px;padding:16px 18px}
+  .dcard h4{font-family:var(--disp);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .dcard p{font-size:13px;margin:0 0 8px;color:var(--text);line-height:1.4}
+  .dcard p span{color:var(--muted);font-weight:500}
+
   footer{margin-top:28px;padding-top:14px;border-top:1.5px solid var(--edge);
     font-size:11.5px;color:var(--muted);line-height:1.55}
   footer b{color:var(--text)}
@@ -123,13 +131,13 @@
       <div class="lbl">Build fee → Trinetry Pvt Ltd</div>
       <div class="big">₹50,00,000 <span class="to">+ GST</span></div>
       <div class="to">Fixed price · milestone-linked</div>
-      <p>Trinetry delivers the build as vendor. Payment released on acceptance of each milestone.</p>
+      <p>Trinetry delivers the build as vendor. Payment released on acceptance of each milestone. Due within 7 business days of invoice.</p>
     </div>
     <div class="card amber">
       <div class="lbl">Equity → Yogesh (personal)</div>
       <div class="big">30%</div>
       <div class="to">CTO + CPO · 3-mo cliff · 1-yr vest</div>
-      <p>Personal stake for the ongoing product + tech role. Not consideration for the build.</p>
+      <p>Personal stake for the ongoing product + tech role. Not consideration for the build. Subject to definitive agreements.</p>
       <span class="chip">Opening ask — negotiable</span>
     </div>
   </div>
@@ -176,12 +184,40 @@
 
   <div class="section-h disp">Team &amp; offices</div>
   <div class="team">
-    <div class="tcard"><div class="k">Bombay — PropWeb office</div><div class="v">1 engineer, embedded</div><div class="d">Coordination, integration, knowledge transfer</div></div>
-    <div class="tcard"><div class="k">Trinetry office</div><div class="v">Rest of the pod</div><div class="d">Full-stack lead, backend, frontend, fractional design/DevOps</div></div>
+    <div class="tcard"><div class="k">Mumbai — PropWeb office</div><div class="v">1 engineer, embedded</div><div class="d">Coordination, integration, knowledge transfer</div></div>
+    <div class="tcard"><div class="k">Pune — Trinetry office</div><div class="v">Rest of the pod</div><div class="d">Full-stack lead, backend, frontend, fractional design/DevOps</div></div>
     <div class="tcard"><div class="k">Basis</div><div class="v">Fixed price</div><div class="d">Staffing at Trinetry's discretion if milestones &amp; timeline hold</div></div>
   </div>
 
+  <div class="section-h disp">Commercial &amp; Legal</div>
+  <div class="details">
+    <div class="dcard">
+      <h4>Trinetry Details</h4>
+      <p><span>Legal Entity:</span> Trinetry Infotech Private Limited</p>
+      <p><span>CIN:</span> U62099PN2025PTC247965</p>
+      <p><span>PAN:</span> AAMCT4307L</p>
+      <p><span>GSTIN:</span> 27AAMCT4307L1ZY</p>
+      <p><span>Registered:</span> 34/A Gulmoher, Centrepoint Near WNC NGR, Vadgaon Sheri, Pune – 411014, Maharashtra</p>
+      <p><span>Directors:</span> Yogesh Sahu, Umesh Shankar Sahu</p>
+      <p style="margin-top:12px;border-top:1px solid var(--edge);padding-top:12px;"><span>Project Duration:</span> 18 Weeks from signing</p>
+      <p><span>Late Payment:</span> 1.5% per month</p>
+      <p><span>Warranty:</span> 180 Days</p>
+    </div>
+    <div class="dcard">
+      <h4>Terms &amp; Governance</h4>
+      <p><span>Payment Due:</span> Within 7 Business Days of Invoice</p>
+      <p><span>On-site:</span> One dedicated engineer stationed at PropWeb Mumbai office throughout engagement</p>
+      <p><span>Approval Window:</span> 7 Business Days</p>
+      <p><span>Exclusivity:</span> 30 Days</p>
+      <p><span>Governing Law:</span> Laws of India</p>
+      <p><span>Jurisdiction:</span> Courts of Mumbai</p>
+      <p><span>Arbitration Seat:</span> Mumbai</p>
+      <p style="margin-top:12px;border-top:1px solid var(--edge);padding-top:12px;"><span>Communication:</span> Email and WhatsApp</span></p>
+      <p><span>Delivery Centre:</span> Pune, Maharashtra</p>
+    </div>
+  </div>
+
   <footer>
-    <b>Draft for negotiation — not legal, tax, or financial advice.</b> Figures (incl. 30% equity) are opening positions. Entity names, CINs, jurisdiction and a few numbers remain <b>[bracketed]</b> in the term sheet and must be completed before signing. Independent legal + CA/tax review required — GST, TDS, stamp duty, and equity issuance (SHA vs ESOP). · PropWeb × Trinetry · July 2026.
+    <b>Draft for negotiation — not legal, tax, or financial advice.</b> Figures (incl. 30% equity) are opening positions. Equity subject to execution of definitive agreements and applicable law. PropWeb legal entity details pending.
   </footer>
 </div>
